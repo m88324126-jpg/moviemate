@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Легенда MovieMate — супер-квест пройден!</title>
+<meta name="description" content="Ты стал Легендой MovieMate — прошёл супер-квест из 7 подвигов. 35 фильмов, 20 поисков, все 4 фазы месяца, 8 наград.">
+<meta name="author" content="MovieMate">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://m88324126-jpg.github.io/moviemate/congratulation.html">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MovieMate">
+<meta property="og:title" content="👑 Легенда MovieMate">
+<meta property="og:description" content="Супер-квест пройден! 7 подвигов, все награды, звание Легенды.">
+<meta property="og:url" content="https://m88324126-jpg.github.io/moviemate/congratulation.html">
+<meta property="og:image" content="https://m88324126-jpg.github.io/moviemate/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Легенда MovieMate — супер-квест пройден">
+<meta property="og:locale" content="ru_RU">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="👑 Легенда MovieMate">
+<meta name="twitter:description" content="Супер-квест пройден! 7 подвигов, все награды, звание Легенды.">
+<meta name="twitter:image" content="https://m88324126-jpg.github.io/moviemate/og-image.png">
+
+<meta name="theme-color" content="#0a0a12">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MovieMate">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
+
+<style>
+:root{
+  color-scheme: dark;
+  --bg:#0a0a12;
+  --gold:#ffd700;
+  --gold-2:#ffb800;
+  --accent:#ff4757;
+  --purple:#5f27cd;
+  --text:#f0f0f5;
+  --muted:#8b8b9e;
+  --border:#2a2a3e;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{
+  background:var(--bg);color:var(--text);
+  font-family:system-ui,-apple-system,sans-serif;
+  min-height:100vh;overflow-x:hidden;
+}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+a{color:inherit;text-decoration:none}
+
+/* ====== ФОН ====== */
+.bg-glow{
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255,215,0,.08) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(95,39,205,.08) 0%, transparent 40%),
+    radial-gradient(circle at 50% 100%, rgba(255,71,87,.05) 0%, transparent 50%);
+}
+
+.stars{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.star{
+  position:absolute;width:2px;height:2px;
+  background:#fff;border-radius:50%;opacity:0;
+  animation:twinkle 3.5s ease-in-out infinite;
+}
+@keyframes twinkle{
+  0%,100%{opacity:0;transform:scale(.5)}
+  50%{opacity:.8;transform:scale(1)}
+}
+
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.conf{position:absolute;top:-30px;opacity:0;animation:fall linear forwards}
+.conf.rect{width:9px;height:13px;border-radius:2px}
+.conf.circle{width:9px;height:9px;border-radius:50%}
+.conf.star{
+  width:12px;height:12px;
+  background:transparent !important;
+  clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+}
+@keyframes fall{
+  0%{transform:translateY(-30px) rotate(0deg);opacity:1}
+  100%{transform:translateY(105vh) rotate(540deg);opacity:.6}
+}
+
+/* ====== КОНТЕЙНЕР ====== */
+.wrap{
+  position:relative;z-index:2;
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  padding:40px 20px;
+}
+
+.card{
+  max-width:600px;width:100%;
+  background:linear-gradient(145deg,#14141f,#1a1a2e);
+  border-radius:26px;
+  padding:44px 36px 40px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+  border:1px solid rgba(255,215,0,.35);
+  box-shadow:
+    0 0 50px rgba(255,215,0,.18),
+    0 24px 60px rgba(0,0,0,.65);
+  animation:cardIn 1.6s cubic-bezier(.16,.8,.3,1) both;
+}
+@keyframes cardIn{
+  0%{opacity:0;transform:scale(.92) translateY(30px)}
+  100%{opacity:1;transform:scale(1) translateY(0)}
+}
+.card::before{
+  content:"";position:absolute;inset:-1px;border-radius:27px;
+  background:linear-gradient(135deg,rgba(255,215,0,.5),rgba(255,140,0,.2),rgba(255,215,0,.5));
+  z-index:-1;filter:blur(6px);
+}
+
+/* ====== КОРОНА ====== */
+.crown{
+  font-size:88px;line-height:1;
+  display:inline-block;
+  margin-bottom:12px;
+  animation:crownFloat 3s ease-in-out infinite;
+  filter:drop-shadow(0 4px 12px rgba(255,215,0,.6));
+}
+@keyframes crownFloat{
+  0%,100%{transform:translateY(0) rotate(-4deg)}
+  50%{transform:translateY(-10px) rotate(4deg)}
+}
+
+.badge-top{
+  display:inline-block;
+  background:linear-gradient(135deg,rgba(255,215,0,.2),rgba(255,71,87,.12));
+  border:1px solid rgba(255,215,0,.5);
+  color:var(--gold);
+  font-size:12px;font-weight:800;
+  padding:6px 16px;border-radius:20px;
+  letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:18px;
+}
+
+h1{
+  font-size:42px;font-weight:900;
+  letter-spacing:-1.3px;line-height:1.05;
+  margin-bottom:12px;
+  background:linear-gradient(135deg,#ffd700,#ff8c00,#ffd700);
+  background-size:200% auto;
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:shine 4s linear infinite;
+}
+@keyframes shine{to{background-position:200% center}}
+
+.subtitle{
+  color:var(--muted);font-size:15px;
+  line-height:1.6;margin-bottom:28px;
+}
+
+/* ====== ЗВАНИЕ ====== */
+.rank-shield{
+  display:inline-block;
+  position:relative;
+  padding:18px 42px;
+  margin-bottom:32px;
+  border-radius:18px;
+  background:linear-gradient(145deg,rgba(255,215,0,.12),rgba(255,140,0,.06));
+  border:2px solid rgba(255,215,0,.5);
+  box-shadow:
+    0 0 30px rgba(255,215,0,.25),
+    inset 0 0 20px rgba(255,215,0,.08);
+}
+.rank-shield::before,.rank-shield::after{
+  content:"✦";
+  position:absolute;top:50%;transform:translateY(-50%);
+  color:var(--gold);font-size:16px;opacity:.85;
+}
+.rank-shield::before{left:14px}
+.rank-shield::after{right:14px}
+.rank-label{
+  font-size:12px;color:var(--muted);
+  text-transform:uppercase;letter-spacing:2px;
+  font-weight:600;margin-bottom:6px;
+}
+.rank{
+  font-size:28px;font-weight:900;
+  letter-spacing:-.7px;
+  background:linear-gradient(135deg,#ffd700,#ffb800);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+/* ====== СПИСОК ПОДВИГОВ ====== */
+.feats-title{
+  font-size:13px;color:var(--muted);
+  text-transform:uppercase;letter-spacing:1.5px;
+  font-weight:600;margin-bottom:14px;
+  text-align:left;padding-left:4px;
+}
+.feats{list-style:none;text-align:left;margin-bottom:30px;padding:0}
+.feat{
+  display:flex;align-items:center;gap:13px;
+  padding:13px 16px;
+  background:rgba(255,215,0,.04);
+  border:1px solid rgba(255,215,0,.16);
+  border-radius:12px;
+  margin-bottom:7px;
+  transition:.2s;
+  animation:featIn .45s ease-out both;
+}
+.feat:nth-child(1){animation-delay:.15s}
+.feat:nth-child(2){animation-delay:.25s}
+.feat:nth-child(3){animation-delay:.35s}
+.feat:nth-child(4){animation-delay:.45s}
+.feat:nth-child(5){animation-delay:.55s}
+.feat:nth-child(6){animation-delay:.65s}
+.feat:nth-child(7){animation-delay:.75s}
+@keyframes featIn{
+  from{opacity:0;transform:translateX(-16px)}
+  to{opacity:1;transform:translateX(0)}
+}
+.feat:hover{
+  border-color:rgba(255,215,0,.4);
+  background:rgba(255,215,0,.08);
+}
+.feat .fi{font-size:24px;flex-shrink:0;line-height:1}
+.feat .ftxt{flex:1;min-width:0}
+.feat .ftitle{
+  font-size:14px;font-weight:700;
+  color:var(--gold);margin-bottom:2px;
+}
+.feat .fdesc{font-size:12px;color:var(--muted)}
+.feat .fcheck{font-size:18px;color:var(--gold);flex-shrink:0}
+
+/* ====== СТАТИСТИКА ====== */
+.stats-row{
+  display:flex;justify-content:space-around;
+  padding:20px 0;
+  margin-bottom:26px;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.stat{text-align:center}
+.stat .num{
+  font-size:24px;font-weight:900;
+  color:var(--gold);display:block;
+  line-height:1;
+}
+.stat .lbl{
+  font-size:11px;color:var(--muted);
+  margin-top:6px;text-transform:uppercase;
+  letter-spacing:.5px;
+}
+
+/* ====== ССЫЛКА НА САЙТ ====== */
+.site-link-box{
+  background:rgba(255,215,0,.06);
+  border:1px solid rgba(255,215,0,.25);
+  border-radius:12px;
+  padding:14px 16px;
+  margin-bottom:26px;
+  text-align:left;
+}
+.site-link-label{
+  font-size:11px;color:var(--muted);
+  text-transform:uppercase;letter-spacing:1.5px;
+  font-weight:700;margin-bottom:8px;
+}
+.site-link-row{display:flex;align-items:center;gap:10px}
+.site-link{
+  flex:1;
+  font-size:13px;color:var(--gold);
+  font-weight:600;
+  padding:8px 12px;
+  background:rgba(0,0,0,.3);
+  border:1px solid rgba(255,215,0,.2);
+  border-radius:8px;
+  transition:.15s;
+  display:flex;align-items:center;gap:8px;
+  min-width:0;
+  overflow:hidden;
+}
+.site-link:hover{
+  background:rgba(255,215,0,.08);
+  border-color:rgba(255,215,0,.4);
+}
+.site-link .link-text{
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.copy-link-btn{
+  flex-shrink:0;
+  width:38px;height:38px;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(255,215,0,.1);
+  border:1px solid rgba(255,215,0,.3);
+  border-radius:8px;
+  color:var(--gold);
+  font-size:16px;cursor:pointer;
+  transition:.15s;
+}
+.copy-link-btn:hover{background:rgba(255,215,0,.2)}
+.copy-link-btn.copied{
+  background:rgba(0,204,68,.2);
+  border-color:rgba(0,204,68,.5);
+  color:#00cc44;
+}
+
+/* ====== БЛАГОДАРНОСТЬ ====== */
+.thanks{
+  font-size:14px;line-height:1.75;
+  color:var(--text);opacity:.85;
+  margin-bottom:30px;
+  font-style:italic;
+}
+.thanks .em{color:var(--gold);font-weight:700;font-style:normal}
+
+/* ====== КНОПКИ ====== */
+.actions{display:flex;flex-direction:column;gap:12px;align-items:center}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  gap:10px;
+  width:100%;max-width:320px;
+  padding:16px 32px;
+  background:linear-gradient(135deg,#ffd700,#ff8c00);
+  color:#0a0a12;
+  font-size:15px;font-weight:900;
+  border:none;border-radius:14px;
+  cursor:pointer;text-decoration:none;
+  letter-spacing:.4px;
+  transition:.2s;
+  box-shadow:0 8px 28px rgba(255,215,0,.4);
+}
+.btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 36px rgba(255,215,0,.55);
+}
+.btn:active{transform:translateY(0)}
+
+.btn-ghost{
+  display:inline-flex;align-items:center;justify-content:center;
+  gap:10px;
+  width:100%;max-width:320px;
+  padding:14px 32px;
+  background:transparent;
+  border:2px solid rgba(255,215,0,.4);
+  color:var(--gold);
+  font-size:14px;font-weight:700;
+  border-radius:14px;
+  cursor:pointer;text-decoration:none;
+  transition:.2s;
+}
+.btn-ghost:hover{
+  background:rgba(255,215,0,.08);
+  border-color:var(--gold);
+  transform:translateY(-2px);
+}
+
+.footer{
+  margin-top:26px;
+  font-size:12px;color:var(--muted);
+}
+
+/* ====== ТОСТ ====== */
+#toast{
+  position:fixed;bottom:30px;left:50%;
+  transform:translateX(-50%) translateY(100px);
+  background:linear-gradient(135deg,#ffd700,#ff8c00);
+  color:#0a0a12;
+  padding:12px 22px;
+  border-radius:30px;
+  font-size:14px;font-weight:700;
+  box-shadow:0 8px 32px rgba(255,215,0,.5);
+  z-index:1000;
+  opacity:0;
+  transition:.3s ease;
+  pointer-events:none;
+  max-width:90vw;
+}
+#toast.on{
+  transform:translateX(-50%) translateY(0);
+  opacity:1;
+}
+
+/* ====== ACCESS ====== */
+.access-denied{
+  max-width:480px;
+  background:linear-gradient(145deg,#14141f,#1a1a2e);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:40px 28px;
+  text-align:center;
+}
+.access-denied .icon{font-size:56px;margin-bottom:14px;opacity:.6}
+.access-denied h2{font-size:20px;font-weight:800;margin-bottom:10px}
+.access-denied p{font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:20px}
+.access-denied .go-btn{
+  display:inline-block;
+  padding:12px 26px;
+  background:linear-gradient(135deg,var(--accent),var(--purple));
+  color:#fff;font-size:14px;font-weight:700;
+  border-radius:12px;transition:.15s;
+}
+.access-denied .go-btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+
+/* ====== REDUCED MOTION ====== */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+  .crown,.btn:hover,.btn-ghost:hover{transform:none}
+}
+
+/* ====== PRINT ====== */
+@media print{
+  body{background:#fff;color:#000}
+  .bg-glow,.stars,.confetti,.actions,#toast{display:none !important}
+  .card{border:2px solid #000;box-shadow:none;background:#fff}
+  h1,.rank,.rank-shield,.rank-label{color:#000 !important;-webkit-text-fill-color:#000 !important;background:none !important}
+  .feat,.site-link-box{border-color:#999;background:#f5f5f5}
+}
+
+/* ====== MOBILE ====== */
+@media (max-width:500px){
+  .card{padding:32px 20px 28px;border-radius:20px}
+  .crown{font-size:70px}
+  h1{font-size:30px;letter-spacing:-.9px}
+  .rank{font-size:22px}
+  .rank-shield{padding:14px 28px}
+  .rank-shield::before{left:10px}
+  .rank-shield::after{right:10px}
+  .btn{padding:14px 24px;font-size:14px}
+  .btn-ghost{padding:12px 24px;font-size:13px}
+  .feat{padding:11px 12px;gap:10px}
+  .feat .fi{font-size:20px}
+  .site-link{font-size:12px;padding:7px 10px}
+  .stat .num{font-size:20px}
+}
+</style>
+</head>
+<body>
+
+<noscript>
+  <div style="background:#b00020;color:#fff;padding:16px;text-align:center;font-family:system-ui">
+    Для работы страницы награждения нужен JavaScript. Включите его в настройках браузера.
+  </div>
+</noscript>
+
+<div class="bg-glow"></div>
+<div class="stars" id="stars" aria-hidden="true"></div>
+<div class="confetti" id="confetti" aria-hidden="true"></div>
+
+<div class="wrap" id="wrap">
+  <!-- Содержимое подставляется в JS -->
+</div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ============================================================
+   ЗАЩИТА: проверка, что пользователь прошёл супер-квест
+   ============================================================ */
+(function guard(){
+  var s = {};
+  try{
+    s = JSON.parse(localStorage.getItem("mm_state") || "{}");
+  }catch(e){ s = {}; }
+
+  /* 1. Проверяем флаг "награда получена" */
+  var claimed = false;
+  try{ claimed = localStorage.getItem("mm_super_quest_claimed") === "1"; }catch(e){}
+
+  /* 2. Проверяем реальные данные прогресса */
+  var viewCount    = parseInt(s.viewCount) || 0;
+  var searchCount  = parseInt(s.searchCount) || 0;
+  var randomCount  = parseInt(s.randomCount) || 0;
+
+  var viewedHighRated = !!s.viewedHighRated;
+  var viewedSeries    = !!s.viewedSeries;
+  var viewedFamily    = !!s.viewedFamily;
+
+  var viewedIds = Array.isArray(s.viewedIds) ? s.viewedIds : [];
+  var dailyDone = (s.dailyDone && typeof s.dailyDone === "object") ? s.dailyDone : {};
+  var dailyCount = Object.keys(dailyDone).length;
+
+  var phasesCount = 0;
+  if(s.monthQuest){
+    if(Array.isArray(s.monthQuest.done)) phasesCount = s.monthQuest.done.length;
+    else if(Array.isArray(s.monthQuest.phases)) phasesCount = s.monthQuest.phases.filter(function(p){ return p; }).length;
+  }
+
+  /* Считаем бейджи */
+  var badges = 0;
+  if(viewCount >= 1) badges++;
+  if(viewCount >= 5) badges++;
+  if(viewCount >= 10) badges++;
+  if(searchCount >= 1) badges++;
+  if(randomCount >= 1) badges++;
+  if(viewedHighRated) badges++;
+  if(viewedSeries) badges++;
+  if(viewedFamily) badges++;
+
+  /* Считаем уникальные жанры */
+  var seenGenres = {};
+  if(typeof DB !== "undefined"){
+    viewedIds.forEach(function(id){
+      var m = DB.filter(function(x){ return x.id === id; })[0];
+      if(m && m.g){
+        m.g.split(",").forEach(function(g){ seenGenres[g.trim()] = 1; });
+      }
+    });
+  }
+  var genreCount = Object.keys(seenGenres).length;
+
+  /* Проверка 7 подвигов */
+  var checks = {
+    views:  viewCount >= 35,
+    search: searchCount >= 20,
+    random: randomCount >= 12,
+    phases: phasesCount >= 4,
+    daily:  dailyCount >= 14,
+    badges: badges >= 8,
+    genres: genreCount >= 10
+  };
+
+  var allOk = Object.keys(checks).every(function(k){ return checks[k]; });
+
+  /* Если флаг есть, но данных недостаточно — считаем взломом */
+  if(!claimed || !allOk){
+    showDenied();
+    return;
+  }
+
+  /* Всё ок — рисуем поздравление */
+  renderCongrats(s, {
+    viewCount: viewCount,
+    badges: badges,
+    phases: phasesCount
+  });
+})();
+
+/* ============================================================
+   ОТКАЗ В ДОСТУПЕ
+   ============================================================ */
+function showDenied(){
+  var wrap = document.getElementById("wrap");
+  wrap.innerHTML =
+    '<div class="access-denied">' +
+      '<div class="icon">🔒</div>' +
+      '<h2>Страница недоступна</h2>' +
+      '<p>Эта награда открывается только за прохождение супер-квеста «Легенда MovieMate». Пройди 7 подвигов — и сможешь вернуться сюда.</p>' +
+      '<a href="quests.html" class="go-btn">← К квестам</a>' +
+    '</div>';
+  /* Не запускаем конфетти и анимации */
+}
+
+/* ============================================================
+   РЕНДЕР ПОЗДРАВЛЕНИЯ
+   ============================================================ */
+function renderCongrats(state, stats){
+  var wrap = document.getElementById("wrap");
+
+  /* Считаем уникальные жанры и показываем в статистике */
+  var viewedIds = Array.isArray(state.viewedIds) ? state.viewedIds : [];
+  var seenGenres = {};
+  if(typeof DB !== "undefined"){
+    viewedIds.forEach(function(id){
+      var m = DB.filter(function(x){ return x.id === id; })[0];
+      if(m && m.g){
+        m.g.split(",").forEach(function(g){ seenGenres[g.trim()] = 1; });
+      }
+    });
+  }
+  var genreCount = Object.keys(seenGenres).length;
+
+  wrap.innerHTML =
+    '<div class="card">' +
+
+      '<div class="crown">👑</div>' +
+      '<div class="badge-top">Супер-квест выполнен</div>' +
+      '<h1>Ты — Легенда!</h1>' +
+      '<p class="subtitle">Ты прошёл самое сложное испытание MovieMate</p>' +
+
+      '<div class="rank-shield">' +
+        '<div class="rank-label">Твоё звание</div>' +
+        '<div class="rank">Легенда MovieMate</div>' +
+      '</div>' +
+
+      '<div class="stats-row">' +
+        '<div class="stat"><span class="num">'+stats.viewCount+'</span><span class="lbl">фильмов</span></div>' +
+        '<div class="stat"><span class="num">'+stats.badges+'/8</span><span class="lbl">награды</span></div>' +
+        '<div class="stat"><span class="num">'+stats.phases+'/4</span><span class="lbl">фазы</span></div>' +
+        '<div class="stat"><span class="num">'+genreCount+'</span><span class="lbl">жанров</span></div>' +
+      '</div>' +
+
+      '<div class="feats-title">✦ Ты совершил 7 подвигов ✦</div>' +
+      '<ul class="feats">' +
+        '<li class="feat"><span class="fi">🎬</span><span class="ftxt"><div class="ftitle">Киноман</div><div class="fdesc">Открыл 35 фильмов</div></span><span class="fcheck">✅</span></li>' +
+        '<li class="feat"><span class="fi">🔍</span><span class="ftxt"><div class="ftitle">Искатель</div><div class="fdesc">20 раз воспользовался поиском</div></span><span class="fcheck">✅</span></li>' +
+        '<li class="feat"><span class="fi">🎲</span><span class="ftxt"><div class="ftitle">Счастливчик</div><div class="fdesc">12 случайных фильмов</div></span><span class="fcheck">✅</span></li>' +
+        '<li class="feat"><span class="fi">🗓</span><span class="ftxt"><div class="ftitle">Марафонец</div><div class="fdesc">Прошёл все 4 фазы месяца</div></span><span class="fcheck">✅</span></li>' +
+        '<li class="feat"><span class="fi">📅</span><span class="ftxt"><div class="ftitle">Преданный</div><div class="fdesc">14 дней выполнял квесты дня</div></span><span class="fcheck">✅</span></li>' +
+        '<li class="feat"><span class="fi">🏅</span><span class="ftxt"><div class="ftitle">Коллекционер</div><div class="fdesc">Собрал все 8 наград</div></span><span class="fcheck">✅</span></li>' +
+        '<li class="feat"><span class="fi">🌈</span><span class="ftxt"><div class="ftitle">Эрудит</div><div class="fdesc">Открыл фильмы из 10 разных жанров</div></span><span class="fcheck">✅</span></li>' +
+      '</ul>' +
+
+      '<div class="site-link-box">' +
+        '<div class="site-link-label">🔗 Ссылка на сайт</div>' +
+        '<div class="site-link-row">' +
+          '<a href="https://m88324126-jpg.github.io/moviemate/" target="_blank" rel="noopener" class="site-link" id="siteLink">' +
+            '<span class="link-text" id="linkText">m88324126-jpg.github.io/moviemate</span>' +
+          '</a>' +
+          '<button class="copy-link-btn" id="copyBtn" onclick="copySiteLink()" aria-label="Скопировать ссылку" title="Скопировать ссылку">📋</button>' +
+        '</div>' +
+      '</div>' +
+
+      '<p class="thanks">' +
+        'Это достижение требует настоящей настойчивости — минимум <span class="em">2 недели</span> пути.<br>' +
+        'Таких, как ты, единицы. Спасибо, что ты с MovieMate! 🎬' +
+      '</p>' +
+
+      '<div class="actions">' +
+        '<button class="btn" id="shareBtn" onclick="shareResult()">' +
+          '<span>📤</span><span id="shareText">Поделиться</span>' +
+        '</button>' +
+        '<a href="home.html" class="btn-ghost">🎬 Вернуться на главную</a>' +
+      '</div>' +
+
+      '<div class="footer">MovieMate © 2026</div>' +
+
+    '</div>';
+
+  /* Ссылка на сайт — определяем динамически */
+  try{
+    var origin = window.location.origin;
+    var base = origin + window.location.pathname.replace(/\/[^\/]*$/, "/");
+    var link = document.getElementById("siteLink");
+    var txt = document.getElementById("linkText");
+    if(link && txt){
+      link.href = base;
+      txt.textContent = base.replace(/^https?:\/\//, "").replace(/\/$/, "");
+    }
+  }catch(e){}
+
+  /* Запускаем декорации */
+  makeStars();
+  makeConfetti();
+}
+
+/* ============================================================
+   ДЕКОРАЦИИ
+   ============================================================ */
+function makeStars(){
+  var w = document.getElementById("stars");
+  if(!w) return;
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(reduceMotion) return;
+  for(var i = 0; i < 25; i++){
+    var s = document.createElement("div");
+    s.className = "star";
+    s.style.left = Math.random() * 100 + "%";
+    s.style.top = Math.random() * 100 + "%";
+    s.style.animationDelay = (Math.random() * 3) + "s";
+    s.style.animationDuration = (3 + Math.random() * 3) + "s";
+    w.appendChild(s);
+  }
+}
+
+function makeConfetti(){
+  var w = document.getElementById("confetti");
+  if(!w) return;
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(reduceMotion) return;
+  var colors = ["#ffd700","#ff8c00","#ff4757","#5f27cd","#00cc44","#ff6b9d","#fff4b0","#ffb800"];
+  var types = ["rect","circle","star"];
+  for(var i = 0; i < 60; i++){
+    var c = document.createElement("div");
+    c.className = "conf " + types[Math.floor(Math.random() * types.length)];
+    c.style.left = Math.random() * 100 + "%";
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.animationDuration = (3 + Math.random() * 4) + "s";
+    c.style.animationDelay = (Math.random() * 4) + "s";
+    w.appendChild(c);
+  }
+}
+
+/* ============================================================
+   ПОДЕЛИТЬСЯ
+   ============================================================ */
+function shareResult(){
+  var btn = document.getElementById("shareBtn");
+  var txt = document.getElementById("shareText");
+  var url = (document.getElementById("siteLink") || {}).href || location.href;
+  var message = "👑 Я стал Легендой MovieMate! Прошёл супер-квест из 7 подвигов. Попробуй и ты: " + url;
+
+  if(navigator.share){
+    navigator.share({
+      title: "Легенда MovieMate",
+      text: "👑 Я стал Легендой MovieMate! Прошёл супер-квест из 7 подвигов.",
+      url: url
+    }).catch(function(){});
+    return;
+  }
+  copyToClipboard(message, function(ok){
+    if(ok){
+      if(btn) btn.classList.add("copied");
+      if(txt) txt.textContent = "Скопировано!";
+      showToast("✅ Текст скопирован — делись!");
+      setTimeout(function(){
+        if(txt) txt.textContent = "Поделиться";
+      }, 2200);
+    } else {
+      showToast("⚠️ Не удалось скопировать");
+    }
+  });
+}
+
+function copySiteLink(){
+  var btn = document.getElementById("copyBtn");
+  var link = (document.getElementById("siteLink") || {}).href || location.href;
+  copyToClipboard(link, function(ok){
+    if(ok && btn){
+      btn.classList.add("copied");
+      btn.textContent = "✓";
+      showToast("✅ Ссылка на сайт скопирована!");
+      setTimeout(function(){
+        btn.classList.remove("copied");
+        btn.textContent = "📋";
+      }, 2000);
+    } else {
+      showToast("⚠️ Не удалось скопировать");
+    }
+  });
+}
+
+function copyToClipboard(text, cb){
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(function(){ cb(true); })
+      .catch(function(){ legacyCopy(text, cb); });
+  } else {
+    legacyCopy(text, cb);
+  }
+}
+function legacyCopy(text, cb){
+  try{
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    var ok = document.execCommand("copy");
+    document.body.removeChild(ta);
+    if(cb) cb(ok);
+  }catch(e){ if(cb) cb(false); }
+}
+
+/* ============================================================
+   TOAST (очередь)
+   ============================================================ */
+var toastQueue = [], toastBusy = false;
+function showToast(msg){
+  toastQueue.push(msg);
+  if(!toastBusy) processToastQueue();
+}
+function processToastQueue(){
+  if(toastQueue.length === 0){ toastBusy = false; return; }
+  toastBusy = true;
+  var msg = toastQueue.shift();
+  var t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("on");
+  clearTimeout(t._t);
+  t._t = setTimeout(function(){
+    t.classList.remove("on");
+    setTimeout(processToastQueue, 250);
+  }, 2200);
+}
+
+/* ============================================================
+   ГЛОБАЛЬНЫЙ ПЕРЕХВАТ ОШИБОК
+   ============================================================ */
+window.addEventListener("error", function(e){
+  console.error("[MovieMate/congrats]", e.message, "строка:", e.lineno);
+});
+</script>
+</body>
+</html>

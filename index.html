@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MovieMate — твой гид по фильмам</title>
+<meta name="description" content="Каталог фильмов и сериалов с квестами, наградами и званиями. 200 фильмов, аниме, мультфильмов. Найди что посмотреть за минуту.">
+<meta name="author" content="MovieMate">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://m88324126-jpg.github.io/moviemate/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MovieMate">
+<meta property="og:title" content="MovieMate — твой гид по фильмам">
+<meta property="og:description" content="200 фильмов, сериалов и аниме. Квесты, награды, звания. Найди что посмотреть за минуту.">
+<meta property="og:url" content="https://m88324126-jpg.github.io/moviemate/">
+<meta property="og:image" content="https://m88324126-jpg.github.io/moviemate/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ru_RU">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MovieMate — твой гид по фильмам">
+<meta name="twitter:description" content="200 фильмов, сериалов и аниме. Квесты, награды, звания.">
+<meta name="twitter:image" content="https://m88324126-jpg.github.io/moviemate/og-image.png">
+
+<meta name="theme-color" content="#0a0a12">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
+
+<style>
+:root{
+  color-scheme: dark;
+  --bg:#0a0a12;--accent:#ff4757;--purple:#5f27cd;
+  --text:#f0f0f5;--muted:#8b8b9e;--border:#2a2a3e;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:var(--bg);overflow:hidden;height:100vh;font-family:system-ui,-apple-system,sans-serif}
+
+#splash{
+  position:fixed;inset:0;background:var(--bg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  z-index:9999;
+  transition:opacity .8s ease;
+  padding:20px;
+}
+#splash.hide{opacity:0;pointer-events:none}
+
+.splash-icon{
+  font-size:64px;margin-bottom:16px;opacity:0;
+  animation:popBounce 1.2s cubic-bezier(.17,.67,.19,.99) forwards .3s;
+}
+@keyframes popBounce{
+  0%{transform:scale(0);opacity:0}
+  60%{transform:scale(1.1);opacity:1}
+  100%{transform:scale(1);opacity:1}
+}
+
+.splash-logo{
+  font-size:72px;font-weight:800;text-align:center;letter-spacing:-2px;
+  background:linear-gradient(90deg,#ff4757,#5f27cd,#ff4757,#c0392b,#5f27cd,#ff4757);
+  background-size:500% 100%;
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:shimmer 6s linear infinite;
+}
+@keyframes shimmer{
+  0%{background-position:0% 50%}
+  100%{background-position:500% 50%}
+}
+
+.splash-desc{
+  color:var(--muted);font-size:18px;margin-top:20px;text-align:center;
+  opacity:0;
+  animation:fadeUp 1.5s ease-out forwards 1s;
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.splash-bar{
+  width:260px;max-width:80vw;height:4px;background:var(--border);border-radius:4px;
+  margin-top:36px;overflow:hidden;opacity:0;
+  animation:fadeIn .5s ease-out forwards 1.2s;
+}
+@keyframes fadeIn{to{opacity:1}}
+.splash-bar-fill{
+  width:0%;height:100%;
+  background:linear-gradient(90deg,var(--accent),var(--purple));
+  border-radius:4px;
+  animation:barFill 5s linear forwards 1.2s;
+}
+@keyframes barFill{to{width:100%}}
+
+.splash-skip{
+  position:fixed;bottom:24px;right:24px;
+  color:var(--text);font-size:13px;cursor:pointer;
+  padding:12px 22px;border:1px solid var(--border);border-radius:10px;
+  background:rgba(255,255,255,.04);
+  transition:color .2s,border-color .2s,background .2s,opacity .3s;
+  opacity:0;
+  animation:fadeIn .6s ease-out forwards .5s;
+  font-family:inherit;
+}
+.splash-skip:hover{
+  color:#fff;
+  border-color:var(--accent);
+  background:rgba(255,71,87,.1);
+}
+.splash-skip:active{transform:scale(.97)}
+
+noscript > div{
+  position:fixed;inset:0;z-index:10000;
+  background:#b00020;color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  padding:20px;text-align:center;font-size:16px;line-height:1.5;
+}
+
+/* ====== REDUCED MOTION ====== */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+  .splash-icon,.splash-desc,.splash-bar,.splash-skip{
+    opacity:1 !important;
+    animation:none !important;
+  }
+  .splash-bar-fill{width:100% !important;animation:none !important}
+  .splash-logo{animation:none !important;background-position:0 50%}
+}
+
+@media (max-width:500px){
+  .splash-icon{font-size:52px}
+  .splash-logo{font-size:52px;letter-spacing:-1.5px}
+  .splash-desc{font-size:15px}
+  .splash-bar{width:200px}
+  .splash-skip{bottom:16px;right:16px;padding:10px 18px;font-size:12px}
+}
+</style>
+
+<noscript>
+  <meta http-equiv="refresh" content="0;url=home.html">
+</noscript>
+</head>
+<body>
+
+<noscript>
+  <div>
+    Для работы MovieMate нужен JavaScript. Перенаправляем на главную…
+  </div>
+</noscript>
+
+<div id="splash">
+  <div class="splash-icon"></div>
+  <div class="splash-logo">MovieMate</div>
+  <div class="splash-desc">твой гид по фильмам и сериалам</div>
+  <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+</div>
+
+<button class="splash-skip" id="skipBtn" onclick="goHome()" aria-label="Пропустить заставку">
+  Пропустить →
+</button>
+
+<script>
+/* ============================================================
+   КОНСТАНТЫ
+   ============================================================ */
+var SPLASH_KEY = "mm_splash_seen";
+var SPLASH_TTL = 24 * 60 * 60 * 1000; /* 24 часа */
+var REDIRECT_DELAY = 6000;            /* 6 секунд автоперехода */
+var HOME_URL = "home.html";
+
+/* ============================================================
+   ПРОВЕРКА: показывать ли заставку
+   ============================================================ */
+(function checkSplash(){
+  var lastSeen = 0;
+  try{
+    var raw = localStorage.getItem(SPLASH_KEY);
+    if(raw) lastSeen = parseInt(raw) || 0;
+  }catch(e){ /* Safari Private — показываем splash как обычно */ }
+
+  var now = Date.now();
+  if(lastSeen > 0 && (now - lastSeen) < SPLASH_TTL){
+    /* Уже видели сегодня — сразу на главную */
+    redirectNow();
+  }
+})();
+
+/* ============================================================
+   РЕДИРЕКТ
+   ============================================================ */
+var _redirected = false;
+
+function redirectNow(){
+  if(_redirected) return;
+  _redirected = true;
+  /* location.replace — не засоряем историю */
+  try{ location.replace(HOME_URL); }
+  catch(e){ location.href = HOME_URL; }
+}
+
+function goHome(){
+  if(_redirected) return;
+  /* Запоминаем факт показа splash */
+  try{ localStorage.setItem(SPLASH_KEY, String(Date.now())); }catch(e){}
+
+  var s = document.getElementById("splash");
+  if(s) s.classList.add("hide");
+  /* Даём 800 мс на плавное исчезновение */
+  setTimeout(redirectNow, 800);
+}
+
+/* ============================================================
+   АВТОПЕРЕХОД
+   ============================================================ */
+var autoTimer = setTimeout(function(){
+  /* Перед переходом тоже ставим метку */
+  try{ localStorage.setItem(SPLASH_KEY, String(Date.now())); }catch(e){}
+  var s = document.getElementById("splash");
+  if(s) s.classList.add("hide");
+  setTimeout(redirectNow, 800);
+}, REDIRECT_DELAY);
+
+/* ============================================================
+   ЗАЩИТА ОТ ЗАВИСАНИЯ
+   ============================================================ */
+
+/* 1. Если скрипт упал — всё равно уходим на главную */
+window.addEventListener("error", function(e){
+  console.error("[MovieMate/splash]", e.message, "строка:", e.lineno);
+  /* Не редиректим сразу — даём пользователю 1 сек увидеть, что что-то не так */
+  clearTimeout(autoTimer);
+  setTimeout(redirectNow, 1000);
+});
+
+/* 2. Если промис отклонён */
+window.addEventListener("unhandledrejection", function(e){
+  console.error("[MovieMate/splash] Promise rejected:", e.reason);
+});
+
+/* 3. Если splash-элемент не найден — сразу редирект */
+if(!document.getElementById("splash")){
+  redirectNow();
+}
+
+/* 4. Резервный таймер — сработает даже если autoTimer не сработал */
+setTimeout(function(){
+  if(!_redirected) redirectNow();
+}, REDIRECT_DELAY + 2000);
+
+/* ============================================================
+   МЕЛОЧИ
+   ============================================================ */
+
+/* Клик по любому месту splash (кроме кнопки) — тоже пропустить */
+document.getElementById("splash").addEventListener("click", function(e){
+  if(e.target.id !== "skipBtn"){
+    goHome();
+  }
+});
+
+/* Нажатие любой клавиши (Enter, Space, Esc) — пропустить */
+document.addEventListener("keydown", function(e){
+  if(e.key === "Enter" || e.key === " " || e.key === "Escape"){
+    e.preventDefault();
+    goHome();
+  }
+});
+
+/* ============================================================
+   PWA SERVICE WORKER
+   ============================================================ */
+if('serviceWorker' in navigator){
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('sw.js').catch(function(err){
+      console.log('ServiceWorker не зарегистрирован:', err);
+    });
+  });
+}
+</script>
+</body>
+</html>

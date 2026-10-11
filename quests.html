@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Квесты и награды — MovieMate</title>
+<meta name="description" content="Ежедневные квесты, месячные челленджи, 8 наград и супер-квест «Легенда MovieMate». Проходи задания, зарабатывай звания.">
+<meta name="keywords" content="квесты фильмы, награды, челлендж, звания, MovieMate">
+<meta name="author" content="MovieMate">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://m88324126-jpg.github.io/moviemate/quests.html">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MovieMate">
+<meta property="og:title" content="Квесты и награды — MovieMate">
+<meta property="og:description" content="Ежедневные квесты, месячные челленджи, 8 наград и супер-квест «Легенда MovieMate».">
+<meta property="og:url" content="https://m88324126-jpg.github.io/moviemate/quests.html">
+<meta property="og:image" content="https://m88324126-jpg.github.io/moviemate/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ru_RU">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Квесты и награды — MovieMate">
+<meta name="twitter:description" content="Ежедневные квесты, 8 наград и супер-квест.">
+<meta name="twitter:image" content="https://m88324126-jpg.github.io/moviemate/og-image.png">
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a0a12">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MovieMate">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏅</text></svg>">
+
+<style>
+:root{
+  color-scheme: dark;
+  --bg:#0a0a12;--card:#161624;--hover:#20203a;--accent:#ff4757;--purple:#5f27cd;
+  --dark:#c0392b;--text:#f0f0f5;--muted:#8b8b9e;--border:#2a2a3e;--star:#ffd700;
+  --green:#00cc44;--r:16px;--glow:0 0 20px rgba(255,71,87,.3);
+  --gold:#ffd700;--gold-2:#ffb800;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);padding-bottom:40px;min-height:100vh}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+
+button:focus-visible, a:focus-visible, input:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+}
+
+.nav{
+  position:-webkit-sticky;position:sticky;top:0;z-index:100;
+  background:rgba(10,10,18,.92);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  padding:12px 20px;display:flex;align-items:center;gap:16px;
+}
+.logo{font-size:20px;font-weight:800;cursor:pointer;background:linear-gradient(135deg,var(--accent),var(--purple));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.back-btn{display:flex;align-items:center;gap:6px;padding:8px 16px;background:var(--card);border:1px solid var(--border);border-radius:10px;cursor:pointer;color:var(--text);font-size:14px;font-weight:600;transition:.2s}
+.back-btn:hover{border-color:var(--accent);color:var(--accent);box-shadow:var(--glow)}
+
+.page{max-width:640px;margin:0 auto;padding:24px 20px}
+
+.status-box{background:linear-gradient(145deg,var(--card),#1a1a2e);border-radius:var(--r);padding:28px 24px;text-align:center;margin-bottom:28px;border:1px solid var(--border);position:relative;overflow:hidden;transition:.4s}
+.status-box::before{content:"";position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,71,87,.08) 0%,transparent 50%);pointer-events:none}
+.status-emoji{font-size:44px;margin-bottom:10px;position:relative;z-index:1;transition:.3s}
+.status-box h2{font-size:24px;font-weight:800;margin-bottom:4px;position:relative;z-index:1;background:linear-gradient(135deg,var(--accent),var(--purple));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;transition:.3s}
+.status-box .sub{color:var(--muted);font-size:13px;position:relative;z-index:1;transition:.3s}
+.stats{display:flex;justify-content:space-around;margin-top:18px;border-top:1px solid var(--border);padding-top:18px;position:relative;z-index:1}
+.stat-item{text-align:center}
+.num{font-size:26px;font-weight:800;color:#fff;display:block;transition:.3s}
+.stat-label{font-size:11px;color:var(--muted);margin-top:2px}
+.progress-box{margin-top:16px;position:relative;z-index:1}
+.progress-bar{width:100%;height:8px;background:var(--border);border-radius:8px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--purple));border-radius:8px;transition:width .8s cubic-bezier(.25,.46,.45,.94);box-shadow:0 0 10px rgba(255,71,87,.4)}
+.progress-text{font-size:12px;color:var(--muted);margin-top:8px;text-align:center}
+
+/* ============ ЗОЛОТОЙ СТАТУС ============ */
+.status-box.legend{
+  border-color:rgba(255,215,0,.6);
+  background:linear-gradient(145deg,#1a1a2e,#0f0f1a);
+  animation:legendGlow 2.5s ease-in-out infinite;
+}
+@keyframes legendGlow{
+  0%,100%{box-shadow:0 0 30px rgba(255,215,0,.3),0 0 60px rgba(255,215,0,.15),inset 0 0 30px rgba(255,215,0,.05)}
+  50%{box-shadow:0 0 45px rgba(255,215,0,.55),0 0 90px rgba(255,215,0,.25),inset 0 0 45px rgba(255,215,0,.12)}
+}
+.status-box.legend::before{background:radial-gradient(circle,rgba(255,215,0,.18) 0%,transparent 60%)}
+.status-box.legend .status-emoji{filter:drop-shadow(0 6px 20px rgba(255,215,0,.7));animation:legendFloat 3s ease-in-out infinite}
+@keyframes legendFloat{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-8px) rotate(3deg)}}
+.status-box.legend h2{background:linear-gradient(135deg,#ffd700,#ff8c00,#ffd700);background-size:200% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:legendShine 3s linear infinite}
+@keyframes legendShine{to{background-position:200% center}}
+.status-box.legend .num{color:var(--gold);text-shadow:0 0 20px rgba(255,215,0,.4)}
+.status-box.legend .sub{color:var(--gold);opacity:.75;font-weight:600;letter-spacing:.3px}
+
+.section-h{font-size:20px;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.section-h .badge-count{margin-left:auto;font-size:12px;font-weight:600;color:var(--muted);background:var(--card);padding:4px 10px;border-radius:8px;border:1px solid var(--border)}
+
+.daily-card{background:linear-gradient(145deg,var(--card),#1a1a2e);border-radius:var(--r);padding:28px 24px;text-align:center;margin-bottom:32px;border:2px solid var(--border);transition:.4s;position:relative;overflow:hidden}
+.daily-card.done{border-color:var(--green);box-shadow:0 0 24px rgba(0,204,68,.2)}
+.daily-card:not(.done)::before{content:"";position:absolute;top:-30%;right:-30%;width:160px;height:160px;background:radial-gradient(circle,rgba(255,71,87,.12),transparent 70%);pointer-events:none}
+.daily-date{font-size:12px;color:var(--muted);margin-bottom:14px;position:relative;z-index:1}
+.daily-icon{font-size:52px;margin-bottom:12px;position:relative;z-index:1;transition:transform .3s}
+.daily-card.done .daily-icon{animation:winBounce .6s ease}
+.daily-task{font-size:18px;font-weight:700;margin-bottom:14px;line-height:1.3;position:relative;z-index:1}
+.daily-status{display:inline-block;padding:8px 24px;border-radius:20px;font-size:14px;font-weight:700;margin-bottom:8px;position:relative;z-index:1}
+.daily-status.done{background:var(--green);color:#fff;box-shadow:0 0 12px rgba(0,204,68,.4)}
+.daily-status.todo{background:var(--hover);color:var(--muted)}
+.daily-hint{font-size:12px;color:var(--muted);margin-top:10px;position:relative;z-index:1}
+.daily-streak{display:inline-flex;align-items:center;gap:6px;margin-top:14px;padding:6px 14px;background:var(--hover);border-radius:20px;font-size:12px;font-weight:600;color:var(--star);position:relative;z-index:1}
+
+/* ============ СУПЕР-КВЕСТ ============ */
+.super-quest{
+  position:relative;
+  background:linear-gradient(145deg,#1a1a2e,#0f0f1a);
+  border-radius:20px;
+  padding:32px 26px;
+  margin-bottom:32px;
+  overflow:hidden;
+  border:2px solid rgba(255,215,0,.3);
+  box-shadow:0 0 40px rgba(255,215,0,.1), inset 0 0 40px rgba(255,215,0,.04);
+}
+.super-quest::before{
+  content:"";position:absolute;inset:-2px;border-radius:22px;
+  background:conic-gradient(from 0deg,transparent 0%,rgba(255,215,0,.35) 25%,transparent 50%,rgba(255,215,0,.35) 75%,transparent 100%);
+  z-index:-1;animation:sqRotate 10s linear infinite;filter:blur(10px);opacity:.6;
+}
+@keyframes sqRotate{to{transform:rotate(360deg)}}
+.super-quest.done{border-color:var(--gold);box-shadow:0 0 60px rgba(255,215,0,.35),inset 0 0 40px rgba(255,215,0,.1)}
+.super-quest.done::before{opacity:1;animation-duration:4s}
+
+.sq-head{text-align:center;margin-bottom:24px}
+.sq-badge{display:inline-block;background:linear-gradient(135deg,rgba(255,215,0,.15),rgba(255,71,87,.1));border:1px solid rgba(255,215,0,.4);color:var(--gold);font-size:11px;font-weight:800;padding:5px 14px;border-radius:20px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px}
+.sq-icon{font-size:56px;line-height:1;margin-bottom:10px;display:inline-block;animation:sqFloat 3s ease-in-out infinite;filter:drop-shadow(0 6px 20px rgba(255,215,0,.5))}
+@keyframes sqFloat{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-8px) rotate(3deg)}}
+.super-quest.done .sq-icon{animation:sqCelebrate 2s ease infinite}
+@keyframes sqCelebrate{0%,100%{transform:scale(1) rotate(-5deg)}50%{transform:scale(1.12) rotate(5deg)}}
+.sq-title{font-size:22px;font-weight:900;letter-spacing:-.5px;line-height:1.15;margin-bottom:6px;background:linear-gradient(135deg,#ffd700,#ff8c00,#ffd700);background-size:200% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:sqShine 3s linear infinite}
+@keyframes sqShine{to{background-position:200% center}}
+.sq-desc{font-size:13px;color:var(--muted);line-height:1.5}
+.sq-desc b{color:var(--gold);font-weight:700}
+
+.sq-progress{position:relative;z-index:1;margin-bottom:22px}
+.sq-progress-bar{width:100%;height:10px;background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.2);border-radius:10px;overflow:hidden}
+.sq-progress-fill{height:100%;background:linear-gradient(90deg,#ffd700,#ff8c00);border-radius:10px;transition:width .8s cubic-bezier(.25,.46,.45,.94);box-shadow:0 0 16px rgba(255,215,0,.5)}
+.sq-progress-text{font-size:12px;color:var(--gold);margin-top:8px;font-weight:600;text-align:center}
+
+.sq-tasks{position:relative;z-index:1;display:flex;flex-direction:column;gap:8px;margin-bottom:22px}
+.sq-task{display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:12px;transition:.2s}
+.sq-task.done{background:rgba(255,215,0,.06);border-color:rgba(255,215,0,.4)}
+.sq-task .sqt-icon{font-size:22px;flex-shrink:0;line-height:1;filter:grayscale(.5);opacity:.5;transition:.2s}
+.sq-task.done .sqt-icon{filter:none;opacity:1}
+.sq-task .sqt-info{flex:1;min-width:0}
+.sq-task .sqt-title{font-size:13px;font-weight:700;color:var(--muted);margin-bottom:3px;transition:.2s}
+.sq-task.done .sqt-title{color:var(--gold)}
+.sq-task .sqt-desc{font-size:11px;color:var(--muted);margin-bottom:5px}
+.sq-task .sqt-bar{width:100%;height:4px;background:rgba(0,0,0,.4);border-radius:4px;overflow:hidden}
+.sq-task .sqt-bar-fill{height:100%;background:linear-gradient(90deg,rgba(255,215,0,.6),rgba(255,140,0,.8));border-radius:4px;transition:width .6s ease}
+.sq-task.done .sqt-bar-fill{background:var(--gold)}
+.sq-task .sqt-count{font-size:12px;color:var(--muted);font-weight:700;flex-shrink:0;min-width:50px;text-align:right}
+.sq-task.done .sqt-count{color:var(--gold)}
+.sq-task .sqt-check{font-size:18px;flex-shrink:0;color:var(--gold)}
+
+.sq-action{position:relative;z-index:1;text-align:center}
+.sq-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 30px;background:linear-gradient(135deg,#ffd700,#ff8c00);color:#0a0a12;font-size:15px;font-weight:800;border:none;border-radius:12px;cursor:pointer;text-decoration:none;letter-spacing:.3px;transition:.2s;box-shadow:0 8px 28px rgba(255,215,0,.35);animation:sqPulse 2s ease-in-out infinite;font-family:inherit}
+@keyframes sqPulse{0%,100%{box-shadow:0 8px 28px rgba(255,215,0,.35)}50%{box-shadow:0 8px 40px rgba(255,215,0,.55)}}
+.sq-btn:hover{transform:translateY(-2px);filter:brightness(1.1);animation:none;box-shadow:0 12px 40px rgba(255,215,0,.6)}
+.sq-btn:disabled{opacity:.6;cursor:not-allowed}
+.sq-claimed{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.35);color:var(--gold);font-size:14px;font-weight:700;border-radius:12px;text-decoration:none;transition:.2s}
+.sq-claimed:hover{background:rgba(255,215,0,.15)}
+.sq-locked{font-size:13px;color:var(--muted);line-height:1.5}
+.sq-locked b{color:var(--gold)}
+
+.month-card{background:linear-gradient(145deg,var(--card),#1a1a2e);border-radius:var(--r);padding:28px 24px;margin-bottom:32px;border:1px solid var(--border);position:relative;overflow:hidden}
+.month-card::before{content:"";position:absolute;top:-40%;left:-20%;width:250px;height:250px;background:radial-gradient(circle,rgba(95,39,205,.08),transparent 70%);pointer-events:none}
+.month-theme{text-align:center;font-size:22px;font-weight:800;margin-bottom:4px;position:relative;z-index:1;background:linear-gradient(135deg,var(--accent),var(--purple));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.month-date{text-align:center;font-size:13px;color:var(--muted);margin-bottom:24px;position:relative;z-index:1}
+
+.phases{display:flex;flex-direction:column;gap:0;position:relative;z-index:1}
+.phase{display:flex;align-items:flex-start;gap:16px;padding:18px 16px;border-radius:14px;border:1px solid var(--border);background:var(--card);transition:.4s;position:relative}
+.phase+.phase{margin-top:8px}
+.phase.done{border-color:rgba(0,204,68,.4);background:rgba(0,204,68,.04)}
+.phase.current{border-color:var(--accent);background:rgba(255,71,87,.06);box-shadow:var(--glow)}
+.phase.locked{opacity:.4}
+
+.phase-circle{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;flex-shrink:0;position:relative;z-index:1;transition:.4s}
+.phase.done .phase-circle{background:var(--green);color:#fff;box-shadow:0 0 16px rgba(0,204,68,.4)}
+.phase.current .phase-circle{background:linear-gradient(135deg,var(--accent),var(--purple));color:#fff;box-shadow:var(--glow);animation:pulse 2s ease infinite}
+.phase.locked .phase-circle{background:var(--border);color:var(--muted)}
+@keyframes pulse{0%,100%{box-shadow:var(--glow)}50%{box-shadow:0 0 28px rgba(255,71,87,.5)}}
+
+.phase-info{flex:1;min-width:0;padding-top:4px}
+.phase-week{font-size:11px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+.phase-task{font-size:15px;font-weight:600;line-height:1.3}
+.phase-reward{font-size:12px;color:var(--muted);margin-top:4px;display:flex;align-items:center;gap:4px}
+.phase-reward b{color:var(--accent);font-weight:700}
+.phase-date-done{font-size:11px;color:var(--green);margin-top:6px;display:flex;align-items:center;gap:4px}
+.phase-status{font-size:22px;flex-shrink:0;align-self:center}
+
+.month-progress{margin-top:24px;position:relative;z-index:1}
+.month-progress-bar{width:100%;height:10px;background:var(--border);border-radius:10px;overflow:hidden}
+.month-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--purple));border-radius:10px;transition:width .8s cubic-bezier(.25,.46,.45,.94);box-shadow:0 0 12px rgba(255,71,87,.4)}
+.month-progress-text{text-align:center;font-size:13px;color:var(--muted);margin-top:8px}
+.month-progress-text b{color:var(--text)}
+
+.badges-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.badge-card{display:flex;align-items:center;gap:14px;padding:16px;background:linear-gradient(145deg,var(--card),#1a1a2e);border-radius:14px;border:1px solid var(--border);transition:.4s}
+.badge-card.earned{border-color:var(--accent);background:rgba(255,71,87,.06);box-shadow:0 0 12px rgba(255,71,87,.15)}
+.badge-card.earned:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(255,71,87,.2)}
+.badge-card.locked{opacity:.4}
+.b-icon{font-size:34px;flex-shrink:0;width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:var(--hover);border-radius:12px}
+.badge-card.earned .b-icon{background:rgba(255,71,87,.12)}
+.b-info{flex:1;min-width:0}
+.b-title{font-weight:700;font-size:14px;margin-bottom:3px}
+.b-desc{font-size:11px;color:var(--muted);line-height:1.3}
+.b-check{font-size:18px;flex-shrink:0}
+
+.win-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:300;display:none;align-items:center;justify-content:center;padding:20px;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);overscroll-behavior:contain}
+.win-overlay.on{display:flex}
+.win-card{background:linear-gradient(145deg,var(--card),#1a1a2e);border-radius:24px;max-width:380px;width:100%;padding:36px 28px;text-align:center;border:1px solid var(--border);animation:winPop .5s cubic-bezier(.25,.46,.45,.94);position:relative;overflow:hidden}
+.win-card::before{content:"";position:absolute;top:-40%;left:-20%;width:200px;height:200px;background:radial-gradient(circle,rgba(255,71,87,.15),transparent 70%);pointer-events:none}
+@keyframes winPop{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+.win-icon{font-size:72px;margin-bottom:16px;animation:winBounce .8s ease;position:relative;z-index:1}
+@keyframes winBounce{0%{transform:scale(0) rotate(-10deg)}60%{transform:scale(1.3) rotate(5deg)}100%{transform:scale(1) rotate(0)}}
+.win-title{font-size:22px;font-weight:800;margin-bottom:8px;position:relative;z-index:1}
+.win-task{font-size:15px;color:var(--muted);margin-bottom:20px;line-height:1.4;position:relative;z-index:1}
+.win-nick-label{font-size:13px;color:var(--muted);margin-bottom:6px;position:relative;z-index:1}
+.win-nick{font-size:28px;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--purple));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:24px;position:relative;z-index:1}
+.win-btn{padding:14px 36px;background:linear-gradient(135deg,var(--accent),var(--purple));color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;transition:.3s;position:relative;z-index:1;font-family:inherit}
+.win-btn:hover{transform:scale(1.04);box-shadow:var(--glow)}
+
+#toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);background:linear-gradient(90deg,var(--accent),var(--purple));color:#fff;padding:12px 22px;border-radius:30px;font-size:14px;font-weight:600;box-shadow:0 8px 24px rgba(255,71,87,.4);z-index:400;opacity:0;transition:.4s cubic-bezier(.2,.9,.3,1.3);pointer-events:none;white-space:nowrap;max-width:90vw}
+#toast.on{transform:translateX(-50%) translateY(0);opacity:1}
+
+#errBox{position:fixed;top:16px;left:50%;transform:translateX(-50%);background:#b00020;color:#fff;padding:12px 20px;border-radius:10px;font-size:13px;z-index:9999;max-width:90vw;display:none;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+
+@keyframes fadeInUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.fade-in{animation:fadeInUp .5s ease both}
+.fade-in:nth-child(1){animation-delay:.05s}
+.fade-in:nth-child(2){animation-delay:.1s}
+.fade-in:nth-child(3){animation-delay:.15s}
+.fade-in:nth-child(4){animation-delay:.2s}
+.fade-in:nth-child(5){animation-delay:.25s}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+  .super-quest::before{animation:none}
+  .phase.current .phase-circle{animation:none}
+  .sq-btn{animation:none}
+  .status-box.legend{animation:none}
+}
+
+@media print{
+  body{background:#fff;color:#000}
+  .nav,#toast,.sq-btn,.back-btn{display:none !important}
+  .status-box,.daily-card,.month-card,.super-quest,.badge-card{border:1px solid #999 !important;background:#f5f5f5 !important}
+}
+
+@media(max-width:500px){
+  .badges-grid{grid-template-columns:1fr}
+  .page{padding:16px 12px}
+  .month-card,.daily-card,.status-box{padding:20px 16px}
+  .super-quest{padding:24px 16px}
+  .sq-icon{font-size:48px}
+  .sq-title{font-size:19px}
+  .sq-task{padding:10px 12px;gap:10px}
+  .sq-task .sqt-icon{font-size:18px}
+  .sq-btn{padding:12px 24px;font-size:14px}
+}
+</style>
+</head>
+<body>
+
+<noscript>
+  <div style="background:#b00020;color:#fff;padding:16px;text-align:center;font-family:system-ui">
+    Для работы квестов нужен JavaScript. Включите его в настройках браузера.
+  </div>
+</noscript>
+
+<div id="errBox" role="alert" aria-live="assertive"></div>
+
+<nav class="nav">
+  <div class="back-btn" onclick="location.href='home.html'" role="button" tabindex="0" aria-label="Вернуться на главную">← Назад</div>
+  <div class="logo" onclick="location.href='home.html'">MovieMate</div>
+</nav>
+
+<div class="page">
+  <div class="status-box fade-in" id="statusBox">
+    <div class="status-emoji" id="status-emoji">🎮</div>
+    <h2 id="user-title">Новичок</h2>
+    <div class="sub">Твой статус в MovieMate</div>
+    <div class="stats">
+      <div class="stat-item"><span class="num" id="stat-views">0</span><span class="stat-label">фильмов открыто</span></div>
+      <div class="stat-item"><span class="num" id="stat-challenges">0</span><span class="stat-label">фаз пройдено</span></div>
+      <div class="stat-item"><span class="num" id="stat-badges">0</span><span class="stat-label">наград</span></div>
+    </div>
+    <div class="progress-box">
+      <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+      <div class="progress-text" id="prog-text">0 из 8 наград получено</div>
+    </div>
+  </div>
+
+  <div class="section-h fade-in">⚡ Квест дня</div>
+  <div class="daily-card fade-in" id="daily-card">
+    <div class="daily-date" id="daily-date"></div>
+    <div class="daily-icon" id="daily-icon">🎯</div>
+    <div class="daily-task" id="daily-task"></div>
+    <div class="daily-status" id="daily-status"></div>
+    <div class="daily-hint">Каждый день — новое задание. Возвращайся завтра!</div>
+    <div class="daily-streak" id="daily-streak" style="display:none">🔥 Серия: <span id="streak-num">0</span> дней</div>
+  </div>
+
+  <div class="section-h fade-in">🗓️ Квест месяца</div>
+  <div class="month-card fade-in">
+    <div class="month-theme" id="month-theme"></div>
+    <div class="month-date" id="month-date"></div>
+    <div class="phases" id="phases"></div>
+    <div class="month-progress">
+      <div class="month-progress-bar"><div class="month-progress-fill" id="month-fill" style="width:0%"></div></div>
+      <div class="month-progress-text" id="month-progress-text"></div>
+    </div>
+  </div>
+
+  <div class="super-quest fade-in" id="superQuest">
+    <div class="sq-head">
+      <div class="sq-badge">🔥 Супер-квест</div>
+      <div class="sq-icon" id="sq-icon">👑</div>
+      <div class="sq-title">Легенда MovieMate</div>
+      <p class="sq-desc">
+        Соверши <b>7 подвигов</b>. Это займёт минимум <b>3-4 недели</b> — быстрее никак.
+      </p>
+    </div>
+
+    <div class="sq-progress">
+      <div class="sq-progress-bar"><div class="sq-progress-fill" id="sq-fill" style="width:0%"></div></div>
+      <div class="sq-progress-text" id="sq-text">0 из 7 подвигов</div>
+    </div>
+
+    <div class="sq-tasks" id="sqTasks"></div>
+
+    <div class="sq-action" id="sq-action"></div>
+  </div>
+
+  <div class="section-h fade-in">🏅 Награды <span class="badge-count" id="badge-count">0 / 8</span></div>
+  <div class="badges-grid" id="badges-grid"></div>
+</div>
+
+<div class="win-overlay" id="win-overlay" role="dialog" aria-modal="true" aria-label="Поздравление" onclick="if(event.target.id==='win-overlay')closeWin()">
+  <div class="win-card">
+    <div class="win-icon" id="win-icon">🎉</div>
+    <div class="win-title" id="win-title">Задание выполнено!</div>
+    <div class="win-task" id="win-task"></div>
+    <div class="win-nick-label" id="win-nick-label">Твой новый статус:</div>
+    <div class="win-nick" id="win-nick"></div>
+    <button class="win-btn" onclick="closeWin()">Отлично!</button>
+  </div>
+</div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="db.js"></script>
+<script>
+/* ============================================================
+   ГЛОБАЛЬНЫЙ ПЕРЕХВАТ ОШИБОК
+   ============================================================ */
+window.addEventListener("error", function(e){
+  console.error("[MovieMate/quests]", e.message, "строка:", e.lineno);
+  var eb = document.getElementById("errBox");
+  if(eb){
+    eb.textContent = "⚠️ Ошибка: " + (e.message || "неизвестно") + " (строка " + e.lineno + ")";
+    eb.style.display = "block";
+    setTimeout(function(){ eb.style.display = "none"; }, 5000);
+  }
+});
+window.addEventListener("unhandledrejection", function(e){
+  console.error("[MovieMate/quests] Promise rejected:", e.reason);
+});
+
+/* ============================================================
+   КОНСТАНТЫ
+   ============================================================ */
+var STATE_VERSION = 2;
+var KEY = "mm_state";
+var SUPER_QUEST_FLAG = "mm_super_quest_claimed";
+
+/* ============================================================
+   УТИЛИТЫ ДАТ (UTC+3)
+   ============================================================ */
+function pad2(n){ return n < 10 ? "0" + n : "" + n; }
+
+function getMoscowDate(){
+  var now = new Date();
+  var utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+  return new Date(utc + (3 * 3600000));
+}
+function getMonthKey(){var d=getMoscowDate();return d.getFullYear()+"-"+pad2(d.getMonth()+1)}
+function getDayKey(){var d=getMoscowDate();return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate())}
+function getWeekOfMonth(){var day=getMoscowDate().getDate();if(day<=7)return 0;if(day<=14)return 1;if(day<=21)return 2;return 3}
+function formatDate(){var d=getMoscowDate();return d.getDate()+" "+Dmonths[d.getMonth()]+" "+d.getFullYear()}
+
+/* ============================================================
+   ДЕЙЛИ-КВЕСТЫ
+   ============================================================ */
+var DAILY_QUESTS=[
+{task:"Открой любой фильм",check:function(){return viewCount>=1}},
+{task:"Открой фильм с рейтингом выше 8.5",check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0&&parseFloat(m.r)>8.5})}},
+{task:"Воспользуйся поиском",check:function(){return searchCount>=1}},
+{task:"Нажми «Случайный фильм»",check:function(){return randomCount>=1}},
+{task:"Открой сериал",check:function(){return viewedSeries}},
+{task:"Открой фильм из раздела «Новое»",check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0&&m.cats.indexOf("new")>=0})}},
+{task:"Открой семейный фильм",check:function(){return viewedFamily}},
+{task:"Открой 3 разных фильма",check:function(){return viewCount>=3}},
+{task:"Открой фильм старше 2000 года",check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0&&parseInt(m.y)<2000})}},
+{task:"Открой фильм с рейтингом 9.0+",check:function(){return viewedHighRated}},
+{task:"Открой боевик",check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0&&m.g.indexOf("Боевик")>=0})}},
+{task:"Открой драму",check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0&&m.g.indexOf("Драма")>=0})}},
+{task:"Открой комедию",check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0&&m.g.indexOf("Комедия")>=0})}},
+{task:"Открой фантастику",check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0&&m.g.indexOf("Фантастика")>=0})}},
+{task:"Открой 2 разных фильма",check:function(){return viewCount>=2}},
+{task:"Открой фильм из «Популярного»",check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0&&m.cats.indexOf("pop")>=0})}},
+{task:"Открой фильм из «Топ»",check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0&&m.cats.indexOf("top")>=0})}},
+{task:"Открой триллер",check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0&&m.g.indexOf("Триллер")>=0})}},
+{task:"Открой фильм 2024 года",check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0&&m.y==="2024"})}},
+{task:"Открой 4 разных фильма",check:function(){return viewCount>=4}},
+{task:"Воспользуйся поиском 2 раза",check:function(){return searchCount>=2}},
+{task:"Нажми «Случайный фильм» 2 раза",check:function(){return randomCount>=2}},
+{task:"Открой фильм с рейтингом ниже 8.0",check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0&&parseFloat(m.r)<8.0})}},
+{task:"Открой сериал и 2 фильма",check:function(){return viewedSeries&&viewCount>=2}},
+{task:"Открой фильм не из США",check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0&&m.c&&m.c.indexOf("США")<0})}},
+{task:"Открой 5 разных фильмов",check:function(){return viewCount>=5}},
+{task:"Открой мультфильм",check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0&&m.cats.indexOf("kids")>=0})}},
+{task:"Открой фильм с рейтингом 8.0+",check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0&&parseFloat(m.r)>=8.0})}},
+{task:"Открой фильм из 90-х",check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0&&parseInt(m.y)>=1990&&parseInt(m.y)<=1999})}},
+{task:"Открой фильм 2010-х",check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0&&parseInt(m.y)>=2010&&parseInt(m.y)<=2019})}}
+];
+
+/* ============================================================
+   МЕСЯЧНЫЕ КВЕСТЫ
+   ============================================================ */
+var MONTHLY_QUESTS=[
+{theme:"Месяц открытий",phases:[
+{task:"Открой 2 фильма",check:function(){return viewCount>=2},nick:"Искатель"},
+{task:"Воспользуйся поиском",check:function(){return searchCount>=1},nick:"Сыщик"},
+{task:"Нажми «Случайный фильм»",check:function(){return randomCount>=1},nick:"Авантюрист"},
+{task:"Открой 5 разных фильмов",check:function(){return viewCount>=5},nick:"Киноман"}
+]},
+{theme:"Месяц жанров",phases:[
+{task:"Открой фильм с рейтингом 8.0+",check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0&&parseFloat(m.r)>=8.0})},nick:"Эстет"},
+{task:"Открой сериал",check:function(){return viewedSeries},nick:"Серийный"},
+{task:"Открой семейный фильм",check:function(){return viewedFamily},nick:"Семейный"},
+{task:"Открой 7 разных фильмов",check:function(){return viewCount>=7},nick:"Киновед"}
+]},
+{theme:"Месяц классики",phases:[
+{task:"Открой фильм старше 2000 года",check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0&&parseInt(m.y)<2000})},nick:"Ретроман"},
+{task:"Открой 3 разных фильма",check:function(){return viewCount>=3},nick:"Архивариус"},
+{task:"Воспользуйся поиском 2 раза",check:function(){return searchCount>=2},nick:"Сыщик"},
+{task:"Открой фильм с рейтингом 9.0+",check:function(){return viewedHighRated},nick:"Знаток"}
+]},
+{theme:"Месяц исследований",phases:[
+{task:"Открой фильм из раздела «Новое»",check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0&&m.cats.indexOf("new")>=0})},nick:"Первооткрыватель"},
+{task:"Открой 4 разных фильма",check:function(){return viewCount>=4},nick:"Следопыт"},
+{task:"Нажми «Случайный фильм»",check:function(){return randomCount>=1},nick:"Авантюрист"},
+{task:"Открой 8 разных фильмов",check:function(){return viewCount>=8},nick:"Профессор"}
+]},
+{theme:"Месяц эмоций",phases:[
+{task:"Открой драму",check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0&&m.g.indexOf("Драма")>=0})},nick:"Эмоционал"},
+{task:"Открой комедию",check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0&&m.g.indexOf("Комедия")>=0})},nick:"Комик"},
+{task:"Открой 5 разных фильмов",check:function(){return viewCount>=5},nick:"Душа компании"},
+{task:"Открой сериал и 3 фильма",check:function(){return viewedSeries&&viewCount>=3},nick:"Киноман"}
+]},
+{theme:"Месяц приключений",phases:[
+{task:"Открой боевик",check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0&&m.g.indexOf("Боевик")>=0})},nick:"Боец"},
+{task:"Открой фантастику",check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0&&m.g.indexOf("Фантастика")>=0})},nick:"Фантазёр"},
+{task:"Открой 6 разных фильмов",check:function(){return viewCount>=6},nick:"Исследователь"},
+{task:"Открой фильм с рейтингом 8.5+",check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0&&parseFloat(m.r)>=8.5})},nick:"Мастер MovieMate"}
+]},
+{theme:"Месяц блокбастеров",phases:[
+{task:"Открой фильм из «Популярного»",check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0&&m.cats.indexOf("pop")>=0})},nick:"Трендвотчер"},
+{task:"Воспользуйся поиском",check:function(){return searchCount>=1},nick:"Сыщик"},
+{task:"Нажми «Случайный фильм» 2 раза",check:function(){return randomCount>=2},nick:"Удачливый"},
+{task:"Открой 10 разных фильмов",check:function(){return viewCount>=10},nick:"Легенда MovieMate"}
+]},
+{theme:"Месяц открытий 2.0",phases:[
+{task:"Открой 3 разных фильма",check:function(){return viewCount>=3},nick:"Искатель"},
+{task:"Открой сериал",check:function(){return viewedSeries},nick:"Серийный"},
+{task:"Открой семейный фильм",check:function(){return viewedFamily},nick:"Семейный"},
+{task:"Воспользуйся поиском 3 раза",check:function(){return searchCount>=3},nick:"Аналитик"}
+]},
+{theme:"Месяц знаний",phases:[
+{task:"Открой «Уэнсдей» и «Герои Энвелла»",check:function(){return viewedIds.indexOf(22)>=0&&viewedIds.indexOf(25)>=0},nick:"Сыщик"},
+{task:"Открой «Мандалорец»",check:function(){return viewedIds.indexOf(23)>=0},nick:"Охотник"},
+{task:"Открой «Властелин колец»",check:function(){return viewedIds.indexOf(24)>=0},nick:"Хранитель"},
+{task:"Открой «Очень странные дела»",check:function(){return viewedIds.indexOf(21)>=0},nick:"Житель Хоукинса"}
+]},
+{theme:"Месяц тайн",phases:[
+{task:"Открой триллер",check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0&&m.g.indexOf("Триллер")>=0})},nick:"Мистик"},
+{task:"Открой фильм старше 2000 года",check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0&&parseInt(m.y)<2000})},nick:"Хранитель тайн"},
+{task:"Открой 5 разных фильмов",check:function(){return viewCount>=5},nick:"Детектив"},
+{task:"Открой фильм с рейтингом 9.0+",check:function(){return viewedHighRated},nick:"Мастер загадок"}
+]},
+{theme:"Месяц комфорта",phases:[
+{task:"Открой семейный фильм",check:function(){return viewedFamily},nick:"Уютный"},
+{task:"Открой комедию",check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0&&m.g.indexOf("Комедия")>=0})},nick:"Комик"},
+{task:"Открой 6 разных фильмов",check:function(){return viewCount>=6},nick:"Киноман"},
+{task:"Открой сериал и 5 фильмов",check:function(){return viewedSeries&&viewCount>=5},nick:"Легенда дивана"}
+]},
+{theme:"Месяц итогов",phases:[
+{task:"Открой фильм из «Топ»",check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0&&m.cats.indexOf("top")>=0})},nick:"Оценщик"},
+{task:"Воспользуйся поиском",check:function(){return searchCount>=1},nick:"Аналитик"},
+{task:"Открой 8 разных фильмов",check:function(){return viewCount>=8},nick:"Летописец"},
+{task:"Открой 12 разных фильмов",check:function(){return viewCount>=12},nick:"Легенда MovieMate"}
+]}
+];
+
+/* ============================================================
+   БЕЙДЖИ
+   ============================================================ */
+var BADGES=[
+{id:"first",icon:"🔰",title:"Первый шаг",desc:"Открой первый фильм",cond:function(){return viewCount>=1}},
+{id:"cinephile",icon:"🎬",title:"Киноман",desc:"Открой 5 фильмов",cond:function(){return viewCount>=5}},
+{id:"marathon",icon:"🍿",title:"Марафонец",desc:"Открой 10 фильмов",cond:function(){return viewCount>=10}},
+{id:"searcher",icon:"🔍",title:"Искатель",desc:"Воспользуйся поиском",cond:function(){return searchCount>=1}},
+{id:"lucky",icon:"🎲",title:"Удачливый",desc:"Нажми «Случайный фильм»",cond:function(){return randomCount>=1}},
+{id:"highrated",icon:"⭐",title:"Знаток",desc:"Открой фильм с рейтингом 9.0+",cond:function(){return viewedHighRated}},
+{id:"series",icon:"📺",title:"Серийный",desc:"Открой сериал",cond:function(){return viewedSeries}},
+{id:"family",icon:"👨‍👩‍👧",title:"Семейный",desc:"Открой семейный фильм",cond:function(){return viewedFamily}}
+];
+
+/* ============================================================
+   СОСТОЯНИЕ
+   ============================================================ */
+var viewCount=0,viewedIds=[],searchCount=0,randomCount=0,challengeCount=0;
+var viewedHighRated=false,viewedSeries=false,viewedFamily=false;
+var monthQuest=null,dailyDone={};
+
+var MONTHS=["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"];
+var Dmonths=["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"];
+
+/* ============================================================
+   ЗАГРУЗКА / СОХРАНЕНИЕ (с миграцией и защитой от Safari Private)
+   ============================================================ */
+function loadState(){
+  var s = {};
+  try{
+    var raw = localStorage.getItem(KEY);
+    if(raw){
+      s = JSON.parse(raw);
+      if(!s || typeof s !== "object") throw new Error("bad");
+    }
+  }catch(e){
+    try{ localStorage.removeItem(KEY); }catch(_){}
+    s = {};
+  }
+
+  try{
+    viewCount       = parseInt(s.viewCount) || 0;
+    viewedIds       = Array.isArray(s.viewedIds) ? s.viewedIds : [];
+    searchCount     = parseInt(s.searchCount) || 0;
+    randomCount     = parseInt(s.randomCount) || 0;
+    challengeCount  = parseInt(s.challengeCount) || 0;
+    viewedHighRated = !!s.viewedHighRated;
+    viewedSeries    = !!s.viewedSeries;
+    viewedFamily    = !!s.viewedFamily;
+    dailyDone       = (s.dailyDone && typeof s.dailyDone === "object") ? s.dailyDone : {};
+    monthQuest      = s.monthQuest || null;
+  }catch(e){
+    viewCount=0;viewedIds=[];searchCount=0;randomCount=0;challengeCount=0;
+    viewedHighRated=false;viewedSeries=false;viewedFamily=false;
+    dailyDone={};monthQuest=null;
+  }
+
+  var mk = getMonthKey();
+  if(!monthQuest || monthQuest.key !== mk){
+    monthQuest = { key: mk, phases:[false,false,false,false], dates:[null,null,null,null] };
+    saveState();
+  }
+  /* Нормализация: если пришёл формат {done:[]} */
+  if(!Array.isArray(monthQuest.phases)){
+    var phases=[false,false,false,false];
+    if(Array.isArray(monthQuest.done)){
+      monthQuest.done.forEach(function(i){ if(i>=0 && i<4) phases[i]=true; });
+    }
+    monthQuest.phases = phases;
+    monthQuest.dates = monthQuest.dates || [null,null,null,null];
+  }
+  /* Дедупликация done */
+  if(Array.isArray(monthQuest.done)){
+    monthQuest.done = monthQuest.done.filter(function(v,i,a){ return a.indexOf(v) === i; });
+    challengeCount = monthQuest.done.length;
+  }
+}
+
+function saveState(){
+  try{
+    localStorage.setItem(KEY, JSON.stringify({
+      version: STATE_VERSION,
+      savedAt: Date.now(),
+      viewCount:viewCount,viewedIds:viewedIds,searchCount:searchCount,
+      randomCount:randomCount,challengeCount:challengeCount,
+      viewedHighRated:viewedHighRated,viewedSeries:viewedSeries,viewedFamily:viewedFamily,
+      monthQuest:monthQuest,dailyDone:dailyDone
+    }));
+  }catch(e){
+    /* Safari Private Browsing — работаем в памяти */
+    console.warn("[MovieMate] saveState failed:", e.message);
+  }
+}
+
+function getEarnedBadges(){return BADGES.filter(function(b){return b.cond()})}
+
+/* ============================================================
+   ТОСТ (очередь)
+   ============================================================ */
+var toastQueue=[],toastBusy=false;
+function toast(msg){
+  toastQueue.push(msg);
+  if(!toastBusy) processToastQueue();
+}
+function processToastQueue(){
+  if(toastQueue.length===0){toastBusy=false;return;}
+  toastBusy=true;
+  var msg=toastQueue.shift();
+  var t=document.getElementById("toast");
+  t.textContent=msg;
+  t.classList.add("on");
+  clearTimeout(t._t);
+  t._t=setTimeout(function(){
+    t.classList.remove("on");
+    setTimeout(processToastQueue,300);
+  },2600);
+}
+
+/* ============================================================
+   ФАЗЫ
+   ============================================================ */
+function checkPhases(){
+  if(!monthQuest){
+    monthQuest={key:getMonthKey(),phases:[false,false,false,false],dates:[null,null,null,null]};
+  }
+  var monthIdx=getMoscowDate().getMonth();
+  var quest=MONTHLY_QUESTS[monthIdx];
+  var currentWeek=getWeekOfMonth();
+  var completedToday=[];
+  for(var i=0;i<=currentWeek;i++){
+    if(!monthQuest.phases[i]&&quest.phases[i].check()){
+      monthQuest.phases[i]=true;
+      var now=getMoscowDate();
+      monthQuest.dates[i]=now.getDate()+" "+Dmonths[now.getMonth()];
+      challengeCount++;
+      completedToday.push({task:quest.phases[i].task,nick:quest.phases[i].nick,phase:i+1});
+    }
+  }
+  /* Синхронизируем challengeCount с реальным количеством */
+  if(Array.isArray(monthQuest.phases)){
+    challengeCount = monthQuest.phases.filter(function(p){return p}).length;
+  }
+  if(completedToday.length>0){
+    saveState();
+    showWin(completedToday[0]);
+  }
+  return completedToday.length>0;
+}
+
+function showWin(info){
+  document.getElementById("win-icon").textContent="🎉";
+  document.getElementById("win-title").textContent="Фаза "+info.phase+" пройдена!";
+  document.getElementById("win-task").textContent="Задание: "+info.task;
+  document.getElementById("win-nick-label").textContent="Твой новый статус:";
+  document.getElementById("win-nick").textContent=info.nick;
+  document.getElementById("win-overlay").classList.add("on");
+  document.body.style.overflow="hidden";
+
+  var btn=document.querySelector(".win-btn");
+  if(btn) setTimeout(function(){btn.focus();},50);
+}
+
+function closeWin(){
+  document.getElementById("win-overlay").classList.remove("on");
+  document.body.style.overflow="";
+}
+
+document.addEventListener("keydown",function(e){
+  if(e.key==="Escape"){
+    if(document.getElementById("win-overlay").classList.contains("on")){
+      closeWin();
+      e.stopPropagation();
+    }
+  }
+});
+
+/* ============================================================
+   ТИТУЛ
+   ============================================================ */
+function updateTitle(){
+  if(!monthQuest){
+    monthQuest={key:getMonthKey(),phases:[false,false,false,false],dates:[null,null,null,null]};
+  }
+  var monthIdx=getMoscowDate().getMonth();
+  var quest=MONTHLY_QUESTS[monthIdx];
+  var completed=monthQuest.phases.filter(function(p){return p}).length;
+  var lastIdx=-1;
+  for(var i=3;i>=0;i--){
+    if(monthQuest.phases[i]){lastIdx=i;break;}
+  }
+  var title = lastIdx >= 0 ? quest.phases[lastIdx].nick : "Новичок";
+  var emojis=["🎮","🔍","🎬","🏆","👑"];
+  document.getElementById("user-title").textContent=title;
+  document.getElementById("status-emoji").textContent=emojis[Math.min(completed,4)];
+
+  /* Золотой статус для Легенды */
+  var box=document.getElementById("statusBox");
+  if(box){
+    var isLegend = (title === "Легенда MovieMate") || (completed >= 4);
+    box.classList.toggle("legend", isLegend);
+  }
+}
+
+/* ============================================================
+   STREAK (через UTC — защита от DST)
+   ============================================================ */
+function calcStreak(){
+  var count=0;
+  var today=getMoscowDate();
+  for(var i=0;i<365;i++){
+    var d=new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate() - i));
+    var dk=d.getUTCFullYear()+"-"+pad2(d.getUTCMonth()+1)+"-"+pad2(d.getUTCDate());
+    if(dailyDone[dk]) count++;
+    else break;
+  }
+  return count;
+}
+
+/* ============================================================
+   СУПЕР-КВЕСТ
+   ============================================================ */
+function getPhasesCount(){
+  if(!monthQuest) return 0;
+  if(Array.isArray(monthQuest.phases)) return monthQuest.phases.filter(function(p){return p}).length;
+  if(Array.isArray(monthQuest.done)) return monthQuest.done.length;
+  return 0;
+}
+function getDailyDoneCount(){
+  try{ return Object.keys(dailyDone || {}).length; }catch(e){ return 0; }
+}
+function countUniqueGenres(){
+  var genres={};
+  viewedIds.forEach(function(id){
+    var m=DB.filter(function(x){return x.id===id})[0];
+    if(m && m.g){
+      m.g.split(",").forEach(function(g){
+        var t=g.trim();
+        if(t) genres[t]=true;
+      });
+    }
+  });
+  return Object.keys(genres).length;
+}
+
+var SUPER_QUEST_TASKS=[
+  { id:"views",   icon:"🎬", title:"Киноман",       desc:"Открыть 35 фильмов",                 target:35, current:function(){return viewCount;} },
+  { id:"search",  icon:"🔍", title:"Искатель",      desc:"Воспользоваться поиском 20 раз",     target:20, current:function(){return searchCount;} },
+  { id:"random",  icon:"🎲", title:"Счастливчик",   desc:"Открыть 12 случайных фильмов",       target:12, current:function(){return randomCount;} },
+  { id:"phases",  icon:"🗓", title:"Марафонец",     desc:"Пройти все 4 фазы месяца",           target:4,  current:function(){return getPhasesCount();} },
+  { id:"daily",   icon:"📅", title:"Преданный",     desc:"Выполнить 14 квестов дня",           target:14, current:function(){return getDailyDoneCount();} },
+  { id:"badges",  icon:"🏅", title:"Коллекционер",  desc:"Собрать все 8 наград",               target:8,  current:function(){return getEarnedBadges().length;} },
+  { id:"genres",  icon:"🌈", title:"Эрудит",        desc:"Открыть фильмы из 10 разных жанров", target:10, current:function(){return countUniqueGenres();} }
+];
+
+function isSuperQuestComplete(){
+  return SUPER_QUEST_TASKS.every(function(t){ return t.current() >= t.target; });
+}
+
+function renderSuperQuest(){
+  var box=document.getElementById("superQuest");
+  if(!box) return;
+
+  var doneCount=0;
+  var tasksHTML="";
+  SUPER_QUEST_TASKS.forEach(function(t){
+    var cur=t.current();
+    var isDone=cur>=t.target;
+    if(isDone) doneCount++;
+    var pct=Math.min(100,Math.round((cur/t.target)*100));
+    var curDisplay=Math.min(cur,t.target);
+    tasksHTML +=
+      '<div class="sq-task'+(isDone?' done':'')+'">'+
+        '<span class="sqt-icon">'+(isDone?t.icon:"🔒")+'</span>'+
+        '<div class="sqt-info">'+
+          '<div class="sqt-title">'+t.title+'</div>'+
+          '<div class="sqt-desc">'+t.desc+'</div>'+
+          '<div class="sqt-bar"><div class="sqt-bar-fill" style="width:'+pct+'%"></div></div>'+
+        '</div>'+
+        '<span class="sqt-count">'+curDisplay+'/'+t.target+'</span>'+
+        (isDone?'<span class="sqt-check">✅</span>':'')+
+      '</div>';
+  });
+  document.getElementById("sqTasks").innerHTML=tasksHTML;
+
+  var totalPct=Math.round((doneCount/SUPER_QUEST_TASKS.length)*100);
+  document.getElementById("sq-fill").style.width=totalPct+"%";
+  document.getElementById("sq-text").textContent=doneCount+" из "+SUPER_QUEST_TASKS.length+" подвигов";
+
+  var allDone=isSuperQuestComplete();
+  var claimed=false;
+  try{ claimed=localStorage.getItem(SUPER_QUEST_FLAG)==="1"; }catch(e){}
+
+  var action=document.getElementById("sq-action");
+  if(allDone){
+    box.classList.add("done");
+    document.getElementById("sq-icon").textContent="🏆";
+    if(claimed){
+      action.innerHTML='<a href="congratulation.html" class="sq-claimed">✓ Награда получена — посмотреть снова</a>';
+    } else {
+      action.innerHTML='<button class="sq-btn" id="claimBtn" onclick="claimSuperQuest()">🎉 Забрать награду</button>';
+    }
+  } else {
+    box.classList.remove("done");
+    document.getElementById("sq-icon").textContent="👑";
+    action.innerHTML='<div class="sq-locked">Осталось подвигов: <b>'+(SUPER_QUEST_TASKS.length-doneCount)+'</b>. Продолжай путь!</div>';
+  }
+}
+
+/* ============================================================
+   ЗАБРАТЬ НАГРАДУ (с проверкой и защитой от повторных кликов)
+   ============================================================ */
+var _claiming=false;
+
+function claimSuperQuest(){
+  if(_claiming) return;
+
+  /* 1. Реальная проверка: все 7 подвигов выполнены? */
+  if(!isSuperQuestComplete()){
+    toast("⚠️ Не все подвиги выполнены");
+    return;
+  }
+
+  _claiming=true;
+  var btn=document.getElementById("claimBtn");
+  if(btn){ btn.disabled=true; btn.textContent="⏳ Открываем…"; }
+
+  /* 2. Ставим флаг */
+  try{
+    localStorage.setItem(SUPER_QUEST_FLAG, "1");
+  }catch(e){
+    console.warn("[MovieMate] не удалось сохранить флаг:", e.message);
+  }
+
+  /* 3. Проверяем, что флаг действительно сохранился */
+  var check=false;
+  try{ check = localStorage.getItem(SUPER_QUEST_FLAG)==="1"; }catch(e){}
+
+  if(!check){
+    /* Safari Private или другая блокировка — идём всё равно */
+    toast("⚠️ Браузер в приватном режиме — прогресс не сохранится");
+  }
+
+  /* 4. Редирект на страницу награждения */
+  setTimeout(function(){
+    try{ location.href="congratulation.html"; }
+    catch(e){ _claiming=false; if(btn){btn.disabled=false;btn.textContent="🎉 Забрать награду";} }
+  }, 400);
+}
+
+/* ============================================================
+   РЕНДЕР
+   ============================================================ */
+function renderPage(){
+  checkPhases();
+
+  document.getElementById("stat-views").textContent=viewCount;
+  document.getElementById("stat-challenges").textContent=monthQuest.phases.filter(function(p){return p}).length;
+  var earned=getEarnedBadges();
+  document.getElementById("stat-badges").textContent=earned.length;
+  document.getElementById("badge-count").textContent=earned.length+" / "+BADGES.length;
+  var pct=Math.round((earned.length/BADGES.length)*100);
+  document.getElementById("prog-fill").style.width=pct+"%";
+  document.getElementById("prog-text").textContent=earned.length+" из "+BADGES.length+" наград получено ("+pct+"%)";
+  updateTitle();
+  renderSuperQuest();
+
+  /* Квест дня */
+  var dq=getDailyQuest();
+  var dk=getDayKey();
+  var dDone=dailyDone[dk]||false;
+  if(!dDone&&dq.check()){
+    dailyDone[dk]=true;
+    saveState();
+    dDone=true;
+  }
+  var dCard=document.getElementById("daily-card");
+  dCard.className="daily-card fade-in"+(dDone?" done":"");
+  document.getElementById("daily-date").textContent="📅 "+formatDate();
+  document.getElementById("daily-icon").textContent=dDone?"🎉":"🎯";
+  document.getElementById("daily-task").textContent=dq.task;
+  var ds=document.getElementById("daily-status");
+  ds.className="daily-status "+(dDone?"done":"todo");
+  ds.textContent=dDone?"✓ Выполнено!":"○ Не выполнено";
+
+  var streak=calcStreak();
+  if(streak>0){
+    document.getElementById("daily-streak").style.display="inline-flex";
+    document.getElementById("streak-num").textContent=streak;
+  } else {
+    document.getElementById("daily-streak").style.display="none";
+  }
+
+  /* Квест месяца */
+  var monthIdx=getMoscowDate().getMonth();
+  var quest=MONTHLY_QUESTS[monthIdx];
+  var currentWeek=getWeekOfMonth();
+  document.getElementById("month-theme").textContent="🎬 "+quest.theme;
+  document.getElementById("month-date").textContent=MONTHS[monthIdx]+" "+getMoscowDate().getFullYear();
+
+  var phasesEl=document.getElementById("phases");
+  phasesEl.innerHTML="";
+  var weekLabels=["1 неделя (1–7)","2 неделя (8–14)","3 неделя (15–21)","4 неделя (22–31)"];
+  var completedCount=0;
+  quest.phases.forEach(function(ph,i){
+    var done=monthQuest.phases[i];
+    var unlocked=i<=currentWeek;
+    var cls=done?"done":(unlocked?"current":"locked");
+    if(done) completedCount++;
+    var dateStr=done&&monthQuest.dates[i]?'<div class="phase-date-done">✓ Выполнено: '+monthQuest.dates[i]+'</div>':'';
+    var div=document.createElement("div");
+    div.className="phase "+cls;
+    div.innerHTML=
+      '<div class="phase-circle">'+(done?"✓":(i+1))+'</div>'+
+      '<div class="phase-info">'+
+        '<div class="phase-week">'+weekLabels[i]+'</div>'+
+        '<div class="phase-task">'+ph.task+'</div>'+
+        '<div class="phase-reward">Награда: <b>'+ph.nick+'</b></div>'+
+        dateStr+
+      '</div>'+
+      '<div class="phase-status">'+(done?"✅":(unlocked?"⏳":"🔒"))+'</div>';
+    phasesEl.appendChild(div);
+  });
+
+  var mp=Math.round((completedCount/4)*100);
+  document.getElementById("month-fill").style.width=mp+"%";
+  document.getElementById("month-progress-text").innerHTML="Пройдено <b>"+completedCount+" из 4</b> фаз ("+mp+"%)";
+
+  /* Бейджи */
+  var grid=document.getElementById("badges-grid");
+  grid.innerHTML="";
+  BADGES.forEach(function(b){
+    var has=b.cond();
+    var div=document.createElement("div");
+    div.className="badge-card "+(has?"earned":"locked");
+    div.innerHTML='<div class="b-icon">'+(has?b.icon:"🔒")+'</div>'+
+      '<div class="b-info"><div class="b-title">'+b.title+'</div>'+
+      '<div class="b-desc">'+b.desc+'</div></div>'+
+      '<div class="b-check">'+(has?"✅":"")+'</div>';
+    grid.appendChild(div);
+  });
+}
+
+function getDailyQuest(){
+  var d=getMoscowDate();
+  var seed=d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate();
+  return DAILY_QUESTS[seed%DAILY_QUESTS.length];
+}
+
+/* ============================================================
+   СИНХРОНИЗАЦИЯ МЕЖДУ ВКЛАДКАМИ
+   ============================================================ */
+window.addEventListener("storage", function(e){
+  if(e.key === KEY){
+    loadState();
+    renderPage();
+  }
+});
+
+/* ============================================================
+   SERVICE WORKER
+   ============================================================ */
+if('serviceWorker' in navigator){
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('sw.js').catch(function(err){
+      console.log('ServiceWorker не зарегистрирован:', err);
+    });
+  });
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+(function init(){
+  loadState();
+  renderPage();
+})();
+</script>
+</body>
+</html>

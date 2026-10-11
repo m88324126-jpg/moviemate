@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Поиск фильмов и сериалов — MovieMate</title>
+<meta name="description" content="Расширенный поиск по 200 фильмам, сериалам и аниме. Ищи по названию, жанру, описанию. История запросов, категории, умный fuzzy-поиск с исправлением опечаток.">
+<meta name="keywords" content="поиск фильмов, найти фильм, поиск сериалов, каталог, жанры, MovieMate">
+<meta name="author" content="MovieMate">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://m88324126-jpg.github.io/moviemate/search.html">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MovieMate">
+<meta property="og:title" content="Поиск фильмов и сериалов — MovieMate">
+<meta property="og:description" content="Расширенный поиск по 200 фильмам и сериалам с категориями, историей и fuzzy-поиском.">
+<meta property="og:url" content="https://m88324126-jpg.github.io/moviemate/search.html">
+<meta property="og:image" content="https://m88324126-jpg.github.io/moviemate/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ru_RU">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Поиск фильмов и сериалов — MovieMate">
+<meta name="twitter:description" content="Расширенный поиск по 200 фильмам и сериалам.">
+<meta name="twitter:image" content="https://m88324126-jpg.github.io/moviemate/og-image.png">
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a0a12">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MovieMate">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
+
+<style>
+:root{
+  color-scheme: dark;
+  --bg:#0b0b0f;--surface:#141419;--surface-2:#1b1b22;--line:#22222a;
+  --text:#f2f2f4;--text-2:#8e8e97;--text-3:#5a5a63;
+  --accent:#f2f2f4;--accent-color:#ff5500;--gold:#e0b14a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{
+  background:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+body{padding-bottom:80px}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,select{font-family:inherit}
+
+button:focus-visible, a:focus-visible, input:focus-visible{
+  outline:2px solid var(--accent-color);
+  outline-offset:2px;
+}
+
+.header{position:-webkit-sticky;position:sticky;top:0;z-index:100;background:rgba(11,11,15,.85);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-bottom:1px solid var(--line)}
+.header-inner{max-width:1000px;margin:0 auto;padding:0 28px;height:56px;display:flex;align-items:center;gap:12px}
+.back{width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:8px;color:var(--text-2);font-size:16px;transition:.15s;flex-shrink:0}
+.back:hover{background:var(--surface);color:var(--text)}
+.brand{font-size:15px;font-weight:600;color:var(--text);cursor:pointer;letter-spacing:-.2px;flex-shrink:0}
+.header .divider{width:1px;height:16px;background:var(--line);margin:0 4px}
+.nav-mid{display:flex;gap:4px;flex:1}
+.nav-btn{padding:7px 14px;border-radius:8px;font-size:13px;color:var(--text-2);font-weight:500;transition:.15s}
+.nav-btn:hover{background:var(--surface);color:var(--text)}
+.nav-btn.on{background:var(--surface-2);color:var(--text)}
+
+.wrap{max-width:1000px;margin:0 auto;padding:0 28px}
+
+.page-title{padding:40px 0 24px}
+.page-title h1{font-size:28px;font-weight:700;letter-spacing:-.6px;line-height:1.15}
+
+.search-block{padding:0 0 32px}
+.search-field{display:flex;align-items:center;gap:14px;padding:14px 18px;background:var(--surface);border:1px solid var(--line);border-radius:14px;transition:.2s}
+.search-field:focus-within{border-color:#3a3a44;background:var(--surface-2)}
+.search-field .ico{color:var(--text-3);font-size:20px;flex-shrink:0;transition:color .2s;line-height:1}
+.search-field:focus-within .ico{color:var(--text-2)}
+.search-field input{flex:1;background:transparent;border:none;outline:none;color:var(--text);font-size:17px;font-weight:400;letter-spacing:-.2px;padding:2px 0;min-width:0}
+.search-field input::placeholder{color:var(--text-3)}
+.clear-btn{width:24px;height:24px;display:none;align-items:center;justify-content:center;border-radius:50%;background:var(--surface-2);color:var(--text-2);font-size:12px;transition:.15s;flex-shrink:0}
+.clear-btn.visible{display:flex}
+.clear-btn:hover{background:#2a2a33;color:var(--text)}
+
+mark{background:rgba(255,85,0,.28);color:inherit;padding:0 2px;border-radius:3px}
+
+.history-terms{display:none;gap:6px;flex-wrap:wrap;margin-top:14px;align-items:center}
+.history-terms.on{display:flex}
+.history-label{font-size:13px;color:var(--text-3);margin-right:6px}
+.history-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 8px 6px 12px;background:var(--surface);border-radius:14px;font-size:13px;color:var(--text-2);cursor:pointer;transition:.15s;user-select:none}
+.history-chip:hover{background:var(--surface-2);color:var(--text)}
+.history-chip .txt{display:inline-block;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.history-chip .rm{font-size:14px;color:var(--text-3);opacity:.5;transition:.15s;padding:0 2px;border-radius:4px}
+.history-chip .rm:hover{color:var(--accent-color);opacity:1;background:rgba(255,85,0,.1)}
+.history-clear{font-size:12px;color:var(--text-3);cursor:pointer;margin-left:auto;transition:.15s;padding:6px 10px;border-radius:8px}
+.history-clear:hover{color:var(--text);background:var(--surface)}
+
+.popular-terms{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.term{padding:6px 12px;background:var(--surface);border-radius:14px;font-size:13px;color:var(--text-2);cursor:pointer;transition:.15s;user-select:none}
+.term:hover{background:var(--surface-2);color:var(--text)}
+
+.cats-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px}
+.cats-head h2{font-size:17px;font-weight:600;letter-spacing:-.3px}
+.cats-head .hint{font-size:13px;color:var(--text-3)}
+.cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-bottom:36px}
+.cat{aspect-ratio:16/9;border-radius:12px;position:relative;overflow:hidden;cursor:pointer;transition:.25s ease;display:flex;flex-direction:column;justify-content:space-between;padding:12px;background:linear-gradient(135deg,var(--c1,#1a1a2a),var(--c2,#0a0a12))}
+.cat::before{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.55) 0%,transparent 55%);pointer-events:none}
+.cat:hover{transform:translateY(-3px)}
+.cat:active{transform:translateY(-1px)}
+.cat .art{position:absolute;top:50%;right:-6px;transform:translateY(-50%);font-size:44px;opacity:.18;transition:.25s;pointer-events:none;line-height:1}
+.cat:hover .art{opacity:.28;transform:translateY(-50%) scale(1.06)}
+.cat .top{position:relative;z-index:1;display:flex;justify-content:flex-end}
+.cat .count{font-size:10px;color:rgba(255,255,255,.65);background:rgba(0,0,0,.35);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:2px 7px;border-radius:10px;font-weight:500}
+.cat .meta{position:relative;z-index:1}
+.cat .label{font-size:14px;font-weight:700;letter-spacing:-.3px;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.5)}
+.cat.on{outline:2px solid var(--accent-color);outline-offset:2px}
+
+.section{margin-bottom:40px}
+.section-head{display:flex;align-items:baseline;gap:10px;margin-bottom:18px;flex-wrap:wrap}
+.section-head h2{font-size:17px;font-weight:600;letter-spacing:-.3px}
+.section-head .count{font-size:13px;color:var(--text-3)}
+.section-head .fuzzy-hint{font-size:12px;color:var(--accent-color);background:rgba(255,85,0,.1);padding:3px 10px;border-radius:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:20px 14px}
+
+.item{cursor:pointer;transition:.2s}
+.item:hover{transform:translateY(-3px)}
+.thumb{position:relative;width:100%;aspect-ratio:2/3;border-radius:8px;overflow:hidden;background:var(--surface)}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:.3s}
+.item:hover .thumb img{transform:scale(1.04)}
+.thumb .rate{position:absolute;top:8px;left:8px;padding:2px 6px;border-radius:4px;background:rgba(0,0,0,.65);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);font-size:11px;font-weight:600;color:#e0b14a}
+.thumb .rate.g{color:#7dd87d}
+.thumb .rate.m{color:#e0b14a}
+.thumb .rate.l{color:#e07070}
+.item .caption{margin-top:10px}
+.item .caption .name{font-size:13px;font-weight:500;line-height:1.35;color:var(--text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.item .caption .sub{font-size:12px;color:var(--text-3);margin-top:3px}
+
+.empty{padding:60px 20px;text-align:center;grid-column:1/-1}
+.empty .ico{font-size:36px;margin-bottom:12px;opacity:.35;color:var(--text-3)}
+.empty h3{font-size:15px;font-weight:600;margin-bottom:6px}
+.empty p{font-size:13px;color:var(--text-3)}
+.empty .hint{margin-top:14px;font-size:12px;color:var(--accent-color)}
+
+.modal{display:none;position:fixed;inset:0;z-index:200;background:rgba(11,11,15,.75);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);overflow-y:auto;padding:20px;overscroll-behavior:contain}
+.modal.on{display:flex;align-items:flex-start;justify-content:center}
+.mbox{background:var(--surface);border:1px solid var(--line);border-radius:16px;max-width:720px;width:100%;margin:auto;position:relative;overflow:hidden;animation:pop .2s ease;overscroll-behavior:contain}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.mclose{position:absolute;top:14px;right:14px;z-index:5;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:var(--surface-2);color:var(--text-2);font-size:14px;transition:.15s}
+.mclose:hover{background:#2a2a33;color:var(--text)}
+.m-body{display:flex;gap:22px;padding:26px}
+.m-poster{flex:0 0 170px;width:170px;aspect-ratio:2/3;border-radius:10px;overflow:hidden;background:var(--surface-2)}
+.m-poster img{width:100%;height:100%;object-fit:cover;display:block}
+.m-info{flex:1;min-width:0}
+.m-info h2{font-size:21px;font-weight:600;letter-spacing:-.4px;line-height:1.2;margin-bottom:4px}
+.m-orig{font-size:13px;color:var(--text-3);margin-bottom:14px}
+.m-meta{display:flex;gap:12px;font-size:13px;color:var(--text-2);margin-bottom:14px;flex-wrap:wrap;align-items:center}
+.m-meta .sep{width:3px;height:3px;border-radius:50%;background:var(--text-3)}
+.m-meta .gold{color:#e0b14a;font-weight:600}
+.m-desc{font-size:14px;line-height:1.6;color:var(--text-2);margin-bottom:16px}
+.m-facts{font-size:13px;color:var(--text-3);line-height:1.8}
+.m-facts b{color:var(--text-2);font-weight:500}
+.m-actions{margin-top:14px}
+.btn-share-film{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:10px;background:var(--surface-2);border:1px solid var(--line);color:var(--text-2);font-size:13px;font-weight:600;cursor:pointer;transition:.15s}
+.btn-share-film:hover{border-color:var(--accent-color);color:var(--accent-color)}
+.m-bottom{border-top:1px solid var(--line);padding:20px 26px 26px}
+.m-bottom .lbl{font-size:12px;color:var(--text-3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px}
+.watch-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.watch-link{padding:12px;border-radius:8px;background:var(--surface-2);color:var(--text);font-size:13px;font-weight:500;text-align:center;transition:.15s}
+.watch-link:hover{background:#2a2a33}
+.watch-link .dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:6px;vertical-align:middle}
+
+#toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);background:linear-gradient(90deg,var(--accent-color),#5f27cd);color:#fff;padding:12px 22px;border-radius:30px;font-size:14px;font-weight:600;box-shadow:0 8px 24px rgba(255,71,87,.4);z-index:300;opacity:0;transition:.4s cubic-bezier(.2,.9,.3,1.3);pointer-events:none;white-space:nowrap;max-width:90vw}
+#toast.on{transform:translateX(-50%) translateY(0);opacity:1}
+
+#errBox{position:fixed;top:16px;left:50%;transform:translateX(-50%);background:#b00020;color:#fff;padding:12px 20px;border-radius:10px;font-size:13px;z-index:9999;max-width:90vw;display:none;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+
+noscript > div{background:#b00020;color:#fff;padding:16px;text-align:center;font-family:system-ui,sans-serif;position:relative;z-index:10000}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+    scroll-behavior:auto !important;
+  }
+  .item:hover{transform:none}
+  .cat:hover{transform:none}
+}
+
+@media print{
+  body{background:#fff;color:#000}
+  .header,#toast,.cats,.history-terms,.popular-terms,.search-block{display:none !important}
+  .modal{position:static;background:none;padding:0}
+}
+
+@media (max-width:768px){
+  .header-inner,.wrap{padding:0 16px}
+  .page-title{padding:28px 0 18px}
+  .page-title h1{font-size:22px}
+  .search-field{padding:12px 14px}
+  .search-field input{font-size:15px}
+  .nav-mid{gap:2px}
+  .nav-btn{padding:6px 10px;font-size:12px}
+  .cats{grid-template-columns:1fr 1fr;gap:8px}
+  .cat{aspect-ratio:16/9;padding:10px}
+  .cat .art{font-size:36px;right:-4px}
+  .cat .label{font-size:13px}
+  .grid{grid-template-columns:repeat(2,1fr);gap:16px 10px}
+  .item .caption .name{font-size:12px}
+  .m-body{flex-direction:column;padding:20px;gap:16px}
+  .m-poster{flex:none;width:140px;margin:0 auto}
+  .m-info h2{font-size:18px}
+  .m-bottom{padding:16px 20px 20px}
+  .watch-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<noscript>
+  <div>Для работы поиска MovieMate нужен JavaScript. Включите его в настройках браузера.</div>
+</noscript>
+
+<div id="errBox" role="alert" aria-live="assertive"></div>
+
+<header class="header">
+  <div class="header-inner">
+    <button class="back" onclick="location.href='home.html'" title="На главную" aria-label="На главную">←</button>
+    <div class="brand" onclick="location.href='home.html'">MovieMate</div>
+    <div class="divider"></div>
+    <nav class="nav-mid" aria-label="Основная навигация">
+      <button class="nav-btn" onclick="location.href='home.html'">Главная</button>
+      <button class="nav-btn on" aria-current="page">Поиск</button>
+      <button class="nav-btn" onclick="location.href='home.html#account'">Профиль</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="page-title">
+    <h1>Поиск</h1>
+  </div>
+
+  <section class="search-block">
+    <div class="search-field">
+      <span class="ico" aria-hidden="true">⌕</span>
+      <input id="fq" type="text" placeholder="Что будем смотреть?" autocomplete="off" aria-label="Поиск фильмов">
+      <button class="clear-btn" id="clearBtn" onclick="clearQuery()" aria-label="Очистить поиск">✕</button>
+    </div>
+    <div class="history-terms" id="historyTerms"></div>
+    <div class="popular-terms" id="popularTerms"></div>
+  </section>
+
+  <div class="cats-head">
+    <h2>Категории</h2>
+    <span class="hint">Выбери жанр</span>
+  </div>
+  <div class="cats" id="cats"></div>
+
+  <div id="resultsArea"></div>
+
+</main>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Информация о фильме" onclick="if(event.target===this)closeM()">
+  <div class="mbox">
+    <button class="mclose" onclick="closeM()" aria-label="Закрыть">✕</button>
+    <div class="m-body">
+      <div class="m-poster"><img id="mImg" alt=""></div>
+      <div class="m-info">
+        <h2 id="mTitle"></h2>
+        <div class="m-orig" id="mOrig"></div>
+        <div class="m-meta" id="mMeta"></div>
+        <div class="m-desc" id="mDesc"></div>
+        <div class="m-facts" id="mExtra"></div>
+        <div class="m-actions">
+          <button class="btn-share-film" onclick="shareFilm()" aria-label="Поделиться фильмом">🔗 Поделиться</button>
+        </div>
+      </div>
+    </div>
+    <div class="m-bottom">
+      <div class="lbl">Где посмотреть</div>
+      <div class="watch-grid" id="watchGrid"></div>
+    </div>
+  </div>
+</div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="db.js"></script>
+<script>
+/* ============================================================
+   ГЛОБАЛЬНЫЙ ПЕРЕХВАТ ОШИБОК
+   ============================================================ */
+window.addEventListener("error", function(e){
+  console.error("[MovieMate/search]", e.message, "строка:", e.lineno);
+  var eb = document.getElementById("errBox");
+  if(eb){
+    eb.textContent = "⚠️ Ошибка: " + (e.message || "неизвестно") + " (строка " + e.lineno + ")";
+    eb.style.display = "block";
+    setTimeout(function(){ eb.style.display = "none"; }, 5000);
+  }
+});
+window.addEventListener("unhandledrejection", function(e){
+  console.error("[MovieMate/search] Promise rejected:", e.reason);
+});
+
+/* ============================================================
+   КАТЕГОРИИ
+   ============================================================ */
+var CATS = [
+  { label:"Драма",       emoji:"🎭", value:"Драма",       c1:"#4a1a5c", c2:"#1a0a2e" },
+  { label:"Фантастика",  emoji:"🚀", value:"Фантастика",  c1:"#1a2a6c", c2:"#0a1230" },
+  { label:"Комедия",     emoji:"😄", value:"Комедия",     c1:"#8b6f1c", c2:"#3d2b0a" },
+  { label:"Боевик",      emoji:"💥", value:"Боевик",      c1:"#8b0000", c2:"#3d0000" },
+  { label:"Триллер",     emoji:"🕵️", value:"Триллер",     c1:"#0f3a3a", c2:"#0a1a1a" },
+  { label:"Семейное",    emoji:"👨‍👩‍👧", value:"Семейный",  c1:"#2b5a3a", c2:"#0f2a1a" },
+  { label:"Мультфильмы", emoji:"🧸", value:"Мультфильм",  c1:"#8b1c5c", c2:"#3d0a2a" },
+  { label:"Фэнтези",     emoji:"🐉", value:"Фэнтези",     c1:"#5f27cd", c2:"#1a0a3d" },
+  { label:"Аниме",       emoji:"🎌", value:"Аниме",       c1:"#8b1c1c", c2:"#3d0a2a" },
+  { label:"Ужасы",       emoji:"👻", value:"Ужасы",       c1:"#1a0a0a", c2:"#3a0a0a" }
+];
+
+var POPULAR = ["Интерстеллар","Драма","Детектив","Сериалы","Мелодрама","Приключения","Аниме","История"];
+
+/* ============================================================
+   ИСТОРИЯ ПОИСКА
+   ============================================================ */
+var HISTORY_KEY = "mm_search_history";
+var HISTORY_MAX = 5;
+
+function loadHistory(){
+  try{ return JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]"); }
+  catch(e){ return []; }
+}
+function saveHistory(arr){
+  try{ localStorage.setItem(HISTORY_KEY, JSON.stringify(arr.slice(0, HISTORY_MAX))); }
+  catch(e){ /* Safari Private — игнорируем */ }
+}
+function addToHistory(q){
+  q = (q || "").trim();
+  if(!q || q.length < 2) return;
+  var arr = loadHistory();
+  var idx = arr.indexOf(q);
+  if(idx >= 0) arr.splice(idx, 1);
+  arr.unshift(q);
+  saveHistory(arr);
+}
+function removeFromHistory(q){
+  var arr = loadHistory().filter(function(x){ return x !== q; });
+  saveHistory(arr);
+  renderHistory();
+}
+function clearHistory(){
+  try{ localStorage.removeItem(HISTORY_KEY); }catch(e){}
+  renderHistory();
+}
+function renderHistory(){
+  var w = document.getElementById("historyTerms");
+  if(!w) return;
+  var arr = loadHistory();
+  if(arr.length === 0){
+    w.classList.remove("on");
+    w.innerHTML = "";
+    return;
+  }
+  w.classList.add("on");
+  w.innerHTML = '<span class="history-label">Недавние</span>';
+  arr.forEach(function(q){
+    var chip = document.createElement("div");
+    chip.className = "history-chip";
+    var txt = document.createElement("span");
+    txt.className = "txt";
+    txt.textContent = q;
+    txt.onclick = function(e){
+      e.stopPropagation();
+      document.getElementById("fq").value = q;
+      updateClearBtn();
+      doSearch(true);
+    };
+    var rm = document.createElement("span");
+    rm.className = "rm";
+    rm.textContent = "×";
+    rm.title = "Удалить из истории";
+    rm.onclick = function(e){
+      e.stopPropagation();
+      removeFromHistory(q);
+    };
+    chip.appendChild(txt);
+    chip.appendChild(rm);
+    w.appendChild(chip);
+  });
+  var clr = document.createElement("div");
+  clr.className = "history-clear";
+  clr.textContent = "Очистить";
+  clr.onclick = clearHistory;
+  w.appendChild(clr);
+}
+
+/* ============================================================
+   СОСТОЯНИЕ
+   ============================================================ */
+var KEY = "mm_state";
+var viewedIds = [], searchCount = 0, viewCount = 0;
+var viewedHighRated = false, viewedSeries = false, viewedFamily = false;
+var randomCount = 0, challengeCount = 0;
+var monthQuest = { key:null, done:[] }, dailyDone = {};
+var pCache = {}, pPending = {};
+var posterCacheKey = "mm_poster_cache";
+var posterCacheMax = 200;
+var posterCacheLoaded = false;
+var currentQuery = "";
+
+function pad2(n){ return n < 10 ? "0" + n : "" + n; }
+
+function loadState(){
+  var s = {};
+  try{
+    var raw = localStorage.getItem(KEY);
+    if(raw){
+      s = JSON.parse(raw);
+      if(!s || typeof s !== "object") throw new Error("bad");
+    }
+  }catch(e){
+    try{ localStorage.removeItem(KEY); }catch(_){}
+    s = {};
+  }
+  try{
+    viewCount = parseInt(s.viewCount) || 0;
+    viewedIds = Array.isArray(s.viewedIds) ? s.viewedIds : [];
+    searchCount = parseInt(s.searchCount) || 0;
+    randomCount = parseInt(s.randomCount) || 0;
+    challengeCount = parseInt(s.challengeCount) || 0;
+    viewedHighRated = !!s.viewedHighRated;
+    viewedSeries = !!s.viewedSeries;
+    viewedFamily = !!s.viewedFamily;
+    dailyDone = (s.dailyDone && typeof s.dailyDone === "object") ? s.dailyDone : {};
+    var mq = s.monthQuest, done = [];
+    if(mq && typeof mq === "object"){
+      if(Array.isArray(mq.done)) done = mq.done.slice();
+      else if(Array.isArray(mq.phases)) mq.phases.forEach(function(p,i){ if(p) done.push(i); });
+    }
+    monthQuest = { key: (mq && mq.key) ? mq.key : null, done: done };
+  }catch(e){}
+}
+
+function saveState(){
+  try{
+    var mq = { key: monthQuest.key, phases:[false,false,false,false], dates:[null,null,null,null] };
+    if(Array.isArray(monthQuest.done)){
+      monthQuest.done.forEach(function(i){ if(i>=0 && i<4) mq.phases[i] = true; });
+    }
+    localStorage.setItem(KEY, JSON.stringify({
+      viewCount:viewCount, viewedIds:viewedIds, searchCount:searchCount,
+      randomCount:randomCount, challengeCount:challengeCount,
+      viewedHighRated:viewedHighRated, viewedSeries:viewedSeries,
+      viewedFamily:viewedFamily, monthQuest:mq, dailyDone:dailyDone
+    }));
+  }catch(e){ /* Safari Private — игнорируем */ }
+}
+
+/* ============================================================
+   КЕШ ПОСТЕРОВ (общий между вкладками)
+   ============================================================ */
+function loadPosterCache(){
+  if(posterCacheLoaded) return;
+  posterCacheLoaded = true;
+  try{
+    var raw = localStorage.getItem(posterCacheKey);
+    if(!raw) return;
+    var data = JSON.parse(raw);
+    if(data && typeof data === "object") pCache = data;
+  }catch(e){
+    try{ localStorage.removeItem(posterCacheKey); }catch(_){}
+    pCache = {};
+  }
+}
+function savePosterCache(){
+  try{
+    var keys = Object.keys(pCache);
+    if(keys.length > posterCacheMax){
+      var trimmed = {};
+      keys.slice(-posterCacheMax).forEach(function(k){ trimmed[k] = pCache[k]; });
+      pCache = trimmed;
+    }
+    localStorage.setItem(posterCacheKey, JSON.stringify(pCache));
+  }catch(e){
+    try{ localStorage.removeItem(posterCacheKey); }catch(_){}
+    pCache = {};
+  }
+}
+
+/* ============================================================
+   ИНДЕКСАЦИЯ ПОИСКА (ускорение)
+   ============================================================ */
+DB.forEach(function(m){
+  m._t = (m.t || "").toLowerCase();
+  m._o = (m.ot || "").toLowerCase();
+  m._p = (m.p || "").toLowerCase();
+  m._g = (m.g || "").toLowerCase();
+});
+
+/* ============================================================
+   РАСКЛАДКА RU↔EN И ГОМОГЛИФЫ
+   ============================================================ */
+var LAYOUT_RU_TO_EN = {
+  "й":"q","ц":"w","у":"e","к":"r","е":"t","н":"y","г":"u","ш":"i","щ":"o","з":"p","х":"[","ъ":"]",
+  "ф":"a","ы":"s","в":"d","а":"f","п":"g","р":"h","о":"j","л":"k","д":"l","ж":";","э":"'",
+  "я":"z","ч":"x","с":"c","м":"v","и":"b","т":"n","ь":"m","б":",","ю":"."
+};
+var LAYOUT_EN_TO_RU = {};
+Object.keys(LAYOUT_RU_TO_EN).forEach(function(k){
+  LAYOUT_EN_TO_RU[LAYOUT_RU_TO_EN[k]] = k;
+});
+
+function fixLayout(q){
+  var hasRu = /[а-яё]/i.test(q);
+  var hasEn = /[a-z]/i.test(q);
+  if(hasRu && !hasEn){
+    /* Русские буквы в английской раскладке — конвертим в en */
+    return q.split("").map(function(ch){
+      var low = ch.toLowerCase();
+      return LAYOUT_RU_TO_EN[low] || ch;
+    }).join("");
+  }
+  if(hasEn && !hasRu){
+    /* Английские буквы — попробуем как русские */
+    return q.split("").map(function(ch){
+      var low = ch.toLowerCase();
+      return LAYOUT_EN_TO_RU[low] || ch;
+    }).join("");
+  }
+  return q;
+}
+
+/* Гомоглифы: латинские е/о/а/с/р/х вперемешку с кириллицей → заменяем на кириллицу */
+var HOMOGLYPHS = {
+  "e":"е","o":"о","a":"а","c":"с","p":"р","x":"х","y":"у","k":"к","m":"м","t":"т","h":"н","b":"в"
+};
+function fixHomoglyphs(q){
+  var hasRu = /[а-яё]/i.test(q);
+  var hasEn = /[a-z]/i.test(q);
+  if(hasRu && hasEn){
+    return q.split("").map(function(ch){
+      var low = ch.toLowerCase();
+      return HOMOGLYPHS[low] || ch;
+    }).join("");
+  }
+  return q;
+}
+
+function normalizeQuery(q){
+  try{
+    q = q.normalize("NFKC");
+  }catch(e){}
+  return q;
+}
+
+/* ============================================================
+   ЛЕВЕНШТЕЙН (для fuzzy)
+   ============================================================ */
+function levenshtein(a, b){
+  a = a.toLowerCase(); b = b.toLowerCase();
+  if(a === b) return 0;
+  if(!a.length) return b.length;
+  if(!b.length) return a.length;
+  var prev = [];
+  for(var j = 0; j <= b.length; j++) prev[j] = j;
+  for(var i = 1; i <= a.length; i++){
+    var cur = [i];
+    for(j = 1; j <= b.length; j++){
+      cur[j] = Math.min(
+        prev[j] + 1,
+        cur[j-1] + 1,
+        prev[j-1] + (a.charAt(i-1) === b.charAt(j-1) ? 0 : 1)
+      );
+    }
+    prev = cur;
+  }
+  return prev[b.length];
+}
+
+function fuzzyMatch(text, query){
+  var t = (text || "").toLowerCase();
+  var q = (query || "").toLowerCase().trim();
+  if(!q) return false;
+  if(t.indexOf(q) >= 0) return true;
+  var qWords = q.split(/\s+/).filter(function(w){ return w.length >= 4; });
+  if(qWords.length === 0) return false;
+  var tWords = t.split(/\s+/);
+  for(var qi = 0; qi < qWords.length; qi++){
+    var qw = qWords[qi];
+    var threshold = qw.length >= 6 ? 2 : 1;
+    var found = false;
+    for(var ti = 0; ti < tWords.length; ti++){
+      if(levenshtein(tWords[ti], qw) <= threshold){ found = true; break; }
+    }
+    if(!found) return false;
+  }
+  return true;
+}
+
+/* ============================================================
+   ПОДСВЕТКА (безопасная — escaped query)
+   ============================================================ */
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+function highlight(text, query){
+  var safe = esc(text);
+  if(!query || query.length < 1) return safe;
+  var re;
+  try{
+    /* Экранируем regex-спецсимволы — защита от ReDoS */
+    re = new RegExp("(" + query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "gi");
+  }catch(e){ return safe; }
+  return safe.replace(re, '<mark>$1</mark>');
+}
+
+/* ============================================================
+   КАТЕГОРИИ
+   ============================================================ */
+function countByGenre(genre){
+  return DB.filter(function(m){ return m.g.indexOf(genre) >= 0; }).length;
+}
+function pluralFilms(n){
+  var m10 = n % 10, m100 = n % 100;
+  if(m10 === 1 && m100 !== 11) return "фильм";
+  if(m10 >= 2 && m10 <= 4 && (m100 < 10 || m100 >= 20)) return "фильма";
+  return "фильмов";
+}
+var activeCat = -1;
+
+function renderCats(){
+  var w = document.getElementById("cats");
+  w.innerHTML = "";
+  CATS.forEach(function(c, i){
+    var cnt = countByGenre(c.value);
+    var el = document.createElement("div");
+    el.className = "cat" + (activeCat === i ? " on" : "");
+    el.style.setProperty("--c1", c.c1);
+    el.style.setProperty("--c2", c.c2);
+    el.setAttribute("role", "button");
+    el.setAttribute("tabindex", "0");
+    el.setAttribute("aria-label", c.label + " — " + cnt + " " + pluralFilms(cnt));
+    el.innerHTML =
+      '<div class="top"><span class="count">'+cnt+' '+pluralFilms(cnt)+'</span></div>' +
+      '<div class="art" aria-hidden="true">'+c.emoji+'</div>' +
+      '<div class="meta"><div class="label">'+c.label+'</div></div>';
+
+    el.onclick = function(){ handleCatClick(i); };
+    el.onkeydown = function(e){
+      if(e.key === "Enter" || e.key === " "){ e.preventDefault(); handleCatClick(i); }
+    };
+    w.appendChild(el);
+  });
+}
+
+function handleCatClick(i){
+  if(activeCat === i){
+    activeCat = -1;
+    document.getElementById("fq").value = "";
+    currentQuery = "";
+    updateClearBtn();
+    renderCats();
+    renderResults(null);
+    return;
+  }
+  activeCat = i;
+  document.getElementById("fq").value = "";
+  currentQuery = "";
+  updateClearBtn();
+  renderCats();
+  var res = DB.filter(function(m){ return m.g.indexOf(CATS[i].value) >= 0; });
+  renderResults(res);
+}
+
+/* ============================================================
+   ПОПУЛЯРНЫЕ
+   ============================================================ */
+function renderPopular(){
+  var w = document.getElementById("popularTerms");
+  w.innerHTML = "";
+  POPULAR.forEach(function(p){
+    var el = document.createElement("div");
+    el.className = "term";
+    el.textContent = p;
+    el.onclick = function(){
+      document.getElementById("fq").value = p;
+      updateClearBtn();
+      doSearch(true);
+    };
+    w.appendChild(el);
+  });
+}
+
+/* ============================================================
+   РЕНДЕР РЕЗУЛЬТАТОВ
+   ============================================================ */
+function renderResults(list, fuzzyUsed){
+  var area = document.getElementById("resultsArea");
+  area.innerHTML = "";
+
+  if(list === null || list === undefined) return;
+
+  if(list.length === 0){
+    area.innerHTML =
+      '<div class="section">'+
+        '<div class="empty">'+
+          '<div class="ico">○</div>'+
+          '<h3>Ничего не найдено</h3>'+
+          '<p>Попробуйте другой запрос или категорию</p>'+
+        '</div>'+
+      '</div>';
+    return;
+  }
+
+  var sec = document.createElement("div");
+  sec.className = "section";
+  var h = document.createElement("div");
+  h.className = "section-head";
+  var hint = fuzzyUsed ? '<span class="fuzzy-hint">Похожие результаты</span>' : '';
+  h.innerHTML = '<h2>Результаты</h2><span class="count">'+list.length+' '+pluralFilms(list.length)+'</span>'+hint;
+  sec.appendChild(h);
+
+  var grid = document.createElement("div");
+  grid.className = "grid";
+  list.forEach(function(m){ grid.appendChild(mkCard(m)); });
+  sec.appendChild(grid);
+  area.appendChild(sec);
+}
+
+/* ============================================================
+   КАРТОЧКА
+   ============================================================ */
+function mkCard(m){
+  var c = document.createElement("div");
+  c.className = "item";
+  c.onclick = function(){ openM(m.id); };
+
+  var th = document.createElement("div");
+  th.className = "thumb";
+  var img = document.createElement("img");
+  img.loading = "lazy";
+  img.alt = m.t;
+  img.dataset.mid = m.id;
+  img.width = 150;
+  img.height = 225;
+  var fb = svgP(m), tried = false;
+  img.onerror = function(){ if(tried) return; tried = true; this.src = fb; };
+  img.src = pCache[m.id] || fb;
+  th.appendChild(img);
+
+  var rt = parseFloat(m.r);
+  var cls = rt >= 8.5 ? "g" : rt >= 7 ? "m" : "l";
+  var rate = document.createElement("div");
+  rate.className = "rate " + cls;
+  rate.textContent = m.r;
+  th.appendChild(rate);
+
+  var cap = document.createElement("div");
+  cap.className = "caption";
+  var nm = document.createElement("div");
+  nm.className = "name";
+  nm.innerHTML = highlight(m.t, currentQuery);
+  var sb = document.createElement("div");
+  sb.className = "sub";
+  sb.innerHTML = highlight(m.y + " · " + m.g.split(",")[0].trim(), currentQuery);
+  cap.appendChild(nm);
+  cap.appendChild(sb);
+
+  c.appendChild(th);
+  c.appendChild(cap);
+
+  if(!pCache[m.id]){
+    fetchPoster(m, function(url){
+      if(!url) return;
+      document.querySelectorAll('img[data-mid="'+m.id+'"]').forEach(function(i){ i.src = url; });
+    });
+  }
+  return c;
+}
+
+/* ============================================================
+   SVG-ЗАГЛУШКА
+   ============================================================ */
+function svgP(m){
+  var lines = wrapText(m.t, 14, 4);
+  var tspans = "", startY = 200 - (lines.length-1) * 14;
+  lines.forEach(function(l, i){
+    tspans += '<tspan x="150" dy="' + (i === 0 ? 0 : 30) + '">' + esc(l) + '</tspan>';
+  });
+  var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="300" height="450" viewBox="0 0 300 450">'+
+    '<defs><linearGradient id="g' + m.id + '" x1="0" y1="0" x2="1" y2="1">'+
+    '<stop offset="0%" stop-color="' + m.col1 + '"/><stop offset="100%" stop-color="' + m.col2 + '"/>'+
+    '</linearGradient></defs>'+
+    '<rect width="300" height="450" fill="url(#g' + m.id + ')"/>'+
+    '<text x="150" y="' + startY + '" font-size="22" font-weight="600" fill="#ffffff" text-anchor="middle" font-family="Arial,sans-serif">' + tspans + '</text>'+
+    '<text x="150" y="420" font-size="14" fill="rgba(255,255,255,0.5)" text-anchor="middle" font-family="Arial,sans-serif">' + m.y + '</text>'+
+    '</svg>';
+  return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+}
+function wrapText(text, max, maxLines){
+  var words = text.split(" "), lines = [], cur = "";
+  words.forEach(function(w){
+    if((cur + " " + w).trim().length <= max) cur = (cur + " " + w).trim();
+    else { if(cur) lines.push(cur); cur = w; }
+  });
+  if(cur) lines.push(cur);
+  if(lines.length > maxLines){
+    lines = lines.slice(0, maxLines);
+    lines[maxLines-1] = lines[maxLines-1].slice(0, max-1) + "…";
+  }
+  return lines;
+}
+
+/* ============================================================
+   OMDb (с годом, типом, кешем, дедупликацией)
+   ============================================================ */
+var OMDB_KEY = "8fceb7e0";
+function fetchPoster(m, cb){
+  if(pCache[m.id]){ cb(pCache[m.id]); return; }
+  if(pPending[m.id]){ pPending[m.id].push(cb); return; }
+  pPending[m.id] = [cb];
+
+  function finish(url){
+    if(url){ pCache[m.id] = url; savePosterCache(); }
+    else { pCache[m.id] = ""; }
+    (pPending[m.id] || []).forEach(function(fn){ try{ fn(url); }catch(e){} });
+    delete pPending[m.id];
+  }
+
+  var omdbType = (m.ty === "movie") ? "&type=movie" : "&type=series";
+  var q = "https://www.omdbapi.com/?apikey=" + OMDB_KEY
+        + "&t=" + encodeURIComponent(m.ot || m.t)
+        + "&y=" + m.y
+        + omdbType;
+  var urls = [
+    "https://api.allorigins.win/raw?url=" + encodeURIComponent(q),
+    "https://corsproxy.io/?url=" + encodeURIComponent(q)
+  ];
+  tryOne(0);
+  function tryOne(i){
+    if(i >= urls.length){ finish(null); return; }
+    var ctrl = new AbortController();
+    var timer = setTimeout(function(){ ctrl.abort(); }, 5000);
+    fetch(urls[i], {signal: ctrl.signal})
+      .then(function(r){ clearTimeout(timer); return r.json(); })
+      .then(function(j){
+        if(j && j.Poster && j.Poster !== "N/A") finish(j.Poster);
+        else if(i+1 < urls.length) tryOne(i+1);
+        else finish(null);
+      })
+      .catch(function(){
+        clearTimeout(timer);
+        if(i+1 < urls.length) tryOne(i+1);
+        else finish(null);
+      });
+  }
+}
+
+/* ============================================================
+   ПОИСК
+   ============================================================ */
+var lastFuzzyUsed = false;
+
+function doSearch(save){
+  if(save === undefined) save = true;
+
+  var raw = document.getElementById("fq").value.trim();
+  if(!raw){ clearQuery(); return; }
+
+  currentQuery = raw;
+  var q = normalizeQuery(raw.toLowerCase());
+
+  if(activeCat >= 0){
+    activeCat = -1;
+    renderCats();
+  }
+
+  /* 1. Точный поиск по индексам */
+  var exact = DB.filter(function(m){
+    return m._t.indexOf(q) >= 0 || m._o.indexOf(q) >= 0 || m._p.indexOf(q) >= 0 || m._g.indexOf(q) >= 0;
+  });
+
+  if(exact.length > 0){
+    if(save){ searchCount++; saveState(); addToHistory(raw); renderHistory(); }
+    renderResults(exact, false);
+    return;
+  }
+
+  /* 2. Если пусто и запрос длинный — fuzzy + layout + homoglyphs (только на Enter) */
+  if(!save){
+    renderResults([], false);
+    return;
+  }
+
+  /* Гомоглифы (смешанные ru+en) */
+  var qHomo = fixHomoglyphs(q);
+  if(qHomo !== q){
+    var resHomo = DB.filter(function(m){
+      return m._t.indexOf(qHomo) >= 0 || m._o.indexOf(qHomo) >= 0 || m._p.indexOf(qHomo) >= 0;
+    });
+    if(resHomo.length > 0){
+      searchCount++; saveState(); addToHistory(raw); renderHistory();
+      renderResults(resHomo, true);
+      return;
+    }
+  }
+
+  /* Раскладка ru↔en */
+  var qLayout = fixLayout(q);
+  if(qLayout !== q && qLayout.length >= 2){
+    var resLayout = DB.filter(function(m){
+      return m._t.indexOf(qLayout) >= 0 || m._o.indexOf(qLayout) >= 0;
+    });
+    if(resLayout.length > 0){
+      searchCount++; saveState(); addToHistory(raw); renderHistory();
+      renderResults(resLayout, true);
+      return;
+    }
+  }
+
+  /* Fuzzy по названию */
+  if(q.length >= 4){
+    var fuzzy = DB.filter(function(m){
+      return fuzzyMatch(m.t, q) || fuzzyMatch(m.ot || "", q) || fuzzyMatch(m._t, q);
+    });
+    if(fuzzy.length > 0){
+      searchCount++; saveState(); addToHistory(raw); renderHistory();
+      renderResults(fuzzy, true);
+      return;
+    }
+  }
+
+  /* Ничего не нашли — сохраняем запрос и показываем пусто */
+  searchCount++; saveState(); addToHistory(raw); renderHistory();
+  renderResults([], false);
+}
+
+function clearQuery(){
+  document.getElementById("fq").value = "";
+  currentQuery = "";
+  if(activeCat >= 0){
+    activeCat = -1;
+    renderCats();
+  }
+  updateClearBtn();
+  renderResults(null);
+}
+function updateClearBtn(){
+  var v = document.getElementById("fq").value.trim();
+  document.getElementById("clearBtn").classList.toggle("visible", v.length > 0);
+}
+
+/* ============================================================
+   МОДАЛКА С FOCUS TRAP
+   ============================================================ */
+function openM(id, opts){
+  opts = opts || {};
+  var m = DB.filter(function(x){ return x.id === id; })[0];
+  if(!m) return;
+
+  if(opts.pushUrl !== false){
+    try{ history.pushState({film: id}, "", location.pathname + "#film-" + id); }catch(e){}
+  }
+
+  /* Трекинг просмотра */
+  var idx = viewedIds.indexOf(id);
+  if(idx >= 0){ viewedIds.splice(idx, 1); }
+  else { viewCount++; }
+  viewedIds.push(id);
+
+  if(parseFloat(m.r) >= 9.0) viewedHighRated = true;
+  if(m.ty === "series" || m.ty === "anime") viewedSeries = true;
+  if(m.cats.indexOf("family") >= 0 || m.cats.indexOf("kids") >= 0) viewedFamily = true;
+  saveState();
+
+  var mi = document.getElementById("mImg");
+  mi.dataset.mid = m.id;
+  mi.src = pCache[m.id] || svgP(m);
+  if(!pCache[m.id]){
+    fetchPoster(m, function(u){ if(u) mi.src = u; });
+  }
+
+  document.getElementById("mTitle").textContent = m.t;
+  document.getElementById("mOrig").textContent = m.ot || "";
+  document.getElementById("mMeta").innerHTML =
+    '<span class="gold">★ '+m.r+'</span>' +
+    '<span class="sep"></span>' +
+    '<span>'+m.y+'</span>' +
+    '<span class="sep"></span>' +
+    '<span>'+m.rt+'</span>' +
+    '<span class="sep"></span>' +
+    '<span>'+(m.ty === "movie" ? "Фильм" : m.ty === "anime" ? "Аниме" : "Сериал")+'</span>';
+  document.getElementById("mDesc").textContent = m.p;
+  document.getElementById("mExtra").innerHTML =
+    "<b>Режиссёр:</b> "+m.d+"<br>"+
+    "<b>Актёры:</b> "+m.a+"<br>"+
+    "<b>Жанр:</b> "+m.g+"<br>"+
+    "<b>Страна:</b> "+m.c;
+
+  var q = encodeURIComponent(m.t + " " + m.y);
+  document.getElementById("watchGrid").innerHTML =
+    '<a class="watch-link" target="_blank" rel="noopener" href="https://rutube.ru/search/?query='+q+'"><span class="dot" style="background:#00cc44"></span>Rutube</a>'+
+    '<a class="watch-link" target="_blank" rel="noopener" href="https://www.kinopoisk.ru/index.php?kp_query='+q+'"><span class="dot" style="background:#ff5500"></span>Кинопоиск</a>'+
+    '<a class="watch-link" target="_blank" rel="noopener" href="https://www.ivi.ru/search/?q='+q+'"><span class="dot" style="background:#9d2de0"></span>Ivi</a>'+
+    '<a class="watch-link" target="_blank" rel="noopener" href="https://okko.tv/search/'+q+'"><span class="dot" style="background:#ff0044"></span>Okko</a>';
+
+  var modal = document.getElementById("modal");
+  modal.classList.add("on");
+  document.body.style.overflow = "hidden";
+
+  var mc = modal.querySelector(".mclose");
+  if(mc) setTimeout(function(){ mc.focus(); }, 50);
+
+  function trapFocus(e){
+    if(e.key !== "Tab") return;
+    var f = modal.querySelectorAll('a[href], button:not(:disabled), [tabindex]:not([tabindex="-1"])');
+    if(!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+    if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+    else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+  }
+  modal.addEventListener("keydown", trapFocus);
+  modal._trapFocus = trapFocus;
+}
+
+function closeM(){
+  var modal = document.getElementById("modal");
+  modal.classList.remove("on");
+  document.body.style.overflow = "";
+  if(modal._trapFocus){
+    modal.removeEventListener("keydown", modal._trapFocus);
+    modal._trapFocus = null;
+  }
+  if(location.hash.indexOf("#film-") === 0){
+    try{ history.pushState({}, "", location.pathname); }catch(e){}
+  }
+}
+
+document.addEventListener("keydown", function(e){
+  if(e.key === "Escape"){
+    if(document.getElementById("modal").classList.contains("on")){
+      closeM(); e.stopPropagation();
+    }
+  }
+});
+
+/* ============================================================
+   ПОДЕЛИТЬСЯ ФИЛЬМОМ
+   ============================================================ */
+function shareFilm(){
+  var url = location.href;
+  var title = document.getElementById("mTitle").textContent;
+  if(navigator.share){
+    navigator.share({title: title, url: url}).catch(function(){});
+  } else {
+    copyToClipboard(url, function(ok){
+      toast(ok ? "✅ Ссылка на фильм скопирована" : "⚠️ Не удалось скопировать");
+    });
+  }
+}
+function copyToClipboard(text, cb){
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(function(){ cb(true); })
+      .catch(function(){ legacyCopy(text, cb); });
+  } else { legacyCopy(text, cb); }
+}
+function legacyCopy(text, cb){
+  try{
+    var ta = document.createElement("textarea");
+    ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.focus(); ta.select();
+    var ok = document.execCommand("copy");
+    document.body.removeChild(ta);
+    if(cb) cb(ok);
+  }catch(e){ if(cb) cb(false); }
+}
+
+/* ============================================================
+   TOAST (очередь)
+   ============================================================ */
+var toastQueue = [], toastBusy = false;
+function toast(msg){
+  toastQueue.push(msg);
+  if(!toastBusy) processToastQueue();
+}
+function processToastQueue(){
+  if(toastQueue.length === 0){ toastBusy = false; return; }
+  toastBusy = true;
+  var msg = toastQueue.shift();
+  var t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("on");
+  clearTimeout(t._t);
+  t._t = setTimeout(function(){
+    t.classList.remove("on");
+    setTimeout(processToastQueue, 300);
+  }, 2200);
+}
+
+/* ============================================================
+   URL-ХЭШ: #film-N
+   ============================================================ */
+window.addEventListener("popstate", function(e){
+  if(e.state && e.state.film){
+    openM(e.state.film, {pushUrl: false});
+  } else if(!location.hash || location.hash.indexOf("#film-") !== 0){
+    closeM();
+  }
+});
+
+/* ============================================================
+   СИНХРОНИЗАЦИЯ МЕЖДУ ВКЛАДКАМИ
+   ============================================================ */
+window.addEventListener("storage", function(e){
+  if(e.key === KEY){ loadState(); }
+});
+
+/* ============================================================
+   SERVICE WORKER
+   ============================================================ */
+if('serviceWorker' in navigator){
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('sw.js').catch(function(err){
+      console.log('ServiceWorker не зарегистрирован:', err);
+    });
+  });
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+var liveTimer = null;
+(function init(){
+  loadPosterCache();
+  loadState();
+  renderCats();
+  renderPopular();
+  renderHistory();
+  renderResults(null);
+
+  var fq = document.getElementById("fq");
+
+  /* Живой поиск — только exact (без fuzzy), через 300 мс */
+  fq.addEventListener("input", function(){
+    updateClearBtn();
+    clearTimeout(liveTimer);
+    liveTimer = setTimeout(function(){ doSearch(false); }, 300);
+  });
+
+  /* Enter — полный поиск с fuzzy, layout, гомоглифами */
+  fq.addEventListener("keydown", function(e){
+    if(e.key === "Enter"){
+      clearTimeout(liveTimer);
+      doSearch(true);
+    }
+  });
+
+  /* URL-параметры */
+  try{
+    var p = new URLSearchParams(location.search);
+    var q = p.get("q");
+    if(q){
+      fq.value = q;
+      updateClearBtn();
+      doSearch(true);
+    }
+    var g = p.get("g");
+    if(g){
+      var idx = -1;
+      for(var i = 0; i < CATS.length; i++){ if(CATS[i].value === g){ idx = i; break; } }
+      if(idx >= 0){ activeCat = idx; renderCats(); renderResults(DB.filter(function(m){ return m.g.indexOf(g) >= 0; })); }
+    }
+  }catch(e){}
+
+  /* Хэш #film-N */
+  var hash = location.hash || "";
+  var filmMatch = hash.match(/^#film-(\d+)$/);
+  if(filmMatch){
+    var id = parseInt(filmMatch[1]);
+    setTimeout(function(){ openM(id, {pushUrl: false}); }, 300);
+  }
+})();
+</script>
+</body>
+</html>

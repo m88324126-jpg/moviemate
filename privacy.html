@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Политика конфиденциальности — MovieMate</title>
+<meta name="description" content="Как MovieMate обращается с данными: ничего не собираем на серверах, всё хранится только в вашем браузере. Подробно о localStorage, OMDb и сторонних сервисах.">
+<meta name="author" content="MovieMate">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://m88324126-jpg.github.io/moviemate/privacy.html">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MovieMate">
+<meta property="og:title" content="Политика конфиденциальности — MovieMate">
+<meta property="og:description" content="Ничего не собираем на серверах. Всё хранится только в вашем браузере.">
+<meta property="og:url" content="https://m88324126-jpg.github.io/moviemate/privacy.html">
+<meta property="og:image" content="https://m88324126-jpg.github.io/moviemate/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ru_RU">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Политика конфиденциальности — MovieMate">
+<meta name="twitter:description" content="Ничего не собираем на серверах. Всё хранится только в вашем браузере.">
+<meta name="twitter:image" content="https://m88324126-jpg.github.io/moviemate/og-image.png">
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a0a12">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MovieMate">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔒</text></svg>">
+
+<style>
+:root{
+  color-scheme: dark;
+  --bg:#0a0a12;
+  --card:#14141f;
+  --card-2:#1a1a2e;
+  --accent:#ff4757;
+  --purple:#5f27cd;
+  --green:#00cc44;
+  --text:#f0f0f5;
+  --muted:#8b8b9e;
+  --border:#2a2a3e;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{
+  background:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  line-height:1.65;
+}
+body{padding:0 0 60px}
+
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent;transition:.15s}
+a:hover{border-bottom-color:var(--accent)}
+
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+
+button:focus-visible, a:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:3px;
+  border-radius:4px;
+}
+
+.nav{
+  position:-webkit-sticky;position:sticky;top:0;z-index:100;
+  background:rgba(10,10,18,.92);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  padding:14px 20px;
+  display:flex;align-items:center;gap:14px;
+}
+.back-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 16px;background:var(--card);
+  border:1px solid var(--border);border-radius:10px;
+  color:var(--text);font-size:14px;font-weight:600;
+  transition:.2s;
+}
+.back-btn:hover{border-color:var(--accent);color:var(--accent)}
+.logo{
+  font-size:18px;font-weight:800;
+  background:linear-gradient(135deg,var(--accent),var(--purple));
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.wrap{
+  max-width:760px;margin:0 auto;
+  padding:40px 20px;
+}
+
+/* ====== Заголовок ====== */
+.page-head{
+  text-align:center;
+  margin-bottom:36px;
+}
+.page-head .badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,rgba(255,71,87,.15),rgba(95,39,205,.15));
+  border:1px solid rgba(255,71,87,.3);
+  color:var(--accent);
+  font-size:11px;font-weight:800;
+  padding:6px 14px;border-radius:20px;
+  letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:16px;
+}
+.page-head h1{
+  font-size:34px;font-weight:800;
+  letter-spacing:-1px;line-height:1.15;
+  margin-bottom:12px;
+}
+.page-head .sub{
+  color:var(--muted);font-size:15px;
+  max-width:520px;margin:0 auto;
+}
+.page-head .updated{
+  color:#5a5a63;font-size:12px;
+  margin-top:14px;
+}
+
+/* ====== TL;DR блок ====== */
+.tldr{
+  background:linear-gradient(145deg,var(--card),var(--card-2));
+  border:1px solid rgba(0,204,68,.35);
+  border-left:4px solid var(--green);
+  border-radius:14px;
+  padding:22px 24px;
+  margin-bottom:32px;
+  position:relative;
+}
+.tldr-title{
+  display:flex;align-items:center;gap:8px;
+  font-size:14px;font-weight:800;color:var(--green);
+  text-transform:uppercase;letter-spacing:1px;
+  margin-bottom:14px;
+}
+.tldr ul{
+  list-style:none;padding:0;
+}
+.tldr li{
+  position:relative;
+  padding-left:26px;
+  font-size:14px;color:#c8c8d4;
+  margin-bottom:8px;
+}
+.tldr li:last-child{margin-bottom:0}
+.tldr li::before{
+  content:"✓";
+  position:absolute;left:0;
+  color:var(--green);font-weight:800;
+  font-size:15px;
+}
+.tldr li b{color:#fff;font-weight:600}
+
+/* ====== Разделы ====== */
+.section{
+  background:linear-gradient(145deg,var(--card),var(--card-2));
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:26px 24px;
+  margin-bottom:18px;
+}
+.section h2{
+  font-size:19px;font-weight:800;
+  letter-spacing:-.3px;
+  margin-bottom:14px;
+  display:flex;align-items:center;gap:12px;
+}
+.section h2 .num{
+  width:30px;height:30px;border-radius:8px;
+  background:rgba(255,71,87,.15);
+  color:var(--accent);
+  font-size:13px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.section p{
+  font-size:15px;color:#c8c8d4;
+  margin-bottom:12px;
+}
+.section p:last-child{margin-bottom:0}
+.section p b{color:#fff;font-weight:600}
+.section ul{
+  margin:10px 0 12px 0;
+  padding-left:0;
+  list-style:none;
+}
+.section ul li{
+  font-size:14px;color:#c8c8d4;
+  padding-left:20px;
+  position:relative;
+  margin-bottom:8px;
+}
+.section ul li:last-child{margin-bottom:0}
+.section ul li::before{
+  content:"•";
+  position:absolute;left:6px;
+  color:var(--muted);
+}
+
+/* Список "не делаем" */
+.section ul.never li::before{
+  content:"✕";
+  color:var(--accent);
+  font-weight:800;
+  left:2px;
+  font-size:13px;
+}
+
+/* Список "делаем" */
+.section ul.yes li::before{
+  content:"✓";
+  color:var(--green);
+  font-weight:800;
+  left:2px;
+  font-size:13px;
+}
+
+/* Таблица хранилищ */
+.storage-table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:12px;
+  font-size:13px;
+  border-radius:10px;
+  overflow:hidden;
+}
+.storage-table th{
+  text-align:left;
+  padding:10px 12px;
+  background:rgba(255,71,87,.08);
+  color:var(--accent);
+  font-weight:700;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  border-bottom:1px solid var(--border);
+}
+.storage-table td{
+  padding:10px 12px;
+  border-bottom:1px solid var(--border);
+  color:#c8c8d4;
+  vertical-align:top;
+}
+.storage-table tr:last-child td{border-bottom:none}
+.storage-table td code{
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:12px;
+  background:rgba(0,0,0,.3);
+  padding:2px 6px;
+  border-radius:4px;
+  color:var(--accent);
+}
+
+/* ====== Контакт ====== */
+.contact-box{
+  background:linear-gradient(145deg,var(--card),var(--card-2));
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:22px 24px;
+  display:flex;
+  align-items:center;
+  gap:18px;
+  margin-top:24px;
+}
+.contact-box .ico{
+  font-size:26px;
+  width:52px;height:52px;
+  border-radius:14px;
+  background:rgba(255,71,87,.1);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.contact-box .txt{flex:1;min-width:0}
+.contact-box .label{
+  font-size:11px;color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:1px;font-weight:700;
+  margin-bottom:4px;
+}
+.contact-box .value{
+  font-size:15px;font-weight:600;
+  color:var(--text);
+  word-break:break-all;
+}
+
+/* ====== Футер ====== */
+.footer{
+  text-align:center;
+  margin-top:36px;
+  padding-top:24px;
+  border-top:1px solid var(--border);
+  color:#5a5a63;font-size:12px;
+  line-height:1.7;
+}
+.footer b{color:var(--muted);font-weight:600}
+.footer .links{
+  margin-top:10px;
+  display:flex;gap:16px;justify-content:center;
+  flex-wrap:wrap;
+}
+.footer .links a{
+  color:var(--muted);
+  font-size:12px;
+}
+.footer .links a:hover{color:var(--accent)}
+
+/* ====== noscript ====== */
+noscript > div{
+  background:#b00020;color:#fff;
+  padding:16px;text-align:center;
+  font-family:system-ui,sans-serif;
+}
+
+/* ====== Reduced motion ====== */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    transition-duration:.01ms !important;
+  }
+}
+
+/* ====== Print ====== */
+@media print{
+  body{background:#fff;color:#000}
+  .nav{display:none}
+  .section,.tldr,.contact-box{
+    background:#fff !important;
+    border:1px solid #999 !important;
+    break-inside:avoid;
+  }
+  .section h2,.page-head h1{color:#000}
+  a{color:#000}
+}
+
+/* ====== Mobile ====== */
+@media (max-width:600px){
+  .wrap{padding:24px 16px}
+  .page-head h1{font-size:24px}
+  .page-head .sub{font-size:14px}
+  .section{padding:20px 18px;border-radius:14px}
+  .section h2{font-size:17px}
+  .section p,.section ul li{font-size:14px}
+  .tldr{padding:18px 18px}
+  .tldr li{font-size:13px}
+  .contact-box{padding:18px;gap:14px}
+  .contact-box .ico{width:44px;height:44px;font-size:22px}
+  .storage-table{font-size:12px}
+  .storage-table th,.storage-table td{padding:8px 10px}
+}
+</style>
+</head>
+<body>
+
+<noscript>
+  <div>Для работы сайта MovieMate нужен JavaScript.</div>
+</noscript>
+
+<nav class="nav">
+  <a href="home.html" class="back-btn">← На главную</a>
+  <div class="logo">MovieMate</div>
+</nav>
+
+<main class="wrap">
+
+  <header class="page-head">
+    <div class="badge">🔒 Приватность</div>
+    <h1>Политика конфиденциальности</h1>
+    <p class="sub">Как MovieMate обращается с вашими данными. Коротко: никак — всё остаётся у вас в браузере.</p>
+    <div class="updated">Последнее обновление: 26 сентября 2026</div>
+  </header>
+
+  <!-- ============ TL;DR ============ -->
+  <div class="tldr">
+    <div class="tldr-title">⚡ Коротко</div>
+    <ul>
+      <li><b>Никаких серверов.</b> MovieMate — статичный сайт на GitHub Pages, у нас нет базы данных.</li>
+      <li><b>Никаких аккаунтов.</b> Не нужно регистрироваться, указывать email или пароль.</li>
+      <li><b>Никаких cookie, аналитики и рекламы.</b> Мы не отслеживаем ваши действия.</li>
+      <li><b>Всё хранится только в вашем браузере</b> (localStorage) и стирается одной кнопкой.</li>
+      <li><b>Единственный внешний запрос</b> — к OMDb API за постерами фильмов.</li>
+    </ul>
+  </div>
+
+  <!-- ============ 1. Кто мы ============ -->
+  <section class="section">
+    <h2><span class="num">1</span>Кто мы такие</h2>
+    <p><b>MovieMate</b> — некоммерческий каталог фильмов, сериалов и аниме. Мы показываем информацию о фильмах (название, год, рейтинг, описание, постер) и ссылаемся на официальные сервисы, где их можно посмотреть: Кинопоиск, Okko, Ivi, Rutube.</p>
+    <p>Мы <b>не храним</b> сами фильмы и <b>не продаём</b> никакие данные. Сайт размещён на бесплатном хостинге <b>GitHub Pages</b> — это значит, что у проекта нет собственного сервера с backend-логикой.</p>
+  </section>
+
+  <!-- ============ 2. Что храним ============ -->
+  <section class="section">
+    <h2><span class="num">2</span>Что хранится в вашем браузере</h2>
+    <p>Для работы интерфейса сайт сохраняет небольшой объём данных в <b>localStorage</b> — это встроенное хранилище вашего браузера. К нам на сервер эти данные <b>не передаются</b>, потому что сервера нет.</p>
+
+    <table class="storage-table">
+      <thead>
+        <tr>
+          <th>Ключ</th>
+          <th>Что там</th>
+          <th>Зачем</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>mm_state</code></td>
+          <td>Счётчики прогресса: сколько фильмов открыто, какая фаза квеста пройдена, какие награды заработаны</td>
+          <td>Чтобы показывать ваш прогресс и звание</td>
+        </tr>
+        <tr>
+          <td><code>mm_search_history</code></td>
+          <td>Последние 5 поисковых запросов</td>
+          <td>Чтобы показывать «Недавние» под строкой поиска</td>
+        </tr>
+        <tr>
+          <td><code>mm_poster_cache</code></td>
+          <td>Ссылки на постеры фильмов (до 200 штук)</td>
+          <td>Чтобы не запрашивать одни и те же постеры повторно и не исчерпать лимит OMDb</td>
+        </tr>
+        <tr>
+          <td><code>mm_super_quest_claimed</code></td>
+          <td>Флаг «награда супер-квеста получена»</td>
+          <td>Чтобы не показывать страницу награждения повторно без причины</td>
+        </tr>
+        <tr>
+          <td><code>mm_splash_seen</code></td>
+          <td>Метка времени последнего показа заставки</td>
+          <td>Чтобы не показывать splash-экран чаще раза в сутки</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p style="margin-top:16px">Все данные имеют <b>формат JSON</b>, лежат в песочнице домена и доступны только этому сайту. Другие сайты прочитать их не могут.</p>
+  </section>
+
+  <!-- ============ 3. Чего мы НЕ делаем ============ -->
+  <section class="section">
+    <h2><span class="num">3</span>Чего мы <b>не</b> делаем</h2>
+    <p>Для полной прозрачности — список того, что вы <b>не найдёте</b> на сайте:</p>
+    <ul class="never">
+      <li>Не запрашиваем имя, email, телефон, пароль</li>
+      <li>Не используем cookie (ни сессионные, ни постоянные)</li>
+      <li>Не подключаем Google Analytics, Яндекс.Метрику или любые другие трекеры</li>
+      <li>Не показываем рекламу и не передаём данные рекламным сетям</li>
+      <li>Не собираем IP-адреса, User-Agent, разрешение экрана</li>
+      <li>Не сохраняем данные на своих серверах (их нет)</li>
+      <li>Не продаём и не передаём информацию третьим лицам</li>
+      <li>Не следим за вами за пределами сайта</li>
+    </ul>
+  </section>
+
+  <!-- ============ 4. Сторонние сервисы ============ -->
+  <section class="section">
+    <h2><span class="num">4</span>Сторонние сервисы</h2>
+
+    <p><b>OMDb API</b> — открытая база данных о фильмах от IMDb. Когда вы открываете карточку фильма впервые, сайт отправляет запрос к OMDb за постером. <b>В запросе передаётся только название фильма и год.</b> Ничего о вас — ни IP, ни браузер, ни как вас зовут.</p>
+
+    <p>Запрос идёт через публичные CORS-прокси <code>allorigins.win</code> и <code>corsproxy.io</code> — это технические посредники, необходимые из-за политики безопасности браузеров. Они могут видеть только сам запрос к OMDb, а не ваши действия на сайте.</p>
+
+    <p><b>Внешние ссылки.</b> Кнопки «Где посмотреть» ведут на официальные сервисы: <b>Rutube, Кинопоиск, Ivi, Okko</b>. Когда вы нажимаете такую ссылку, вы уходите с нашего сайта и переходите на чужой. С этого момента действуют их правила конфиденциальности, а не наши. Рекомендуем ознакомиться с ними отдельно.</p>
+
+    <p><b>GitHub Pages</b> — площадка, на которой размещён сайт. Как любой хостинг, GitHub ведёт технические логи обращений (стандартная практика). К содержимому вашего localStorage GitHub доступа не имеет.</p>
+  </section>
+
+  <!-- ============ 5. Cookie ============ -->
+  <section class="section">
+    <h2><span class="num">5</span>Cookie и отслеживание</h2>
+    <p>MovieMate <b>не устанавливает cookie</b>. Совсем. Ни своих, ни чужих, ни аналитических, ни рекламных.</p>
+    <p>Мы используем <b>localStorage</b> — это другой механизм браузера, и технически это не cookie. Его нельзя прочитать с другого домена, он не отправляется на сервер автоматически и стирается по вашему желанию (см. раздел 7).</p>
+    <p>Если вы зашли на сайт с включённым блокировщиком рекламы (uBlock, AdGuard и т.п.) — сайт будет работать без каких-либо изменений, потому что блокировать здесь нечего.</p>
+  </section>
+
+  <!-- ============ 6. Дети ============ -->
+  <section class="section">
+    <h2><span class="num">6</span>Возраст и дети</h2>
+    <p>Сайт подходит для любого возраста. Мы <b>не запрашиваем</b> никакие данные — ни у взрослых, ни у детей. Родителям не о чем беспокоиться: без регистрации, без email, без сбора статистики ребёнок просто смотрит каталог фильмов.</p>
+    <p>Никакой специальной защиты данных несовершеннолетних не требуется, потому что мы в принципе ничего не собираем.</p>
+  </section>
+
+  <!-- ============ 7. Как удалить ============ -->
+  <section class="section">
+    <h2><span class="num">7</span>Как удалить свои данные</h2>
+    <p>Так как всё хранится только в вашем браузере, удалить данные можете только вы. Есть <b>четыре способа</b>:</p>
+
+    <p><b>1. Через сам сайт</b> — откройте профиль на главной и нажмите «Сбросить» (если такая кнопка доступна) либо очистите данные вручную через инструменты браузера.</p>
+
+    <p><b>2. Через настройки браузера</b> — откройте настройки → «Конфиденциальность» → «Данные сайтов» → найдите <code>m88324126-jpg.github.io</code> → удалите.</p>
+
+    <p><b>3. Горячие клавиши</b> — нажмите <b>Ctrl + Shift + Delete</b> (Windows) или <b>Cmd + Shift + Delete</b> (Mac), выберите «Cookies и данные сайтов», очистите.</p>
+
+    <p><b>4. Инструменты разработчика</b> — нажмите <b>F12</b>, откройте вкладку <b>Application</b> → <b>Storage</b> → <b>Clear site data</b>.</p>
+
+    <p>После очистки <b>весь прогресс, история просмотров, история поиска и награды сбросятся</b>. Восстановить их нельзя, но и следов не останется.</p>
+
+    <p>Если хотите сохранить прогресс перед очисткой — используйте кнопку <b>«Скачать прогресс»</b> в профиле. Она выгружает файл JSON, который можно потом загрузить обратно.</p>
+  </section>
+
+  <!-- ============ 8. Безопасность ============ -->
+  <section class="section">
+    <h2><span class="num">8</span>Безопасность</h2>
+    <p>Мы не храним ваши данные на серверах, поэтому их невозможно украсть со стороны. Всё, что есть — лежит в вашем браузере, под защитой его песочницы.</p>
+    <p>Сайт работает по <b>HTTPS</b> — соединение с GitHub Pages зашифровано. Ссылки на внешние сервисы открываются с атрибутом <code>rel="noopener"</code> — это защита от эксплуатации вкладки-родителя вредоносной страницей.</p>
+    <p>Внутри страниц используется <b>экранирование пользовательского ввода</b> (защита от XSS) — даже если вы введёте в поиск HTML-код, он отобразится как текст, а не выполнится.</p>
+  </section>
+
+  <!-- ============ 9. Изменения ============ -->
+  <section class="section">
+    <h2><span class="num">9</span>Изменения в политике</h2>
+    <p>Если мы что-то изменим в этом документе — обновим дату вверху страницы. Существенных изменений в обработке данных не планируется, потому что мы по-прежнему ничего не собираем.</p>
+    <p>Если вы хотите отслеживать изменения, история правок доступна в <a href="https://github.com/m88324126-jpg/moviemate" target="_blank" rel="noopener">репозитории проекта на GitHub</a>.</p>
+  </section>
+
+  <!-- ============ Контакт ============ -->
+  <div class="contact-box">
+    <div class="ico" aria-hidden="true">✉️</div>
+    <div class="txt">
+      <div class="label">Есть вопросы?</div>
+      <div class="value"><a href="mailto:kinogid2026@yandex.ru">kinogid2026@yandex.ru</a></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    © 2026 <b>MovieMate</b>. Все права защищены.<br>
+    Каталог-агрегатор. Мы не храним и не распространяем фильмы.<br>
+    Ссылки ведут на официальные сервисы (Кинопоиск, Okko, Ivi, Rutube).
+    <div class="links">
+      <a href="home.html">Главная</a>
+      <a href="search.html">Поиск</a>
+      <a href="quests.html">Квесты</a>
+      <a href="https://github.com/m88324126-jpg/moviemate" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </footer>
+
+</main>
+
+<script>
+/* ============================================================
+   SERVICE WORKER для PWA
+   ============================================================ */
+if('serviceWorker' in navigator){
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('sw.js').catch(function(err){
+      console.log('ServiceWorker не зарегистрирован:', err);
+    });
+  });
+}
+
+/* ============================================================
+   ПЕРЕХВАТ ОШИБОК
+   ============================================================ */
+window.addEventListener("error", function(e){
+  console.error("[MovieMate/privacy]", e.message, "строка:", e.lineno);
+});
+</script>
+</body>
+</html>

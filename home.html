@@ -1,0 +1,1755 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta name="yandex-verification" content="8788a7337c5b80d7" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MovieMate — каталог фильмов, сериалов и аниме с квестами</title>
+<meta name="description" content="Каталог фильмов и сериалов с квестами, наградами и званиями.">
+<meta name="theme-color" content="#0a0a12">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
+
+<style>
+:root{
+  color-scheme: dark;
+  --bg:#0a0a12;--card:#14141f;--accent:#ff4757;--purple:#5f27cd;
+  --muted:#8b8b9a;--text:#e8e8ee;--line:#22222e;--green:#2ecc71;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{padding-bottom:60px}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input{font-family:inherit}
+
+button:focus-visible, a:focus-visible, input:focus-visible{
+  outline:2px solid var(--accent);outline-offset:2px;
+}
+
+.nav{
+  position:-webkit-sticky;position:sticky;top:0;z-index:100;
+  background:rgba(10,10,18,.95);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:12px;padding:12px 20px;
+}
+.logo{font-size:20px;font-weight:800;letter-spacing:-.5px;background:linear-gradient(90deg,#ff4757,#5f27cd);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;cursor:pointer;flex-shrink:0}
+.nav-mid{display:flex;gap:6px;margin-left:20px;flex:1}
+.nav-btn{padding:8px 16px;border-radius:8px;font-size:14px;color:var(--muted);font-weight:500;transition:.15s}
+.nav-btn:hover{background:var(--card);color:var(--text)}
+.nav-btn.on{background:var(--accent);color:#fff}
+.nav-search{display:flex;gap:6px}
+.nav-search input{background:var(--card);border:1px solid var(--line);color:var(--text);padding:8px 12px;border-radius:8px;font-size:13px;width:180px;outline:none}
+.nav-search input:focus{border-color:var(--accent)}
+.nav-search button{background:var(--accent);color:#fff;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600}
+
+#activeWatchBanner{
+  position:-webkit-sticky;position:sticky;top:57px;z-index:99;
+  display:none;
+  align-items:center;gap:12px;
+  padding:10px 20px;
+  background:linear-gradient(90deg,rgba(46,204,113,.15),rgba(46,204,113,.05));
+  border-bottom:1px solid rgba(46,204,113,.3);
+  font-size:13px;font-weight:600;color:var(--green);
+  cursor:pointer;
+  transition:.15s;
+}
+#activeWatchBanner:hover{background:linear-gradient(90deg,rgba(46,204,113,.22),rgba(46,204,113,.08))}
+#activeWatchBanner .awb-icon{font-size:16px}
+#activeWatchBanner b{color:var(--text);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:280px}
+#activeWatchBanner .awb-time{margin-left:auto;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px;letter-spacing:.5px}
+
+.page{display:none}
+.page.on{display:block;animation:fadeInUp .3s ease}
+
+#hero{position:relative;min-height:400px;overflow:hidden;display:flex;align-items:flex-end}
+.hero-bg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;transition:opacity .6s}
+.hero-grad{position:absolute;inset:0;z-index:1;background:linear-gradient(to top,var(--bg) 5%,transparent 60%),linear-gradient(to right,rgba(10,10,18,.85) 0%,transparent 70%)}
+.hero-c{position:relative;z-index:2;padding:36px;max-width:650px}
+.hero-badge{display:inline-block;background:var(--accent);color:#fff;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;margin-bottom:14px}
+#hTitle{font-size:42px;font-weight:800;line-height:1.1;margin-bottom:14px}
+.hero-meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.imdb-badge{background:#f5c518;color:#000;font-weight:700;font-size:12px;padding:3px 8px;border-radius:5px}
+.tag{background:rgba(255,255,255,.1);color:var(--text);padding:3px 10px;border-radius:6px;font-size:12px}
+#hDesc{font-size:14px;color:#b8b8c5;line-height:1.6;margin-bottom:20px;max-width:600px}
+.hero-btns{display:flex;gap:10px;flex-wrap:wrap}
+.btn-red{background:var(--accent);color:#fff;padding:11px 22px;border-radius:9px;font-size:14px;font-weight:600;transition:.15s}
+.btn-red:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.btn-grad{background:linear-gradient(90deg,var(--accent),var(--purple));color:#fff;padding:11px 22px;border-radius:9px;font-size:14px;font-weight:600;transition:.15s}
+.btn-grad:hover{filter:brightness(1.15);transform:translateY(-1px)}
+.btn-grad:disabled{opacity:.6;cursor:not-allowed;transform:none}
+
+#chips{display:flex;gap:8px;overflow-x:auto;padding:16px 20px;scrollbar-width:none}
+#chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;padding:8px 16px;border-radius:20px;background:var(--card);border:1px solid var(--line);font-size:13px;color:var(--muted);font-weight:500;transition:.15s}
+.chip:hover{color:var(--text);border-color:#333}
+.chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+.section{margin-bottom:32px;padding:0 20px}
+.sec-h{display:flex;align-items:center;gap:8px;font-size:19px;font-weight:700;margin-bottom:14px}
+.sec-h .ico{font-size:20px}
+.row{display:flex;gap:14px;overflow-x:auto;padding-bottom:10px;scrollbar-width:thin;scrollbar-color:#333 transparent}
+.row::-webkit-scrollbar{height:6px}
+.row::-webkit-scrollbar-thumb{background:#333;border-radius:3px}
+
+.card{flex:0 0 160px;width:160px;cursor:pointer;transition:.2s}
+.card:hover{transform:translateY(-3px)}
+.card-poster{position:relative;width:100%;aspect-ratio:2/3;border-radius:10px;overflow:hidden;background:var(--card);transition:.2s}
+.card-poster img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.card-imdb{position:absolute;top:6px;left:6px;background:rgba(0,0,0,.7);color:#f5c518;font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+.card-t{font-size:13px;font-weight:600;margin-top:8px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-y{font-size:11px;color:var(--muted);margin-top:3px}
+
+.card-continue-badge{
+  position:absolute;top:6px;right:6px;
+  background:rgba(46,204,113,.9);color:#fff;
+  font-size:10px;font-weight:700;
+  padding:3px 7px;border-radius:4px;
+  -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
+  display:flex;align-items:center;gap:3px;
+}
+.card-continue-badge.timer{
+  background:rgba(255,71,87,.9);
+  animation:pulseTimer 2s ease-in-out infinite;
+}
+@keyframes pulseTimer{
+  0%,100%{opacity:1}
+  50%{opacity:.7}
+}
+
+.profile-wrap{padding:32px 20px;max-width:760px;margin:0 auto}
+.profile-box{background:linear-gradient(145deg,var(--card),#1a1a2e);border-radius:16px;padding:26px;margin-bottom:20px;border:1px solid var(--line);position:relative;overflow:hidden}
+.profile-box::before{content:"";position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:280px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(255,71,87,.18),transparent 70%);pointer-events:none}
+.prof-emoji{font-size:32px;margin-bottom:6px}
+#user-title{font-size:26px;font-weight:800;letter-spacing:-.5px;background:linear-gradient(90deg,var(--accent),var(--purple));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
+.prof-desc{color:var(--muted);font-size:13px;margin-bottom:4px}
+.prof-hint{color:#666;font-size:12px;margin-bottom:18px}
+.stats{display:flex;gap:24px;flex-wrap:wrap}
+.stat .num{font-size:22px;font-weight:800;color:var(--accent)}
+.stat .lbl{font-size:12px;color:var(--muted);margin-top:2px}
+
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:24px}
+.feature{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;cursor:pointer;transition:.15s}
+.feature:hover{transform:translateY(-2px);border-color:#333}
+.feature .fi{font-size:22px;margin-bottom:8px}
+.feature .ft{font-size:14px;font-weight:600;margin-bottom:3px}
+.feature .fd{font-size:12px;color:var(--muted)}
+
+.backup-section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:24px}
+.backup-title{font-size:15px;font-weight:700;margin-bottom:6px}
+.backup-desc{font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.5}
+.backup-btns{display:flex;gap:10px;flex-wrap:wrap}
+.btn-backup{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:10px;background:var(--bg);border:1px solid var(--line);color:var(--text);font-size:13px;font-weight:600;cursor:pointer;transition:.15s}
+.btn-backup:hover{border-color:var(--accent);color:var(--accent)}
+.btn-backup.primary{background:linear-gradient(90deg,var(--accent),var(--purple));border:none;color:#fff}
+.btn-backup.primary:hover{filter:brightness(1.1);color:#fff}
+
+.site-footer{max-width:760px;margin:40px auto 0;padding:24px 20px;text-align:center;color:#5a5a63;font-size:12px;line-height:1.7;border-top:1px solid var(--line)}
+.site-footer b{color:#8b8b9a;font-weight:600}
+.site-footer .privacy-link{display:inline-block;margin-top:10px;color:#8b8b9a;border-bottom:1px solid transparent;transition:.15s}
+.site-footer .privacy-link:hover{color:var(--accent);border-bottom-color:var(--accent)}
+
+.modal{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.8);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);overflow-y:auto;padding:20px;overscroll-behavior:contain}
+.modal.on{display:flex;align-items:flex-start;justify-content:center}
+.mbox{background:var(--card);border-radius:16px;max-width:820px;width:100%;margin:auto;position:relative;overflow:hidden;border:1px solid var(--line);animation:fadeInUp .25s ease}
+.mclose{position:absolute;top:14px;right:14px;z-index:5;background:rgba(0,0,0,.6);color:#fff;width:34px;height:34px;border-radius:50%;font-size:16px;transition:.15s}
+.mclose:hover{background:var(--accent)}
+.mh{display:flex;gap:22px;padding:26px}
+.mh-img{flex:0 0 200px;width:200px;aspect-ratio:2/3;border-radius:12px;overflow:hidden;background:var(--bg)}
+.mh-img img{width:100%;height:100%;object-fit:cover;display:block}
+.mh-info{flex:1;min-width:0}
+.mh-title{font-size:22px;font-weight:800;line-height:1.2;margin-bottom:8px}
+.mh-type{color:var(--muted);font-size:13px;margin-bottom:12px}
+.mh-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.mh-desc{font-size:13px;line-height:1.5;color:#b8b8c5;margin-bottom:14px}
+.mh-extra{font-size:12px;color:var(--muted);line-height:1.7}
+.mh-extra b{color:#c8c8d4;font-weight:600}
+.mh-actions{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap}
+
+.btn-share-film{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--text);font-size:13px;font-weight:600;cursor:pointer;transition:.15s}
+.btn-share-film:hover{border-color:var(--accent);color:var(--accent)}
+
+.btn-watched{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:10px 18px;border-radius:10px;
+  font-size:13px;font-weight:600;cursor:pointer;transition:.15s;
+  background:rgba(46,204,113,.12);
+  border:1px solid rgba(46,204,113,.4);
+  color:var(--green);
+}
+.btn-watched:hover{background:rgba(46,204,113,.2);border-color:var(--green)}
+.btn-watched.is-watched{
+  background:linear-gradient(90deg,#2ecc71,#27ae60);
+  border-color:var(--green);color:#fff;
+}
+
+.watch-status{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:8px 14px;border-radius:8px;
+  font-size:12px;font-weight:600;
+  margin-top:12px;
+  background:rgba(255,71,87,.12);
+  border:1px solid rgba(255,71,87,.3);
+  color:var(--accent);
+}
+.watch-status.done{
+  background:rgba(46,204,113,.12);
+  border-color:rgba(46,204,113,.3);
+  color:var(--green);
+}
+.watch-status.timer{
+  background:rgba(46,204,113,.12);
+  border-color:rgba(46,204,113,.3);
+  color:var(--green);
+}
+.watch-status.timer .timer-remaining{
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:14px;
+  color:var(--green);
+  letter-spacing:.5px;
+}
+
+.watch-progress-wrap{margin-top:10px;display:none}
+.watch-progress-wrap.on{display:block}
+.watch-progress-bar{width:100%;height:5px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden;margin-bottom:6px}
+.watch-progress-fill{height:100%;background:linear-gradient(90deg,var(--green),#27ae60);transition:width 1s linear;border-radius:3px}
+.watch-progress-hint{font-size:11px;color:var(--muted);display:flex;justify-content:space-between}
+
+.ps{border-top:1px solid var(--line);padding:20px 26px 26px}
+.tabs{display:flex;gap:6px;margin-bottom:16px}
+.tab{padding:8px 16px;border-radius:8px;font-size:13px;color:var(--muted);font-weight:600;transition:.15s}
+.tab:hover{background:rgba(255,255,255,.05)}
+.tab.on{background:var(--accent);color:#fff}
+.tab-panel{display:none}
+.tab-panel.on{display:block}
+
+.watch-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.watch-link{display:flex;align-items:center;justify-content:center;padding:14px;border-radius:10px;color:#fff;font-weight:600;font-size:14px;transition:.15s;position:relative;cursor:pointer}
+.watch-link:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.watch-link.okko{grid-column:1/-1}
+.watch-link.active{
+  box-shadow:0 0 0 2px var(--green),0 8px 20px rgba(46,204,113,.3);
+}
+.watch-link.active::after{
+  content:"▶ таймер идёт";
+  position:absolute;
+  top:-8px;
+  right:8px;
+  background:var(--green);
+  color:#fff;
+  font-size:10px;
+  font-weight:700;
+  padding:2px 8px;
+  border-radius:10px;
+}
+
+#toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);background:linear-gradient(90deg,var(--accent),var(--purple));color:#fff;padding:12px 22px;border-radius:30px;font-size:14px;font-weight:600;box-shadow:0 8px 24px rgba(255,71,87,.4);z-index:300;opacity:0;transition:.4s cubic-bezier(.2,.9,.3,1.3);pointer-events:none;max-width:90vw;text-align:center}
+#toast.on{transform:translateX(-50%) translateY(0);opacity:1}
+
+#errBox{position:fixed;top:16px;left:50%;transform:translateX(-50%);background:#b00020;color:#fff;padding:12px 20px;border-radius:10px;font-size:13px;z-index:9999;max-width:90vw;display:none}
+
+noscript > div{background:#b00020;color:#fff;padding:16px;text-align:center;font-family:system-ui,sans-serif}
+
+@keyframes fadeInUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    transition-duration:.01ms !important;
+    scroll-behavior:auto !important;
+  }
+  .card:hover{transform:none}
+}
+
+@media (max-width:600px){
+  .nav{flex-wrap:wrap;padding:10px 14px;gap:8px}
+  .logo{font-size:18px}
+  .nav-mid{margin-left:8px;order:3;width:100%;justify-content:space-around}
+  .nav-btn{padding:8px 12px;font-size:13px}
+  .nav-search{flex:1;order:2}
+  .nav-search input{width:100%;font-size:13px}
+  .nav-search button{padding:8px 12px;font-size:12px}
+  #activeWatchBanner{top:auto;position:relative;padding:10px 14px;font-size:12px}
+  #activeWatchBanner b{max-width:150px}
+  #hero{min-height:340px}
+  .hero-c{padding:20px}
+  #hTitle{font-size:28px}
+  .card{flex:0 0 130px;width:130px}
+  .section{padding:0 14px}
+  .sec-h{font-size:17px}
+  .mh{flex-direction:column;padding:20px;gap:16px}
+  .mh-img{flex:0 0 auto;width:140px;margin:0 auto}
+  .mh-title{font-size:18px}
+  .ps{padding:16px 20px 22px}
+  .watch-grid{grid-template-columns:1fr}
+  .profile-wrap{padding:22px 14px}
+  #user-title{font-size:22px}
+}
+</style>
+</head>
+<body>
+
+<noscript>
+  <div>Для работы MovieMate нужен JavaScript. Включите его в настройках браузера.</div>
+</noscript>
+
+<div id="errBox" role="alert"></div>
+
+<nav class="nav">
+  <div class="logo" onclick="go('home')">MovieMate</div>
+  <div class="nav-mid">
+    <button class="nav-btn on" data-nav="home" onclick="go('home')">Главная</button>
+    <button class="nav-btn" onclick="location.href='search.html'">Поиск</button>
+    <button class="nav-btn" data-nav="account" onclick="go('account')">Профиль</button>
+  </div>
+  <div class="nav-search">
+    <input id="nsi" placeholder="Быстрый поиск..." onkeydown="if(event.key==='Enter')ns()">
+    <button onclick="ns()">Искать</button>
+  </div>
+</nav>
+
+<div id="activeWatchBanner">
+  <span class="awb-icon">⏱</span>
+  <span>Смотришь: <b id="activeWatchTitle"></b></span>
+  <span class="awb-time" id="activeWatchTime"></span>
+</div>
+
+<div class="page on" id="pg-home">
+  <div id="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-grad"></div>
+    <div class="hero-c">
+      <span class="hero-badge">📅 Фильм дня</span>
+      <h1 id="hTitle">—</h1>
+      <div class="hero-meta" id="hMeta"></div>
+      <p id="hDesc"></p>
+      <div class="hero-btns">
+        <button class="btn-red" onclick="openM(movieOfDay().id)">Подробнее</button>
+        <button class="btn-grad" onclick="randomMovie()">🎲 Случайный фильм</button>
+      </div>
+    </div>
+  </div>
+  <div id="chips"></div>
+  <div id="sections"></div>
+</div>
+
+<div class="page" id="pg-account">
+  <div class="profile-wrap">
+    <div class="profile-box">
+      <div class="prof-emoji">🎮</div>
+      <div id="user-title">Новичок</div>
+      <div class="prof-desc">Твой статус в MovieMate</div>
+      <div class="prof-hint">Новое имя ты получишь за прохождение фаз месяца</div>
+      <div class="stats">
+        <div class="stat"><div class="num" id="stViews">0</div><div class="lbl">фильмов открыто</div></div>
+        <div class="stat"><div class="num" id="stPhases">0</div><div class="lbl">фаз пройдено</div></div>
+        <div class="stat"><div class="num" id="stBadges">0</div><div class="lbl">награды</div></div>
+      </div>
+    </div>
+    <div class="features">
+      <div class="feature" onclick="location.href='search.html'">
+        <div class="fi">📜</div><div class="ft">История просмотров</div>
+        <div class="fd">Все фильмы, которые ты открывал</div>
+      </div>
+      <div class="feature" onclick="location.href='quests.html'">
+        <div class="fi">🏅</div><div class="ft">Квесты и награды</div>
+        <div class="fd" id="featQuests">Получено 0 из 8</div>
+      </div>
+      <div class="feature" onclick="location.href='quests.html'">
+        <div class="fi">🧩</div><div class="ft">Челлендж дня</div>
+        <div class="fd" id="featDaily">0 из 4 фаз пройдено</div>
+      </div>
+    </div>
+    <div class="backup-section">
+      <div class="backup-title">💾 Сохранить прогресс</div>
+      <div class="backup-desc">Прогресс хранится только в этом браузере. Скачай файл — и сможешь перенести его на другое устройство.</div>
+      <div class="backup-btns">
+        <button class="btn-backup primary" onclick="exportProgress()">⬇️ Скачать прогресс</button>
+        <button class="btn-backup" onclick="document.getElementById('importFile').click()">⬆️ Загрузить прогресс</button>
+        <input type="file" id="importFile" accept=".json" style="display:none" onchange="importProgress(event)">
+      </div>
+    </div>
+    <footer class="site-footer">
+      <b>MovieMate</b> — каталог-агрегатор. Мы не храним и не распространяем фильмы.<br>
+      Ссылки ведут на официальные сервисы.<br>
+      <a href="privacy.html" class="privacy-link">Политика конфиденциальности</a>
+    </footer>
+  </div>
+</div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" onclick="if(event.target===this)closeM()">
+  <div class="mbox">
+    <button class="mclose" onclick="closeM()" aria-label="Закрыть">✕</button>
+    <div class="mh">
+      <div class="mh-img"><img id="mImg" alt=""></div>
+      <div class="mh-info">
+        <div class="mh-title" id="mTitle"></div>
+        <div class="mh-type" id="mType"></div>
+        <div class="mh-tags" id="mTags"></div>
+        <div class="mh-desc" id="mDesc"></div>
+        <div class="mh-extra" id="mExtra"></div>
+
+        <div id="mWatchStatus"></div>
+
+        <div class="watch-progress-wrap" id="mProgressWrap">
+          <div class="watch-progress-bar">
+            <div class="watch-progress-fill" id="mProgressFill" style="width:0%"></div>
+          </div>
+          <div class="watch-progress-hint">
+            <span id="mProgressStart">Начало</span>
+            <span id="mProgressEnd">Конец</span>
+          </div>
+        </div>
+
+        <div class="mh-actions">
+          <button class="btn-watched" id="mWatchedBtn" onclick="toggleWatched()">
+            <span>✓</span>
+            <span id="mWatchedText">Посмотрел</span>
+          </button>
+          <button class="btn-share-film" onclick="shareFilm()">🔗 Поделиться</button>
+        </div>
+      </div>
+    </div>
+    <div class="ps">
+      <div class="tabs">
+        <button class="tab on" onclick="switchTab(0)">Где посмотреть</button>
+        <button class="tab" onclick="switchTab(1)">Трейлер</button>
+      </div>
+      <div class="tab-panel on" id="tab0">
+        <div class="watch-grid" id="watchGrid"></div>
+      </div>
+      <div class="tab-panel" id="tab1">
+        <div class="watch-grid" id="trailerGrid"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="db.js"></script>
+<script>
+/* ============================================================
+   ГЛОБАЛЬНЫЙ ПЕРЕХВАТ ОШИБОК
+   ============================================================ */
+window.addEventListener("error", function(e){
+  console.error("[MovieMate]", e.message, "строка:", e.lineno);
+  var eb = document.getElementById("errBox");
+  if(eb){
+    eb.textContent = "⚠️ " + (e.message || "ошибка");
+    eb.style.display = "block";
+    setTimeout(function(){ eb.style.display = "none"; }, 5000);
+  }
+});
+
+/* ============================================================
+   КОНСТАНТЫ
+   ============================================================ */
+var STATE_VERSION = 10;
+var WATCH_BUFFER_MIN = 4;
+
+var SECTIONS = [
+  { id:"pop",     ico:"🔥", title:"Популярное" },
+  { id:"new",     ico:"✨", title:"Новое" },
+  { id:"top",     ico:"⭐", title:"Высокий рейтинг" },
+  { id:"anime",   ico:"🎌", title:"Аниме" },
+  { id:"series",  ico:"📺", title:"Сериалы" },
+  { id:"family",  ico:"🎬", title:"Семейное" },
+  { id:"kids",    ico:"🧸", title:"Для детей" },
+  { id:"comedy",  ico:"😄", title:"Комедии" },
+  { id:"romance", ico:"💕", title:"Мелодрамы" },
+  { id:"horror",  ico:"👻", title:"Ужасы" },
+  { id:"doc",     ico:"📚", title:"Документальное" },
+  { id:"rus",     ico:"🇷🇺", title:"Российское кино" }
+];
+
+var MONTHLY_QUESTS = [
+  { theme:"Месяц старта", phases:[
+    { task:"Открой любой фильм", check:function(){return viewCount>=1;}, nick:"Новичок" },
+    { task:"Открой 3 фильма", check:function(){return viewCount>=3;}, nick:"Зритель" },
+    { task:"Открой 5 фильмов", check:function(){return viewCount>=5;}, nick:"Кинолюб" },
+    { task:"Открой 10 фильмов", check:function(){return viewCount>=10;}, nick:"Киноман" }
+  ]},
+  { theme:"Месяц поиска", phases:[
+    { task:"Воспользуйся поиском", check:function(){return searchCount>=1;}, nick:"Искатель" },
+    { task:"Найди 3 фильма", check:function(){return searchCount>=3;}, nick:"Следопыт" },
+    { task:"Поиск 5 раз", check:function(){return searchCount>=5;}, nick:"Сыщик" },
+    { task:"Найди 10 фильмов", check:function(){return searchCount>=10;}, nick:"Детектив" }
+  ]},
+  { theme:"Месяц удачи", phases:[
+    { task:"Случайный фильм", check:function(){return randomCount>=1;}, nick:"Счастливчик" },
+    { task:"Случайный 3 раза", check:function(){return randomCount>=3;}, nick:"Удачливый" },
+    { task:"Случайный 5 раз", check:function(){return randomCount>=5;}, nick:"Фортуна" },
+    { task:"Случайный 10 раз", check:function(){return randomCount>=10;}, nick:"Джекпот" }
+  ]},
+  { theme:"Месяц рейтингов", phases:[
+    { task:"Фильм с рейтингом 8+", check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0 && parseFloat(m.r)>=8;});}, nick:"Ценитель" },
+    { task:"Фильм 8.5+", check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0 && parseFloat(m.r)>=8.5;});}, nick:"Знаток" },
+    { task:"Фильм 9+", check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0 && parseFloat(m.r)>=9;});}, nick:"Эксперт" },
+    { task:"3 фильма 9+", check:function(){var n=0;DB.forEach(function(m){if(viewedIds.indexOf(m.id)>=0 && parseFloat(m.r)>=9)n++;});return n>=3;}, nick:"Критик" }
+  ]},
+  { theme:"Месяц жанров", phases:[
+    { task:"Драма", check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0 && m.g.indexOf("Драма")>=0;});}, nick:"Драматург" },
+    { task:"Фантастика", check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0 && m.g.indexOf("Фантастика")>=0;});}, nick:"Фантаст" },
+    { task:"Боевик", check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0 && m.g.indexOf("Боевик")>=0;});}, nick:"Боец" },
+    { task:"Комедия", check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0 && m.g.indexOf("Комедия")>=0;});}, nick:"Юморист" }
+  ]},
+  { theme:"Месяц сериалов", phases:[
+    { task:"Любой сериал", check:function(){return viewedSeries;}, nick:"Серийный" },
+    { task:"3 сериала", check:function(){var n=0;DB.forEach(function(m){if(viewedIds.indexOf(m.id)>=0 && (m.ty==="series"||m.ty==="anime"))n++;});return n>=3;}, nick:"Марафонец" },
+    { task:"5 сериалов", check:function(){var n=0;DB.forEach(function(m){if(viewedIds.indexOf(m.id)>=0 && (m.ty==="series"||m.ty==="anime"))n++;});return n>=5;}, nick:"Сериаломан" },
+    { task:"8 сериалов", check:function(){var n=0;DB.forEach(function(m){if(viewedIds.indexOf(m.id)>=0 && (m.ty==="series"||m.ty==="anime"))n++;});return n>=8;}, nick:"Гуру" }
+  ]},
+  { theme:"Месяц семейного", phases:[
+    { task:"Семейный фильм", check:function(){return viewedFamily;}, nick:"Семьянин" },
+    { task:"2 семейных", check:function(){var n=0;DB.forEach(function(m){if(viewedIds.indexOf(m.id)>=0 && (m.cats.indexOf("family")>=0||m.cats.indexOf("kids")>=0))n++;});return n>=2;}, nick:"Родитель" },
+    { task:"Детский фильм", check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0 && m.cats.indexOf("kids")>=0;});}, nick:"Друг детей" },
+    { task:"4 семейных", check:function(){var n=0;DB.forEach(function(m){if(viewedIds.indexOf(m.id)>=0 && (m.cats.indexOf("family")>=0||m.cats.indexOf("kids")>=0))n++;});return n>=4;}, nick:"Хранитель" }
+  ]},
+  { theme:"Месяц 90-х", phases:[
+    { task:"Фильм 90-х", check:function(){return DB.some(function(m){var y=parseInt(m.y);return viewedIds.indexOf(m.id)>=0 && y>=1990 && y<=1999;});}, nick:"Ретро" },
+    { task:"3 фильма 90-х", check:function(){var n=0;DB.forEach(function(m){var y=parseInt(m.y);if(viewedIds.indexOf(m.id)>=0 && y>=1990 && y<=1999)n++;});return n>=3;}, nick:"Ностальгия" },
+    { task:"5 фильмов 90-х", check:function(){var n=0;DB.forEach(function(m){var y=parseInt(m.y);if(viewedIds.indexOf(m.id)>=0 && y>=1990 && y<=1999)n++;});return n>=5;}, nick:"Хранитель" },
+    { task:"8 фильмов 90-х", check:function(){var n=0;DB.forEach(function(m){var y=parseInt(m.y);if(viewedIds.indexOf(m.id)>=0 && y>=1990 && y<=1999)n++;});return n>=8;}, nick:"Легенда" }
+  ]},
+  { theme:"Месяц знаний", phases:[
+    { task:"Уэнсдей + Герои Энвелла", check:function(){return viewedIds.indexOf(22)>=0 && viewedIds.indexOf(25)>=0;}, nick:"Сыщик" },
+    { task:"Мандалорец", check:function(){return viewedIds.indexOf(23)>=0;}, nick:"Охотник" },
+    { task:"Властелин колец", check:function(){return viewedIds.indexOf(24)>=0;}, nick:"Хранитель" },
+    { task:"Очень странные дела", check:function(){return viewedIds.indexOf(21)>=0;}, nick:"Житель Хоукинса" }
+  ]},
+  { theme:"Месяц тайн", phases:[
+    { task:"Детектив", check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0 && (m.g.indexOf("Детектив")>=0||m.g.indexOf("Триллер")>=0);});}, nick:"Детектив" },
+    { task:"3 триллера", check:function(){var n=0;DB.forEach(function(m){if(viewedIds.indexOf(m.id)>=0 && m.g.indexOf("Триллер")>=0)n++;});return n>=3;}, nick:"Сыщик" },
+    { task:"Фильм 9+", check:function(){return DB.some(function(m){return viewedIds.indexOf(m.id)>=0 && parseFloat(m.r)>=9;});}, nick:"Знаток" },
+    { task:"5 жанров", check:function(){var seen={},n=0;DB.forEach(function(m){if(viewedIds.indexOf(m.id)>=0){m.g.split(",").forEach(function(g){g=g.trim();if(!seen[g]){seen[g]=1;n++;}});}});return n>=5;}, nick:"Эрудит" }
+  ]},
+  { theme:"Месяц зимы", phases:[
+    { task:"Фильм", check:function(){return viewCount>=1;}, nick:"Зритель" },
+    { task:"5 фильмов", check:function(){return viewCount>=5;}, nick:"Кинолюб" },
+    { task:"Семейный", check:function(){return viewedFamily;}, nick:"Семьянин" },
+    { task:"15 фильмов", check:function(){return viewCount>=15;}, nick:"Киноман" }
+  ]},
+  { theme:"Месяц финала", phases:[
+    { task:"20 фильмов", check:function(){return viewCount>=20;}, nick:"Ветеран" },
+    { task:"25 фильмов", check:function(){return viewCount>=25;}, nick:"Мастер" },
+    { task:"6 наград", check:function(){return getEarnedBadges().length>=6;}, nick:"Коллекционер" },
+    { task:"Все 8 наград", check:function(){return getEarnedBadges().length>=8;}, nick:"Легенда" }
+  ]}
+];
+
+var BADGES = [
+  { id:"first",     ico:"🔰", title:"Первый шаг", check:function(){return viewCount>=1;} },
+  { id:"cinephile", ico:"🎬", title:"Киноман",     check:function(){return viewCount>=5;} },
+  { id:"marathon",  ico:"🍿", title:"Марафонец",   check:function(){return viewCount>=10;} },
+  { id:"searcher",  ico:"🔍", title:"Искатель",    check:function(){return searchCount>=1;} },
+  { id:"lucky",     ico:"🎲", title:"Удачливый",   check:function(){return randomCount>=1;} },
+  { id:"highrated", ico:"⭐", title:"Знаток",      check:function(){return viewedHighRated;} },
+  { id:"series",    ico:"📺", title:"Серийный",    check:function(){return viewedSeries;} },
+  { id:"family",    ico:"👨‍👩‍👧", title:"Семейный", check:function(){return viewedFamily;} }
+];
+
+/* ============================================================
+   СОСТОЯНИЕ
+   ============================================================ */
+var KEY = "mm_state";
+var WATCHED_KEY = "mm_watched";
+var WATCHING_KEY = "mm_watching";
+var POSTER_KEY = "mm_poster_cache";
+var WATCH_DAILY_KEY = "mm_watch_daily";
+
+var viewCount = 0, viewedIds = [], searchCount = 0, randomCount = 0, challengeCount = 0;
+var viewedHighRated = false, viewedSeries = false, viewedFamily = false;
+var monthQuest = { key:null, done:[] };
+var dailyDone = {};
+var watchedIds = [];
+var watchingTimers = {};
+var pCache = {};
+var pPending = {};
+var posterCacheLoaded = false;
+
+var MONTHS_GEN = ["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"];
+
+/* ============================================================
+   ДАТЫ
+   ============================================================ */
+function pad2(n){ return n < 10 ? "0" + n : "" + n; }
+function getMoscowDate(){
+  var now = new Date();
+  var utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+  return new Date(utc + (3 * 3600000));
+}
+function getMonthKey(){var d=getMoscowDate();return d.getFullYear()+"-"+pad2(d.getMonth()+1)}
+function getDayKey(){var d=getMoscowDate();return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate())}
+function getWeekOfMonth(){var day=getMoscowDate().getDate();if(day<=7)return 0;if(day<=14)return 1;if(day<=21)return 2;return 3}
+
+/* ============================================================
+   УЧЁТ ВРЕМЕНИ ПРОСМОТРА
+   ============================================================ */
+function getWatchDailyAll(){
+  try{
+    var raw = localStorage.getItem(WATCH_DAILY_KEY);
+    if(!raw) return {};
+    var data = JSON.parse(raw);
+    return (data && typeof data === "object") ? data : {};
+  }catch(e){ return {}; }
+}
+function saveWatchDailyAll(data){
+  try{ localStorage.setItem(WATCH_DAILY_KEY, JSON.stringify(data)); }
+  catch(e){ console.warn("[MovieMate] watch daily save fail:", e.message); }
+}
+function addWatchTime(ms){
+  if(!ms || ms < 1000) return;
+  var d = getMoscowDate();
+  var dayKey = d.getFullYear() + "-" + pad2(d.getMonth()+1) + "-" + pad2(d.getDate());
+  var all = getWatchDailyAll();
+  all[dayKey] = (all[dayKey] || 0) + ms;
+  saveWatchDailyAll(all);
+  console.log("[MovieMate] +" + Math.round(ms/60000) + " мин (" + Math.round(ms/1000) + " сек). Сегодня всего: " +
+    Math.floor(all[dayKey] / 60000) + " мин");
+}
+
+/* ============================================================
+   ДЛИТЕЛЬНОСТЬ
+   ============================================================ */
+function parseDuration(rt){
+  if(!rt) return 120;
+  var match = String(rt).match(/(\d+)/);
+  return match ? parseInt(match[1], 10) : 120;
+}
+
+/* ============================================================
+   ПРОСМОТРЕННЫЕ
+   ============================================================ */
+function loadWatched(){
+  try{
+    var raw = localStorage.getItem(WATCHED_KEY);
+    if(!raw){ watchedIds = []; return; }
+    var data = JSON.parse(raw);
+    if(!Array.isArray(data)){ watchedIds = []; return; }
+    var cutoff = Date.now() - 7 * 86400000;
+    watchedIds = data.filter(function(item){
+      return item && item.t && item.t >= cutoff;
+    });
+    if(watchedIds.length && typeof watchedIds[0] === "number"){
+      watchedIds = watchedIds.map(function(id){ return {id:id, t:Date.now()}; });
+    }
+    saveWatched(true);
+  }catch(e){ watchedIds = []; }
+}
+function saveWatched(silent){
+  try{ localStorage.setItem(WATCHED_KEY, JSON.stringify(watchedIds)); }
+  catch(e){ if(!silent) console.warn("watched save fail"); }
+}
+function isWatched(id){
+  id = String(id);
+  return watchedIds.some(function(x){ return String(x.id) === id; });
+}
+function markWatched(id){
+  if(isWatched(id)) return false;
+  watchedIds.push({ id: id, t: Date.now() });
+  saveWatched();
+  return true;
+}
+function unmarkWatched(id){
+  id = String(id);
+  var before = watchedIds.length;
+  watchedIds = watchedIds.filter(function(x){ return String(x.id) !== id; });
+  if(watchedIds.length !== before){ saveWatched(); return true; }
+  return false;
+}
+
+/* ============================================================
+   ТАЙМЕРЫ ПРОСМОТРА
+   ============================================================ */
+function loadWatching(){
+  try{
+    var raw = localStorage.getItem(WATCHING_KEY);
+    if(!raw){ watchingTimers = {}; return; }
+    var data = JSON.parse(raw);
+    watchingTimers = (data && typeof data === "object") ? data : {};
+  }catch(e){ watchingTimers = {}; }
+}
+function saveWatching(){
+  try{ localStorage.setItem(WATCHING_KEY, JSON.stringify(watchingTimers)); }
+  catch(e){ console.warn("watching save fail"); }
+}
+function getWatchingRemaining(id){
+  var t = watchingTimers[id];
+  if(!t) return 0;
+  var elapsed = Date.now() - t.startTime;
+  var remaining = t.duration - elapsed;
+  return remaining > 0 ? remaining : 0;
+}
+function getWatchingProgress(id){
+  var t = watchingTimers[id];
+  if(!t) return 0;
+  var elapsed = Date.now() - t.startTime;
+  var p = elapsed / t.duration * 100;
+  return Math.max(0, Math.min(100, p));
+}
+function isWatching(id){
+  return getWatchingRemaining(id) > 0;
+}
+function formatRemaining(ms){
+  if(ms <= 0) return "0:00";
+  var totalSec = Math.ceil(ms / 1000);
+  var h = Math.floor(totalSec / 3600);
+  var m = Math.floor((totalSec % 3600) / 60);
+  var s = totalSec % 60;
+  if(h > 0){
+    return h + ":" + pad2(m) + ":" + pad2(s);
+  }
+  return m + ":" + pad2(s);
+}
+function startWatchingTimer(movieId){
+  var m = DB.filter(function(x){ return x.id === movieId; })[0];
+  if(!m) return;
+
+  if(isWatching(movieId)){
+    toast("⏱ Уже смотришь: " + m.t);
+    return;
+  }
+
+  if(isWatched(movieId)){
+    unmarkWatched(movieId);
+  }
+
+  var totalMin = parseDuration(m.rt);
+  var watchMin = Math.max(1, totalMin - WATCH_BUFFER_MIN);
+  var durationMs = watchMin * 60000;
+
+  watchingTimers[movieId] = {
+    startTime: Date.now(),
+    duration: durationMs
+  };
+  saveWatching();
+
+  console.log("[MovieMate] Таймер запущен:", movieId, m.t, "на", watchMin, "мин");
+
+  toast("⏱ Таймер: " + watchMin + " мин");
+  updateWatchedUI(movieId);
+  renderWatch(m);
+  renderAll();
+  renderActiveBanner();
+}
+
+function stopWatchingTimer(movieId){
+  if(watchingTimers[movieId]){
+    var t = watchingTimers[movieId];
+    var elapsed = Date.now() - t.startTime;
+    if(elapsed > t.duration) elapsed = t.duration;
+    if(elapsed >= 30000){
+      addWatchTime(elapsed);
+    } else {
+      console.log("[MovieMate] Пропущено: смотрел только " + Math.round(elapsed/1000) + " сек");
+    }
+    delete watchingTimers[movieId];
+    saveWatching();
+  }
+  renderActiveBanner();
+}
+
+function checkExpiredTimers(silent){
+  var changed = false;
+  var expired = [];
+  Object.keys(watchingTimers).forEach(function(id){
+    var numId = parseInt(id, 10);
+    var remaining = getWatchingRemaining(numId);
+    if(remaining <= 0){
+      if(!isWatched(numId)){
+        markWatched(numId);
+        var m = DB.filter(function(x){ return x.id === numId; })[0];
+        if(m) expired.push(m.t);
+        changed = true;
+      }
+      if(watchingTimers[id] && watchingTimers[id].duration){
+        addWatchTime(watchingTimers[id].duration);
+        console.log("[MovieMate] Досмотрено: добавлено " +
+          Math.round(watchingTimers[id].duration / 60000) + " мин");
+      }
+      delete watchingTimers[id];
+    }
+  });
+  if(changed){
+    saveWatching();
+    if(!silent && expired.length){
+      toast("🎉 Просмотрено: " + expired.join(", "));
+    }
+  }
+  return changed;
+}
+
+function stopAllTimersOnReturn(){
+  var ids = Object.keys(watchingTimers);
+  if(!ids.length) return 0;
+
+  var stoppedNames = [];
+  var totalAdded = 0;
+
+  ids.forEach(function(idStr){
+    var numId = parseInt(idStr, 10);
+    var t = watchingTimers[numId];
+    var m = DB.filter(function(x){ return x.id === numId; })[0];
+
+    if(t){
+      var elapsed = Date.now() - t.startTime;
+      if(elapsed > t.duration) elapsed = t.duration;
+      if(elapsed >= 30000){
+        totalAdded += elapsed;
+      }
+    }
+    if(m) stoppedNames.push(m.t);
+  });
+
+  if(totalAdded > 0){
+    addWatchTime(totalAdded);
+    console.log("[MovieMate] Итого при возврате: +" + Math.round(totalAdded/60000) + " мин");
+  }
+
+  watchingTimers = {};
+  saveWatching();
+
+  if(stoppedNames.length === 1){
+    toast("⏹ Таймер остановлен: " + stoppedNames[0]);
+  } else if(stoppedNames.length > 1){
+    toast("⏹ Таймеры остановлены (" + stoppedNames.length + ")");
+  }
+
+  return stoppedNames.length;
+}
+
+/* ============================================================
+   «В ПРОЦЕССЕ»
+   ============================================================ */
+function getInProgress(){
+  var list = viewedIds.slice().reverse();
+  var result = [];
+  for(var i=0; i<list.length && result.length < 6; i++){
+    var id = list[i];
+    if(isWatched(id)) continue;
+    var m = DB.filter(function(x){ return x.id === id; })[0];
+    if(m) result.push(m);
+  }
+  return result;
+}
+
+/* ============================================================
+   КЕШ ПОСТЕРОВ
+   ============================================================ */
+function loadPosterCache(){
+  if(posterCacheLoaded) return;
+  posterCacheLoaded = true;
+  try{
+    var raw = localStorage.getItem(POSTER_KEY);
+    if(!raw) return;
+    var data = JSON.parse(raw);
+    if(data && typeof data === "object") pCache = data;
+  }catch(e){ pCache = {}; }
+}
+function savePosterCache(){
+  try{
+    var keys = Object.keys(pCache);
+    if(keys.length > 200){
+      var trimmed = {};
+      keys.slice(-200).forEach(function(k){ trimmed[k] = pCache[k]; });
+      pCache = trimmed;
+    }
+    localStorage.setItem(POSTER_KEY, JSON.stringify(pCache));
+  }catch(e){ pCache = {}; }
+}
+
+/* ============================================================
+   STATE
+   ============================================================ */
+function saveState(){
+  try{
+    var mq = { key: monthQuest.key || getMonthKey(), phases:[false,false,false,false], dates:[null,null,null,null] };
+    if(Array.isArray(monthQuest.done)){
+      var d = getMoscowDate();
+      var dateStr = d.getDate()+" "+MONTHS_GEN[d.getMonth()];
+      monthQuest.done.forEach(function(i){
+        if(i>=0 && i<4){ mq.phases[i] = true; if(!mq.dates[i]) mq.dates[i] = dateStr; }
+      });
+    }
+    localStorage.setItem(KEY, JSON.stringify({
+      version: STATE_VERSION, savedAt: Date.now(),
+      viewCount:viewCount, viewedIds:viewedIds, searchCount:searchCount,
+      randomCount:randomCount, challengeCount:challengeCount,
+      viewedHighRated:viewedHighRated, viewedSeries:viewedSeries,
+      viewedFamily:viewedFamily, monthQuest:mq, dailyDone:dailyDone
+    }));
+  }catch(e){ console.warn("save fail"); }
+}
+function loadState(){
+  var s = {};
+  try{
+    var raw = localStorage.getItem(KEY);
+    if(raw){ s = JSON.parse(raw) || {}; }
+  }catch(e){ s = {}; }
+
+  try{
+    viewCount       = parseInt(s.viewCount) || 0;
+    viewedIds       = Array.isArray(s.viewedIds) ? s.viewedIds : [];
+    searchCount     = parseInt(s.searchCount) || 0;
+    randomCount     = parseInt(s.randomCount) || 0;
+    challengeCount  = parseInt(s.challengeCount) || 0;
+    viewedHighRated = !!s.viewedHighRated;
+    viewedSeries    = !!s.viewedSeries;
+    viewedFamily    = !!s.viewedFamily;
+    dailyDone       = (s.dailyDone && typeof s.dailyDone === "object") ? s.dailyDone : {};
+
+    var seen = {};
+    viewedIds = viewedIds.filter(function(id){
+      if(seen[id]) return false;
+      seen[id] = 1;
+      return true;
+    });
+
+    var mq = s.monthQuest;
+    var done = [];
+    if(mq && typeof mq === "object"){
+      if(Array.isArray(mq.done)) done = mq.done.slice();
+      else if(Array.isArray(mq.phases)) mq.phases.forEach(function(p,i){ if(p) done.push(i); });
+    }
+    monthQuest = { key: (mq && mq.key) ? mq.key : null, done: done };
+
+    var mKey = getMonthKey();
+    if(monthQuest.key !== mKey){
+      monthQuest = { key: mKey, done: [] };
+      challengeCount = 0;
+    }
+  }catch(e){
+    viewCount = 0; viewedIds = []; searchCount = 0; randomCount = 0;
+    challengeCount = 0; viewedHighRated = false; viewedSeries = false;
+    viewedFamily = false; dailyDone = {};
+    monthQuest = { key: getMonthKey(), done: [] };
+  }
+  saveState();
+}
+function getEarnedBadges(){ return BADGES.filter(function(b){ return b.check(); }); }
+
+/* ============================================================
+   ЭКСПОРТ / ИМПОРТ
+   ============================================================ */
+function exportProgress(){
+  try{
+    var data = {
+      app: "MovieMate", version: STATE_VERSION,
+      exported: new Date().toISOString(),
+      state: localStorage.getItem(KEY) || "{}",
+      watched: localStorage.getItem(WATCHED_KEY) || "[]",
+      watching: localStorage.getItem(WATCHING_KEY) || "{}",
+      watchDaily: localStorage.getItem(WATCH_DAILY_KEY) || "{}",
+      history: localStorage.getItem("mm_search_history") || "[]",
+      superQuestClaimed: localStorage.getItem("mm_super_quest_claimed") || "0",
+      posterCache: localStorage.getItem(POSTER_KEY) || "{}"
+    };
+    var blob = new Blob([JSON.stringify(data, null, 2)], {type:"application/json"});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    var d = new Date();
+    a.href = url;
+    a.download = "moviemate-"+d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate())+".json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    toast("✅ Прогресс скачан");
+  }catch(e){ toast("⚠️ Ошибка экспорта"); }
+}
+function importProgress(event){
+  var file = event.target.files && event.target.files[0];
+  if(!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e){
+    var data;
+    try{ data = JSON.parse(e.target.result); }
+    catch(err){ toast("⚠️ Файл повреждён"); return; }
+    if(!data || data.app !== "MovieMate"){ toast("⚠️ Не тот файл"); return; }
+    if(!confirm("Заменить текущий прогресс?")) return;
+    try{
+      if(data.state) localStorage.setItem(KEY, data.state);
+      if(data.watched) localStorage.setItem(WATCHED_KEY, data.watched);
+      if(data.watching) localStorage.setItem(WATCHING_KEY, data.watching);
+      if(data.watchDaily) localStorage.setItem(WATCH_DAILY_KEY, data.watchDaily);
+      if(data.history) localStorage.setItem("mm_search_history", data.history);
+      if(data.superQuestClaimed) localStorage.setItem("mm_super_quest_claimed", data.superQuestClaimed);
+      if(data.posterCache) localStorage.setItem(POSTER_KEY, data.posterCache);
+      toast("✅ Восстановлено");
+      setTimeout(function(){ location.reload(); }, 800);
+    }catch(err){ toast("⚠️ Не сохранилось"); }
+  };
+  reader.readAsText(file);
+  event.target.value = "";
+}
+
+/* ============================================================
+   НАВИГАЦИЯ
+   ============================================================ */
+function go(page, pushHistory){
+  document.querySelectorAll(".page").forEach(function(p){ p.classList.remove("on"); });
+  var el = document.getElementById("pg-"+page);
+  if(el) el.classList.add("on");
+  document.querySelectorAll(".nav-btn").forEach(function(b){
+    b.classList.toggle("on", b.dataset.nav===page);
+  });
+  if(page==="account") updateProfile();
+  if(page==="home") renderAll();
+  window.scrollTo({top:0,behavior:"smooth"});
+  if(pushHistory !== false){
+    try{
+      var url = page === "home" ? "home.html" : "home.html#" + page;
+      history.pushState({page: page}, "", url);
+    }catch(e){}
+  }
+}
+window.addEventListener("popstate", function(e){
+  var page = (e.state && e.state.page) || "home";
+  go(page, false);
+});
+function ns(){
+  var q = document.getElementById("nsi").value.trim();
+  if(!q) return;
+  location.replace('search.html?q=' + encodeURIComponent(q));
+}
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+var toastQueue = [];
+var toastBusy = false;
+function toast(msg){
+  toastQueue.push(msg);
+  if(!toastBusy) processToastQueue();
+}
+function processToastQueue(){
+  if(toastQueue.length === 0){ toastBusy = false; return; }
+  toastBusy = true;
+  var msg = toastQueue.shift();
+  var t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("on");
+  clearTimeout(t._t);
+  t._t = setTimeout(function(){
+    t.classList.remove("on");
+    setTimeout(processToastQueue, 300);
+  }, 2600);
+}
+
+/* ============================================================
+   ФИЛЬМ ДНЯ
+   ============================================================ */
+function movieOfDay(){
+  var d = getMoscowDate();
+  var seed = (d.getFullYear() * 400) + ((d.getMonth()+1) * 31) + d.getDate();
+  return DB[seed % DB.length];
+}
+function renderHero(){
+  var m = movieOfDay();
+  document.getElementById("hTitle").textContent = m.t;
+  document.getElementById("hDesc").textContent = m.p.length>180 ? m.p.slice(0,180)+"…" : m.p;
+  document.getElementById("hMeta").innerHTML =
+    '<span class="imdb-badge">IMDb '+m.r+'</span>'+
+    '<span class="tag">'+m.g.split(",")[0].trim()+'</span>'+
+    '<span class="tag">'+m.rt+'</span>';
+  var bg = document.getElementById("heroBg");
+  bg.style.background = "linear-gradient(135deg,"+m.col1+","+m.col2+")";
+  bg.style.backgroundImage = "";
+  fetchPoster(m, function(url){
+    if(url){
+      bg.style.backgroundImage = "linear-gradient(rgba(10,10,18,.35),rgba(10,10,18,.35)), url('"+url+"')";
+      bg.style.backgroundSize = "cover";
+      bg.style.backgroundPosition = "center";
+    }
+  });
+}
+
+/* ============================================================
+   ЧИПСЫ
+   ============================================================ */
+var CHIPS = [
+  { label:"Все",       field:null,  value:null },
+  { label:"Фильмы",    field:"ty",  value:"movie" },
+  { label:"Сериалы",   field:"ty",  value:"series" },
+  { label:"Аниме",     field:"ty",  value:"anime" },
+  { label:"Фантастика",field:"g",   value:"Фантастика" },
+  { label:"Боевик",    field:"g",   value:"Боевик" },
+  { label:"Драма",     field:"g",   value:"Драма" },
+  { label:"Комедия",   field:"g",   value:"Комедия" },
+  { label:"Триллер",   field:"g",   value:"Триллер" },
+  { label:"Ужасы",     field:"g",   value:"Ужасы" },
+  { label:"Семейный",  field:"g",   value:"Семейный" }
+];
+function renderChips(){
+  var w = document.getElementById("chips");
+  w.innerHTML = "";
+  CHIPS.forEach(function(c, i){
+    var b = document.createElement("button");
+    b.className = "chip" + (i===0 ? " on" : "");
+    b.textContent = c.label;
+    b.onclick = function(){
+      document.querySelectorAll(".chip").forEach(function(x){ x.classList.remove("on"); });
+      b.classList.add("on");
+      if(!c.field){ go("home"); return; }
+      location.replace('search.html?g=' + encodeURIComponent(c.value));
+    };
+    w.appendChild(b);
+  });
+}
+
+/* ============================================================
+   СЕКЦИИ
+   ============================================================ */
+function renderSections(){
+  var wrap = document.getElementById("sections");
+  wrap.innerHTML = "";
+  SECTIONS.forEach(function(sec){
+    var list = DB.filter(function(m){ return m.cats.indexOf(sec.id)>=0; }).slice(0, 12);
+    if(list.length===0) return;
+    var s = document.createElement("div");
+    s.className = "section";
+    var h = document.createElement("div");
+    h.className = "sec-h";
+    h.innerHTML = '<span class="ico">'+sec.ico+'</span>'+sec.title;
+    var row = document.createElement("div");
+    row.className = "row";
+    list.forEach(function(m){ row.appendChild(mkCard(m)); });
+    s.appendChild(h); s.appendChild(row);
+    wrap.appendChild(s);
+  });
+}
+function renderContinueWatching(){
+  var wrap = document.getElementById("sections");
+  if(!wrap) return;
+  var list = getInProgress();
+  if(list.length === 0) return;
+  var s = document.createElement("div");
+  s.className = "section";
+  var h = document.createElement("div");
+  h.className = "sec-h";
+  h.innerHTML = '<span class="ico">▶️</span>Продолжить просмотр';
+  var row = document.createElement("div");
+  row.className = "row";
+  list.forEach(function(m){ row.appendChild(mkCard(m, true)); });
+  s.appendChild(h); s.appendChild(row);
+  wrap.insertBefore(s, wrap.firstChild);
+}
+
+/* ============================================================
+   КАРТОЧКА
+   ============================================================ */
+function mkCard(m, showBadge){
+  var c = document.createElement("div");
+  c.className = "card";
+  c.onclick = function(){ openM(m.id); };
+  var p = document.createElement("div");
+  p.className = "card-poster";
+  var img = document.createElement("img");
+  img.loading = "lazy";
+  img.alt = m.t;
+  img.dataset.mid = m.id;
+  var fallback = svgP(m);
+  var tried = false;
+  img.onerror = function(){ if(tried) return; tried = true; this.src = fallback; };
+  img.src = pCache[m.id] || fallback;
+  p.appendChild(img);
+  var imdb = document.createElement("div");
+  imdb.className = "card-imdb";
+  imdb.textContent = "IMDb "+m.r;
+  p.appendChild(imdb);
+
+  if(showBadge){
+    var badge = document.createElement("div");
+    badge.className = "card-continue-badge";
+    if(isWatching(m.id)){
+      badge.classList.add("timer");
+      badge.setAttribute("data-timer-id", m.id);
+      badge.textContent = "⏱ " + formatRemaining(getWatchingRemaining(m.id));
+    } else {
+      badge.textContent = "▶ смотрю";
+    }
+    p.appendChild(badge);
+  }
+
+  var t = document.createElement("div");
+  t.className = "card-t";
+  t.textContent = m.t;
+  var y = document.createElement("div");
+  y.className = "card-y";
+  y.textContent = m.y + (m.ty==="series" ? " • Сериал" : m.ty==="anime" ? " • Аниме" : "");
+  c.appendChild(p); c.appendChild(t); c.appendChild(y);
+
+  if(!pCache[m.id]){
+    fetchPoster(m, function(url){
+      if(!url) return;
+      document.querySelectorAll('img[data-mid="'+m.id+'"]').forEach(function(im){ im.src = url; });
+    });
+  }
+  return c;
+}
+
+/* ============================================================
+   SVG-ЗАГЛУШКА
+   ============================================================ */
+function svgP(m){
+  var lines = wrapText(m.t, 14, 4);
+  var tspans = "";
+  var startY = 200 - (lines.length-1)*14;
+  lines.forEach(function(l,i){
+    tspans += '<tspan x="150" dy="'+(i===0?0:30)+'">'+esc(l)+'</tspan>';
+  });
+  var svg =
+    '<svg xmlns="http://www.w3.org/2000/svg" width="300" height="450" viewBox="0 0 300 450">'+
+    '<defs><linearGradient id="g'+m.id+'" x1="0" y1="0" x2="1" y2="1">'+
+    '<stop offset="0%" stop-color="'+m.col1+'"/><stop offset="100%" stop-color="'+m.col2+'"/>'+
+    '</linearGradient></defs>'+
+    '<rect width="300" height="450" fill="url(#g'+m.id+')"/>'+
+    '<circle cx="150" cy="100" r="90" fill="rgba(255,255,255,0.06)"/>'+
+    '<rect x="130" y="86" width="40" height="28" rx="4" fill="rgba(255,255,255,0.25)"/>'+
+    '<polygon points="140,94 140,110 156,102" fill="rgba(255,255,255,0.5)"/>'+
+    '<text x="150" y="'+startY+'" font-size="24" font-weight="bold" fill="#ffffff" text-anchor="middle" font-family="Arial,sans-serif">'+tspans+'</text>'+
+    '<text x="150" y="410" font-size="16" fill="rgba(255,255,255,0.7)" text-anchor="middle" font-family="Arial,sans-serif">IMDb '+m.r+'</text>'+
+    '<text x="150" y="430" font-size="14" fill="rgba(255,255,255,0.5)" text-anchor="middle" font-family="Arial,sans-serif">'+m.y+'</text>'+
+    '</svg>';
+  return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+}
+function wrapText(text, max, maxLines){
+  var words = text.split(" ");
+  var lines = [], cur = "";
+  words.forEach(function(w){
+    if((cur+" "+w).trim().length <= max) cur = (cur+" "+w).trim();
+    else { if(cur) lines.push(cur); cur = w; }
+  });
+  if(cur) lines.push(cur);
+  if(lines.length > maxLines){
+    lines = lines.slice(0, maxLines);
+    lines[maxLines-1] = lines[maxLines-1].slice(0, max-1)+"…";
+  }
+  return lines;
+}
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+/* ============================================================
+   ПОСТЕРЫ
+   ============================================================ */
+var FMDB_BASE = "https://imdb.iamidiotareyoutoo.com";
+var OMDB_KEY = "8fceb7e0";
+
+function fetchPoster(m, cb){
+  if(pCache[m.id]){ cb(pCache[m.id]); return; }
+  if(pPending[m.id]){ pPending[m.id].push(cb); return; }
+  pPending[m.id] = [cb];
+  function finish(url){
+    pCache[m.id] = url || "";
+    if(url) savePosterCache();
+    (pPending[m.id] || []).forEach(function(fn){ try{ fn(url); }catch(e){} });
+    delete pPending[m.id];
+  }
+  tryFMDB(m, function(url){
+    if(url){ finish(url); return; }
+    tryOMDb(m, function(url2){ finish(url2); });
+  });
+}
+function tryFMDB(m, cb){
+  var q = FMDB_BASE + "/search?q=" + encodeURIComponent(m.ot || m.t);
+  var proxied = "https://api.allorigins.win/raw?url=" + encodeURIComponent(q);
+  fetchWithTimeout(proxied, 6000)
+    .then(function(j){
+      if(!j || !Array.isArray(j.description)) throw new Error("no res");
+      var targetYear = String(m.y);
+      var match = j.description.find(function(item){
+        return item["#YEAR"] && String(item["#YEAR"]) === targetYear;
+      }) || j.description[0];
+      if(!match || !match["#IMDB_ID"]) throw new Error("no id");
+      var photoUrl = FMDB_BASE + "/photo?tt=" + match["#IMDB_ID"];
+      var proxiedPhoto = "https://api.allorigins.win/raw?url=" + encodeURIComponent(photoUrl);
+      return fetchWithTimeout(proxiedPhoto, 6000);
+    })
+    .then(function(j){
+      if(j && j.imageUrl){ cb(j.imageUrl); return; }
+      if(j && j.url){ cb(j.url); return; }
+      cb(null);
+    })
+    .catch(function(){ cb(null); });
+}
+function tryOMDb(m, cb){
+  var omdbType = (m.ty === "movie") ? "&type=movie" : "&type=series";
+  var q = "https://www.omdbapi.com/?apikey=" + OMDB_KEY
+        + "&t=" + encodeURIComponent(m.ot || m.t) + "&y=" + m.y + omdbType;
+  var urls = [
+    "https://api.allorigins.win/raw?url=" + encodeURIComponent(q),
+    "https://corsproxy.io/?url=" + encodeURIComponent(q)
+  ];
+  tryOne(0);
+  function tryOne(i){
+    if(i >= urls.length){ cb(null); return; }
+    fetchWithTimeout(urls[i], 6000)
+      .then(function(j){
+        if(j && j.Poster && j.Poster !== "N/A"){ cb(j.Poster); return; }
+        if(i+1 < urls.length) tryOne(i+1);
+        else cb(null);
+      })
+      .catch(function(){
+        if(i+1 < urls.length) tryOne(i+1);
+        else cb(null);
+      });
+  }
+}
+function fetchWithTimeout(url, ms){
+  var ctrl = new AbortController();
+  var timer = setTimeout(function(){ ctrl.abort(); }, ms);
+  return fetch(url, {signal: ctrl.signal})
+    .then(function(r){
+      clearTimeout(timer);
+      if(!r.ok) throw new Error("http " + r.status);
+      return r.json();
+    })
+    .catch(function(e){ clearTimeout(timer); throw e; });
+}
+
+/* ============================================================
+   МОДАЛКА
+   ============================================================ */
+var _openModalId = null;
+
+function openM(id, opts){
+  opts = opts || {};
+  var count = opts.count !== false;
+  var m = DB.filter(function(x){ return x.id===id; })[0];
+  if(!m) return;
+
+  if(opts.pushUrl !== false){
+    try{ history.pushState({film: id}, "", "home.html#film-" + id); }catch(e){}
+  }
+
+  if(count){
+    if(viewedIds.indexOf(id) < 0){
+      viewCount++;
+      viewedIds.push(id);
+    }
+    if(parseFloat(m.r)>=9.0) viewedHighRated = true;
+    if(m.ty==="series" || m.ty==="anime") viewedSeries = true;
+    if(m.cats.indexOf("family")>=0 || m.cats.indexOf("kids")>=0) viewedFamily = true;
+    saveState();
+    checkPhases();
+    updateProfile();
+  }
+
+  var mi = document.getElementById("mImg");
+  mi.dataset.mid = m.id;
+  mi.src = pCache[m.id] || svgP(m);
+  if(!pCache[m.id]){
+    fetchPoster(m, function(url){ if(url) mi.src = url; });
+  }
+  document.getElementById("mTitle").textContent = m.t + " ("+m.y+")";
+  var typeTxt = m.ty==="movie" ? "Фильм" : m.ty==="anime" ? "Аниме" : "Сериал";
+  document.getElementById("mType").textContent = typeTxt + " • " + m.ot;
+  document.getElementById("mTags").innerHTML =
+    '<span class="tag">'+m.g+'</span>'+
+    '<span class="tag">'+m.rt+'</span>'+
+    '<span class="imdb-badge">IMDb '+m.r+'</span>';
+  document.getElementById("mDesc").textContent = m.p;
+  document.getElementById("mExtra").innerHTML =
+    "<b>Режиссёр:</b> "+m.d+"<br>"+
+    "<b>Актёры:</b> "+m.a+"<br>"+
+    "<b>Страна:</b> "+m.c;
+
+  _openModalId = id;
+  updateWatchedUI(id);
+  renderWatch(m);
+  switchTab(0);
+
+  var modal = document.getElementById("modal");
+  modal.classList.add("on");
+  document.body.style.overflow = "hidden";
+  var mc = modal.querySelector(".mclose");
+  if(mc) setTimeout(function(){ mc.focus(); }, 50);
+}
+
+function closeM(){
+  var modal = document.getElementById("modal");
+  modal.classList.remove("on");
+  document.body.style.overflow = "";
+  try{ if(document.activeElement) document.activeElement.blur(); }catch(e){}
+  if(location.hash.indexOf("#film-") === 0){
+    try{ history.pushState({}, "", "home.html"); }catch(e){}
+  }
+  _openModalId = null;
+}
+
+/* ============================================================
+   СТАТУС ПРОСМОТРА
+   ============================================================ */
+function toggleWatched(){
+  var id = _openModalId;
+  if(!id) return;
+
+  if(isWatched(id)){
+    unmarkWatched(id);
+    toast("↺ Возвращено в «Продолжить просмотр»");
+  } else {
+    if(watchingTimers[id]){
+      var t = watchingTimers[id];
+      var elapsed = Date.now() - t.startTime;
+      if(elapsed > t.duration) elapsed = t.duration;
+      if(elapsed >= 30000) addWatchTime(elapsed);
+      delete watchingTimers[id];
+      saveWatching();
+    }
+    markWatched(id);
+    toast("🎉 Отмечено как просмотренное");
+  }
+
+  updateWatchedUI(id);
+  renderAll();
+  renderActiveBanner();
+}
+
+function updateWatchedUI(id){
+  var btn = document.getElementById("mWatchedBtn");
+  var status = document.getElementById("mWatchStatus");
+  var progressWrap = document.getElementById("mProgressWrap");
+  var watchedText = document.getElementById("mWatchedText");
+  if(!btn || !status) return;
+
+  var watched = isWatched(id);
+  var watching = isWatching(id);
+  var remaining = getWatchingRemaining(id);
+
+  if(watched){
+    btn.classList.add("is-watched");
+    watchedText.textContent = "Просмотрено";
+    status.innerHTML = '<div class="watch-status done">✓ Уже просмотрено</div>';
+    progressWrap.classList.remove("on");
+  } else if(watching){
+    btn.classList.remove("is-watched");
+    watchedText.textContent = "Посмотрел";
+    status.innerHTML = '<div class="watch-status timer">⏱ <span class="timer-remaining" data-timer-id="'+id+'">'+formatRemaining(remaining)+'</span> до конца просмотра</div>';
+    progressWrap.classList.add("on");
+    var p = getWatchingProgress(id);
+    document.getElementById("mProgressFill").style.width = p + "%";
+  } else {
+    btn.classList.remove("is-watched");
+    watchedText.textContent = "Посмотрел";
+    status.innerHTML = '<div class="watch-status">▶ Не запущено</div>';
+    progressWrap.classList.remove("on");
+  }
+}
+
+/* ============================================================
+   СЕРВИСЫ + ЗАПУСК ТАЙМЕРА
+   ============================================================ */
+function renderWatch(m){
+  var q = encodeURIComponent(m.t+" "+m.y);
+  var services = [
+    { name:"Rutube",    color:"#00cc44", url:"https://rutube.ru/search/?query="+q },
+    { name:"Кинопоиск", color:"#ff5500", url:"https://www.kinopoisk.ru/index.php?kp_query="+q },
+    { name:"Ivi",       color:"#9d2de0", url:"https://www.ivi.ru/search/?q="+q },
+    { name:"Okko",      color:"#ff0044", url:"https://okko.tv/search/"+q, full:true }
+  ];
+  var grid = document.getElementById("watchGrid");
+  var isActive = isWatching(m.id);
+  grid.innerHTML = services.map(function(s){
+    return '<a class="watch-link'+(s.full?' okko':'')+(isActive?' active':'')+'" '+
+           'style="background:'+s.color+'" target="_blank" rel="noopener" '+
+           'href="'+s.url+'" data-movie-id="'+m.id+'">'+s.name+'</a>';
+  }).join("");
+
+  grid.querySelectorAll(".watch-link").forEach(function(a){
+    a.onclick = function(){
+      var id = parseInt(this.getAttribute("data-movie-id"), 10);
+      setTimeout(function(){
+        startWatchingTimer(id);
+      }, 100);
+    };
+  });
+
+  document.getElementById("trailerGrid").innerHTML =
+    '<a class="watch-link" style="background:linear-gradient(90deg,#ff4757,#5f27cd);grid-column:1/-1" '+
+      'target="_blank" rel="noopener" href="https://rutube.ru/search/?query='+encodeURIComponent(m.t+" "+m.y+" трейлер")+'">▶ Смотреть трейлер на Rutube</a>';
+}
+
+function switchTab(i){
+  document.querySelectorAll(".tab").forEach(function(t,idx){ t.classList.toggle("on", idx===i); });
+  document.querySelectorAll(".tab-panel").forEach(function(p,idx){ p.classList.toggle("on", idx===i); });
+}
+
+document.addEventListener("keydown", function(e){
+  if(e.key === "Escape"){
+    if(document.getElementById("modal").classList.contains("on")){
+      closeM();
+      e.stopPropagation();
+    }
+  }
+});
+
+/* ============================================================
+   ПОДЕЛИТЬСЯ
+   ============================================================ */
+function shareFilm(){
+  var url = location.href;
+  var title = document.getElementById("mTitle").textContent;
+  if(navigator.share){
+    navigator.share({title: title, url: url}).catch(function(){});
+  } else {
+    copyToClipboard(url, function(ok){
+      toast(ok ? "✅ Ссылка скопирована" : "⚠️ Не удалось");
+    });
+  }
+}
+function copyToClipboard(text, cb){
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(function(){ cb(true); })
+      .catch(function(){ legacyCopy(text, cb); });
+  } else { legacyCopy(text, cb); }
+}
+function legacyCopy(text, cb){
+  try{
+    var ta = document.createElement("textarea");
+    ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.focus(); ta.select();
+    var ok = document.execCommand("copy");
+    document.body.removeChild(ta);
+    if(cb) cb(ok);
+  }catch(e){ if(cb) cb(false); }
+}
+
+/* ============================================================
+   СЛУЧАЙНЫЙ ФИЛЬМ
+   ============================================================ */
+var _lastRandomAt = 0;
+var _lastRandomId = -1;
+function randomMovie(){
+  var now = Date.now();
+  if(now - _lastRandomAt < 500) return;
+  _lastRandomAt = now;
+  var btn = document.querySelector(".btn-grad");
+  if(btn){ btn.disabled = true; setTimeout(function(){ btn.disabled = false; }, 300); }
+  randomCount++;
+  saveState();
+  checkPhases();
+  var id = _lastRandomId;
+  var attempts = 0;
+  while(id === _lastRandomId && attempts < 20){
+    id = DB[Math.floor(Math.random()*DB.length)].id;
+    attempts++;
+  }
+  _lastRandomId = id;
+  openM(id, {count:false});
+}
+
+/* ============================================================
+   ПРОФИЛЬ
+   ============================================================ */
+function updateProfile(){
+  var mq = MONTHLY_QUESTS[getMoscowDate().getMonth()];
+  var lastIdx = -1;
+  for(var i=3; i>=0; i--){
+    if(monthQuest.done.indexOf(i) >= 0){ lastIdx = i; break; }
+  }
+  var title = lastIdx >= 0 ? mq.phases[lastIdx].nick : "Новичок";
+  document.getElementById("user-title").textContent = title;
+  document.getElementById("stViews").textContent = viewCount;
+  document.getElementById("stPhases").textContent = monthQuest.done.length;
+  document.getElementById("stBadges").textContent = getEarnedBadges().length;
+  document.getElementById("featDaily").textContent =
+    monthQuest.done.length+" из 4 фаз пройдено. Месяц: "+mq.theme;
+  var el = document.getElementById("featQuests");
+  if(el) el.textContent = "Получено "+getEarnedBadges().length+" из 8";
+}
+
+/* ============================================================
+   ФАЗЫ
+   ============================================================ */
+function checkPhases(){
+  if(!monthQuest || !Array.isArray(monthQuest.done)){
+    monthQuest = { key: getMonthKey(), done: [] };
+  }
+  var mq = MONTHLY_QUESTS[getMoscowDate().getMonth()];
+  var week = getWeekOfMonth();
+  var newlyDone = [];
+  for(var i=0; i<=week && i<4; i++){
+    if(monthQuest.done.indexOf(i)>=0) continue;
+    if(mq.phases[i].check()){
+      monthQuest.done.push(i);
+      newlyDone.push(i);
+    }
+  }
+  monthQuest.done = monthQuest.done.filter(function(v,idx,a){ return a.indexOf(v) === idx; });
+  challengeCount = monthQuest.done.length;
+  if(newlyDone.length){
+    saveState();
+    var last = newlyDone[newlyDone.length-1];
+    toast("🎉 Фаза "+(last+1)+" пройдена! "+mq.phases[last].nick);
+    updateProfile();
+  } else {
+    saveState();
+  }
+}
+
+function renderAll(){
+  renderHero();
+  renderSections();
+  renderContinueWatching();
+}
+
+/* ============================================================
+   БАННЕР
+   ============================================================ */
+function getActiveWatchingId(){
+  var ids = Object.keys(watchingTimers);
+  var best = null;
+  var bestStart = 0;
+  for(var i=0; i<ids.length; i++){
+    var id = parseInt(ids[i], 10);
+    var remaining = getWatchingRemaining(id);
+    if(remaining > 0){
+      var t = watchingTimers[id];
+      if(t.startTime > bestStart){
+        bestStart = t.startTime;
+        best = id;
+      }
+    }
+  }
+  return best;
+}
+
+function renderActiveBanner(){
+  var banner = document.getElementById("activeWatchBanner");
+  if(!banner) return;
+
+  var id = getActiveWatchingId();
+  if(!id){
+    banner.style.display = "none";
+    return;
+  }
+
+  var m = DB.filter(function(x){ return x.id === id; })[0];
+  if(!m){
+    banner.style.display = "none";
+    return;
+  }
+
+  document.getElementById("activeWatchTitle").textContent = m.t;
+  document.getElementById("activeWatchTime").textContent = formatRemaining(getWatchingRemaining(id));
+  banner.style.display = "flex";
+}
+
+/* ============================================================
+   ВОЗВРАТ НА САЙТ
+   ============================================================ */
+function onVisibilityReturn(force){
+  if(document.hidden && !force) return;
+  console.log("[MovieMate] Возврат на сайт. Активных таймеров:", Object.keys(watchingTimers).length);
+  var expiredChanged = checkExpiredTimers(false);
+  stopAllTimersOnReturn();
+  if(expiredChanged) renderAll();
+  renderActiveBanner();
+  if(_openModalId) updateWatchedUI(_openModalId);
+}
+
+window.addEventListener("pageshow", function(e){
+  setTimeout(function(){ onVisibilityReturn(true); }, 100);
+});
+window.addEventListener("popstate", function(e){
+  setTimeout(function(){ onVisibilityReturn(true); }, 100);
+});
+window.addEventListener("pagehide", function(){
+  saveWatching();
+});
+document.addEventListener("visibilitychange", function(){
+  if(!document.hidden){
+    setTimeout(function(){ onVisibilityReturn(false); }, 100);
+  }
+});
+window.addEventListener("focus", function(){
+  setTimeout(function(){ onVisibilityReturn(false); }, 100);
+});
+
+/* ============================================================
+   ИНТЕРВАЛЫ
+   ============================================================ */
+setInterval(function(){
+  document.querySelectorAll('[data-timer-id]').forEach(function(el){
+    var id = parseInt(el.getAttribute('data-timer-id'), 10);
+    var remaining = getWatchingRemaining(id);
+    if(remaining <= 0) return;
+    var prefix = el.classList.contains('card-continue-badge') ? "⏱ " : "";
+    el.textContent = prefix + formatRemaining(remaining);
+  });
+  if(_openModalId && isWatching(_openModalId)){
+    var fill = document.getElementById("mProgressFill");
+    if(fill) fill.style.width = getWatchingProgress(_openModalId) + "%";
+  }
+  renderActiveBanner();
+}, 1000);
+
+setInterval(function(){
+  var changed = checkExpiredTimers();
+  if(changed){
+    renderAll();
+    if(_openModalId){
+      updateWatchedUI(_openModalId);
+      var m = DB.filter(function(x){ return x.id === _openModalId; })[0];
+      if(m) renderWatch(m);
+    }
+  }
+}, 5000);
+
+/* ============================================================
+   СИНХРОНИЗАЦИЯ ВКЛАДОК
+   ============================================================ */
+window.addEventListener("storage", function(e){
+  if(e.key === KEY){
+    loadState();
+    updateProfile();
+    if(document.getElementById("pg-home").classList.contains("on")) renderAll();
+  }
+  if(e.key === WATCHED_KEY){
+    loadWatched();
+    if(document.getElementById("pg-home").classList.contains("on")) renderAll();
+  }
+  if(e.key === WATCHING_KEY){
+    loadWatching();
+    if(_openModalId) updateWatchedUI(_openModalId);
+    if(document.getElementById("pg-home").classList.contains("on")) renderAll();
+    renderActiveBanner();
+  }
+});
+
+/* ============================================================
+   INIT
+   ============================================================ */
+(function init(){
+  console.log("[MovieMate] v" + STATE_VERSION + " загружен");
+
+  loadPosterCache();
+  loadWatched();
+  loadWatching();
+  loadState();
+
+  var hadTimers = Object.keys(watchingTimers).length > 0;
+  checkExpiredTimers(false);
+  stopAllTimersOnReturn();
+
+  renderChips();
+  renderAll();
+  updateProfile();
+  checkPhases();
+  renderActiveBanner();
+
+  var hash = (location.hash || "");
+  var filmMatch = hash.match(/^#film-(\d+)$/);
+  if(filmMatch){
+    var id = parseInt(filmMatch[1], 10);
+    setTimeout(function(){ openM(id, {pushUrl: false, count: true}); }, 300);
+  }
+  else if(hash === "#account"){
+    setTimeout(function(){ go("account", false); }, 100);
+  }
+})();
+</script>
+</body>
+</html>
